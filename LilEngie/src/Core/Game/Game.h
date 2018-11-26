@@ -3,12 +3,15 @@
 #include <functional>
 #include <Core/Core.h>
 
-class LIL_API Game
+namespace LilEngie
 {
-private:
-	bool isRunning = true;
+	class LIL_API Game
+	{
+	private:
+		bool isRunning = true;
 
-public:
-	Game(std::function<void()> start, std::function<void()> update);
-	~Game();
-};
+	public:
+		Game(std::function<void()> start, std::function<void()> update);
+		~Game();
+	};
+}

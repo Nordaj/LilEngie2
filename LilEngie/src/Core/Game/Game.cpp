@@ -1,16 +1,19 @@
 #include <iostream>
 #include "Game.h"
 
-Game::Game(std::function<void()> start, std::function<void()> update)
+namespace LilEngie
 {
-	start();
-	while (isRunning)
+	Game::Game(std::function<void()> start, std::function<void()> update)
 	{
-		update();
+		start();
+		while (isRunning)
+		{
+			update();
+		}
 	}
-}
 
-Game::~Game()
-{
+	Game::~Game()
+	{
 
+	}
 }
