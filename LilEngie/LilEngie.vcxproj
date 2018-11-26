@@ -242,12 +242,16 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Application\Entry.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Game\Game.h" />
     <ClInclude Include="src\LilEngie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Game\Game.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

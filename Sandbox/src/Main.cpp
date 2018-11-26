@@ -1,11 +1,14 @@
 #include <iostream>
 #include <LilEngie.h>
 
-int main()
+void Start()
 {
-	Game::Init();
-
-	std::cout << "Press enter to close." << std::endl;
-	std::cin.get();
-	return 0;
+	std::cout << "Hello World" << std::endl;
 }
+
+void Update()
+{
+
+}
+
+LIL_ENGIE_SETUP(Start, Update)

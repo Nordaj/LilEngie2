@@ -1,7 +1,16 @@
 #include <iostream>
 #include "Game.h"
 
-void Game::Init()
+Game::Game(std::function<void()> start, std::function<void()> update)
 {
-	std::cout << "Game Initialized!" << std::endl;
+	start();
+	while (isRunning)
+	{
+		update();
+	}
+}
+
+Game::~Game()
+{
+
 }
