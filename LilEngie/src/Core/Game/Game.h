@@ -1,17 +1,27 @@
 #pragma once
 
-#include <functional>
 #include <Core/Core.h>
+#include <Core/Application/Application.h>
+#include <Core/EventSystem/Events.h>
+#include "ServiceLocator.h"
 
 namespace LilEngie
 {
-	class LIL_API Game
+	typedef void(*Function)();
+
+	class LIL_API Game : IEventListener
 	{
 	private:
+		ServiceLocator serviceLocator;
+		Application application;
+		EventManager eventManager;
 		bool isRunning = true;
+		Event closeEvent;
 
 	public:
-		Game(std::function<void()> start, std::function<void()> update);
+		Game(Function start, Function update);
 		~Game();
+
+		void OnEvent(const Event &e) override;
 	};
 }

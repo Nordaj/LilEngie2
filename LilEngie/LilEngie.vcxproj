@@ -242,13 +242,26 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Application\Entry.h" />
+    <ClInclude Include="src\Core\Application\Application.h" />
     <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Core\EventSystem\Event.h" />
+    <ClInclude Include="src\Core\EventSystem\EventManager.h" />
+    <ClInclude Include="src\Core\EventSystem\Events.h" />
+    <ClInclude Include="src\Core\EventSystem\IEventListener.h" />
     <ClInclude Include="src\Core\Game\Game.h" />
+    <ClInclude Include="src\Core\Game\ServiceLocator.h" />
+    <ClInclude Include="src\Core\Platform\Window\Window.h" />
+    <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
     <ClInclude Include="src\LilEngie.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Application\Application.cpp" />
+    <ClCompile Include="src\Core\EventSystem\EventManager.cpp" />
+    <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
     <ClCompile Include="src\Core\Game\Game.cpp" />
+    <ClCompile Include="src\Core\Game\ServiceLocator.cpp" />
+    <ClCompile Include="src\Core\Platform\Window\Window.cpp" />
+    <ClCompile Include="src\Core\Platform\Window\Windows\WinWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

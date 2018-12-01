@@ -11,4 +11,12 @@ void Update()
 
 }
 
+/*
+int main() 
+{ 
+	LilEngie::Game game(Start, Update); 
+	return 0; 
+}
+*/
+
 LIL_ENGIE_SETUP(Start, Update)
