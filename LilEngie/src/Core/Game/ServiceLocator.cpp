@@ -2,5 +2,6 @@
 
 namespace LilEngie
 {
-	EventManager* ServiceLocator::eventManager = nullptr;
+	EventManager *ServiceLocator::eventManager = nullptr;
+	Log *ServiceLocator::log = nullptr;
 }

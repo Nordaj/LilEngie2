@@ -3,6 +3,7 @@
 #include <memory>
 #include <Core/Application/Application.h>
 #include <Core/EventSystem/Events.h>
+#include <Core/Debug/Log.h>
 #include "Game.h"
 
 namespace LilEngie
@@ -13,7 +14,8 @@ namespace LilEngie
 		closeEvent = Event(EventType::GameClose);
 
 		//Connect global services to service locator
-		ServiceLocator::eventManager = &eventManager;
+		serviceLocator.eventManager = &eventManager;
+		serviceLocator.log = &log;
 
 		//Initialization
 		application.Init();
@@ -31,10 +33,7 @@ namespace LilEngie
 	}
 
 	Game::~Game()
-	{
-		//Empty services from service locator
-		ServiceLocator::eventManager = nullptr;
-	}
+	{ }
 
 	void Game::OnEvent(const Event &e)
 	{

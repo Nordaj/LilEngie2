@@ -5,6 +5,7 @@
 namespace LilEngie
 {
 	class EventManager;
+	class Log;
 	class Game;
 
 	class LIL_API ServiceLocator
@@ -13,14 +14,20 @@ namespace LilEngie
 		friend class Game;
 
 	private:
-		static EventManager * eventManager;
+		static EventManager *eventManager;
+		static Log *log;
 
 	public:
-		inline static EventManager* EventManager()
+		inline static EventManager *EventManager()
 		{ return eventManager; }
+
+		inline static Log *Log()
+		{ return log; }
 	};
 
 	typedef ServiceLocator Services;
 }
 
-#define SERVICES_GET(x) if (Services::x() != nullptr) Services::x()
+//Both do the same thing, pick a favorite
+#define SERVICES_GET(x) if (LilEngie::Services::x() != nullptr) LilEngie::Services::x()
+#define LIL(x) if (LilEngie::Services::x() != nullptr) LilEngie::Services::x()
