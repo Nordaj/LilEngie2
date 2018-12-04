@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <Core/Core.h>
 
 namespace LilEngie

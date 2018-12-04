@@ -1,8 +1,9 @@
 #include <LilEngie.h>
+using namespace LilEngie;
 
 void Start()
 {
-	LIL(Log)->Print("Hello, welocme to Lil Engie 2.");
+	LIL(Log)->Print("Hello, welcome to Lil Engie 2.");
 }
 
 void Update()

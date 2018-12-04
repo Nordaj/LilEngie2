@@ -4,6 +4,7 @@
 #include <Core/Application/Application.h>
 #include <Core/EventSystem/Events.h>
 #include <Core/Debug/Log.h>
+#include <Core/Debug/DebugTimer.h>
 #include "Game.h"
 
 namespace LilEngie

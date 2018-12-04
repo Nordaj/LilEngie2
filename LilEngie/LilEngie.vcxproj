@@ -244,6 +244,7 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Application\Application.h" />
     <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Core\Debug\DebugTimer.h" />
     <ClInclude Include="src\Core\Debug\Log.h" />
     <ClInclude Include="src\Core\EventSystem\Event.h" />
     <ClInclude Include="src\Core\EventSystem\EventManager.h" />
@@ -253,10 +254,13 @@
     <ClInclude Include="src\Core\Game\ServiceLocator.h" />
     <ClInclude Include="src\Core\Platform\Window\Window.h" />
     <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
+    <ClInclude Include="src\Core\System\StackAllocator.h" />
+    <ClInclude Include="src\Core\System\StackAllocator.ipp" />
     <ClInclude Include="src\LilEngie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application\Application.cpp" />
+    <ClCompile Include="src\Core\Debug\DebugTimer.cpp" />
     <ClCompile Include="src\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Core\EventSystem\EventManager.cpp" />
     <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
@@ -264,6 +268,7 @@
     <ClCompile Include="src\Core\Game\ServiceLocator.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Window.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\Core\System\StackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
