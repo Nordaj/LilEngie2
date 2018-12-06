@@ -233,12 +233,14 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -254,6 +256,7 @@
     <ClInclude Include="src\Core\Game\ServiceLocator.h" />
     <ClInclude Include="src\Core\Platform\Window\Window.h" />
     <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
+    <ClInclude Include="src\Core\System\PoolAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.ipp" />
     <ClInclude Include="src\LilEngie.h" />
@@ -268,6 +271,7 @@
     <ClCompile Include="src\Core\Game\ServiceLocator.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Window.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\Core\System\PoolAllocator.cpp" />
     <ClCompile Include="src\Core\System\StackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>

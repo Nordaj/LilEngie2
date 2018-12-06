@@ -5,10 +5,19 @@
 #include <Core/EventSystem/Events.h>
 #include <Core/Debug/Log.h>
 #include <Core/Debug/DebugTimer.h>
+#include <Core/System/PoolAllocator.h>
 #include "Game.h"
 
 namespace LilEngie
 {
+	struct TestClass
+	{
+		int x, y, z;
+		float i, j, k;
+
+		TestClass() {}
+	};
+
 	Game::Game(Function start, Function update)
 	{
 		//Setup events
