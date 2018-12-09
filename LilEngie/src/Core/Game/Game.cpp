@@ -10,14 +10,6 @@
 
 namespace LilEngie
 {
-	struct TestClass
-	{
-		int x, y, z;
-		float i, j, k;
-
-		TestClass() {}
-	};
-
 	Game::Game(Function start, Function update)
 	{
 		//Setup events
