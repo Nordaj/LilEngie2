@@ -4,7 +4,7 @@
 
 namespace LilEngie
 {
-	class LIL_API Component
+	class LIL_API IComponent
 	{
 		friend class Actor;
 
@@ -12,6 +12,9 @@ namespace LilEngie
 		Actor* actor;
 
 	public:
+		IComponent() {}
+		virtual ~IComponent() {}
+
 		//Destroys the component
 		void Destroy();
 

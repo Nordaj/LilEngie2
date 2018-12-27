@@ -9,7 +9,8 @@ namespace LilEngie
 	class LIL_API IEventListener
 	{
 	public:
-		~IEventListener();
+		IEventListener() {}
+		virtual ~IEventListener();
 
 		virtual void OnEvent(const Event &e) = 0;
 

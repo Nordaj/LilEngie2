@@ -6,7 +6,7 @@ namespace LilEngie
 {
 	void Application::Init()
 	{
-		window.Init();
+		windowProperties = window.Init();
 	}
 
 	void Application::Update()

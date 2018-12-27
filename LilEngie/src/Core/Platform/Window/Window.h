@@ -7,7 +7,18 @@
 
 namespace LilEngie
 {
-	class LIL_API Window : IEventListener
+	struct WinProp
+	{
+		short width;
+		short height;
+
+		//Platform specific
+	#ifdef LIL_WINDOWS
+		void* hwnd;
+	#endif //LIL_WINDOWS
+	};
+
+	class LIL_API Window : public IEventListener
 	{
 	private:
 		int width = 512;
@@ -15,7 +26,7 @@ namespace LilEngie
 		std::string title = "My Game";
 
 	public:
-		bool Init();
+		WinProp Init();
 		void Close();
 
 		void SetWidth(int x);

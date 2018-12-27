@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <Core/Core.h>
-#include "Component.h"
+#include "IComponent.h"
 
 namespace LilEngie
 {
@@ -17,7 +17,7 @@ namespace LilEngie
 		Scene* scene;
 		bool isEnabled = true;
 		std::vector<Actor*> children;
-		std::vector<Component*> components;
+		std::vector<IComponent*> components;
 
 	public:
 		Actor(Scene* scene);
@@ -31,7 +31,7 @@ namespace LilEngie
 
 		void Destroy();
 
-		void DestroyComponent(Component* component);
+		void DestroyComponent(IComponent* component);
 		template<typename T>
 		T* CreateComponent();
 

@@ -6,6 +6,7 @@
 #include <Core/Debug/Log.h>
 #include <Core/Debug/DebugTimer.h>
 #include <Core/System/PoolAllocator.h>
+#include <Core/Platform/Graphics/IGraphics.h>
 #include "Game.h"
 
 namespace LilEngie
@@ -21,17 +22,24 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
+		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
 
+		//Main loop
 		if (start) start();
 		while (isRunning)
 		{
 			if (update) update();
 			application.Update();
+
+			renderer.Render();
 		}
+
+		//Shutdown
 		SERVICES_GET(EventManager)->Dispatch(closeEvent);
+		renderer.Shutdown();
 	}
 
 	Game::~Game()

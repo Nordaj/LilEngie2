@@ -1,4 +1,4 @@
-#include "Component.h"
+#include "IComponent.h"
 #include "Scene.h"
 #include "Actor.h"
 
@@ -8,7 +8,7 @@ namespace LilEngie
 		: scene(scene)
 	{ 
 		children = std::vector<Actor*>();
-		components = std::vector<Component*>();
+		components = std::vector<IComponent*>();
 	}
 
 	Actor::~Actor()
@@ -43,7 +43,7 @@ namespace LilEngie
 		scene->DestroyActor(this);
 	}
 
-	void Actor::DestroyComponent(Component* component)
+	void Actor::DestroyComponent(IComponent* component)
 	{
 		for (int i = 0; i < components.size(); i++)
 		{

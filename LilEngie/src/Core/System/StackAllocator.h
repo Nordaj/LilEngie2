@@ -19,7 +19,7 @@ namespace LilEngie
 		//Size is measured in bytes
 		void* Alloc(unsigned int size);
 		void Free(void* location);
-		void FreeAll();
+		void Clean();
 
 		//Size is amount of T (not in bytes).
 		template<typename T>

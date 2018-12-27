@@ -7,12 +7,18 @@
 
 namespace LilEngie
 {
-	bool Window::Init()
+	WinProp Window::Init()
 	{
 		Subscribe(EventType::WindowResize);
 
 	#ifdef LIL_WINDOWS
-		return WinWindow::Init(title.c_str(), width, height);
+		WinProp val = {};
+
+		WinWindow::Init(title.c_str(), width, height, &val.hwnd);
+
+		val.width = width;
+		val.height = height;
+		return val;
 	#endif //LIL_WINDOWS
 	}
 

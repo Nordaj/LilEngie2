@@ -12,6 +12,8 @@ namespace LilEngie
 		Window window;
 
 	public:
+		WinProp windowProperties;
+
 		void Init();
 		void Update();
 	};

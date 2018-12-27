@@ -1,10 +1,10 @@
 #include <Core/EventSystem/Events.h>
 #include "Actor.h"
-#include "Component.h"
+#include "IComponent.h"
 
 namespace LilEngie
 {
-	void Component::Destroy()
+	void IComponent::Destroy()
 	{
 		actor->DestroyComponent(this);
 	}

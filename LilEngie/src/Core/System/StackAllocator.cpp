@@ -11,24 +11,31 @@ namespace LilEngie
 
 	StackAllocator::~StackAllocator()
 	{
-		delete data;
+		if (data != nullptr)
+			delete data;
 	}
 
 	void* StackAllocator::Alloc(unsigned int size)
 	{
-		void* theirs = end;
-		end = (char*)end + size;
-		return theirs;
+		if (data != nullptr)
+		{
+			void* theirs = end;
+			end = (char*)end + size;
+			return theirs;
+		}
 	}
 
 	void StackAllocator::Free(void* location)
 	{
-		//0 out the memory
-		memset(location, 0, (char*)end - location);
-		end = location;
+		if (data != nullptr)
+		{
+			//0 out the memory
+			memset(location, 0, (char*)end - location);
+			end = location;
+		}
 	}
 
-	void StackAllocator::FreeAll()
+	void StackAllocator::Clean()
 	{
 		delete data;
 		data = nullptr;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Common.h"
+
 #if defined(LIL_WINDOWS)
 	#if defined(LIL_BUILD_DLL)
 		//BUILDING AS DYNAMIC LIB
