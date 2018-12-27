@@ -28,7 +28,7 @@ namespace LilEngie
 		virtual void SetClearColor(float r, float g, float b, float a) = 0;
 		virtual void Clear() = 0;
 		virtual void Render() = 0;
-		virtual void Draw(uint indexCount) = 0;
+		virtual void Resize(int width, int height) = 0;
 
 		//Shaders and input layout
 		virtual IVertexShader* CreateVertexShader(const std::string &file) = 0;
@@ -48,6 +48,7 @@ namespace LilEngie
 		virtual IIndexBuffer* CreateIndexBuffer(uint* inds, uint size) = 0;
 		virtual void BindIndexBuffer(IIndexBuffer* iBuffer) = 0;
 		virtual void ReleaseIndexBuffer(IIndexBuffer** iBuffer) = 0;
+		virtual void Draw(uint indexCount) = 0;
 
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = DirectX11);
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);

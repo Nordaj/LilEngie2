@@ -73,30 +73,15 @@ namespace LilEngie
 		if (FAILED(hr))
 			GFX_ERROR("Failed to create Direct3D11 device and swap chain.");
 
-		//Setup render target
-		ID3D11Texture2D* tex;
-		hr = ctx->swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&tex);
-		if (FAILED(hr))
-			GFX_ERROR("Failed to get Direct3D11 swap chain back buffer.");
-
-		hr = ctx->device->CreateRenderTargetView(tex, NULL, &ctx->renderTargetView);
-		if (FAILED(hr))
-			GFX_ERROR("Failed to create Direct3D11 render target view.");
-
-		ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, NULL);
+		//Setup render target view
+		SetupRenderTargetView();
 
 		//Set viewport
-		RECT r = {};
-		GetClientRect((HWND)windowProperties.hwnd, &r);
-
 		D3D11_VIEWPORT viewport = {};
-		viewport.Width = r.right - r.left;
-		viewport.Height = r.bottom - r.top;
+		viewport.Width = (float)windowProperties.width;
+		viewport.Height = (float)windowProperties.width;
 		viewport.MaxDepth = 1;
-
 		ctx->deviceContext->RSSetViewports(1, &viewport);
-
-		tex->Release();
 	}
 
 	void DX11Graphics::SetClearColor(float r, float g, float b, float a)
@@ -120,9 +105,24 @@ namespace LilEngie
 			GFX_ERROR("Failed to present Direct3D11 swap chain.");
 	}
 
-	void DX11Graphics::Draw(uint indexCount)
+	void DX11Graphics::Resize(int width, int height)
 	{
-		ctx->deviceContext->DrawIndexed(indexCount, 0, 0);
+		//Need to release render target view before resizing
+		ctx->renderTargetView->Release();
+		ctx->renderTargetView = nullptr;
+
+		//Resize the buffers
+		ctx->swapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+
+		//Setup new render target view
+		SetupRenderTargetView();
+
+		//Setup viewport
+		D3D11_VIEWPORT viewport = {};
+		viewport.Width = (float)width;
+		viewport.Height = (float)height;
+		viewport.MaxDepth = 1;
+		ctx->deviceContext->RSSetViewports(1, &viewport);
 	}
 
 	IVertexShader* DX11Graphics::CreateVertexShader(const std::string &file)
@@ -320,6 +320,11 @@ namespace LilEngie
 		*iBuffer = nullptr;
 	}
 
+	void DX11Graphics::Draw(uint indexCount)
+	{
+		ctx->deviceContext->DrawIndexed(indexCount, 0, 0);
+	}
+
 	void DX11Graphics::Shutdown()
 	{
 		ctx->device->Release();
@@ -428,5 +433,28 @@ namespace LilEngie
 		//Clean and return
 		delete[] e;
 		return layout;
+	}
+
+	void DX11Graphics::SetupRenderTargetView()
+	{
+		HRESULT hr = S_OK;
+
+		//Release if necessary
+		if (ctx->renderTargetView != nullptr)
+			ctx->renderTargetView->Release();
+
+		//Setup render target view
+		ID3D11Texture2D* tex;
+		hr = ctx->swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&tex);
+		if (FAILED(hr))
+			GFX_ERROR("Failed to get Direct3D11 swap chain back buffer.");
+
+		hr = ctx->device->CreateRenderTargetView(tex, NULL, &ctx->renderTargetView);
+		if (FAILED(hr))
+			GFX_ERROR("Failed to create Direct3D11 render target view.");
+
+		ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, NULL);
+
+		tex->Release();
 	}
 }

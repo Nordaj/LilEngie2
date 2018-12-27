@@ -24,7 +24,7 @@ namespace LilEngie
 		void SetClearColor(float r, float g, float b, float a) override;
 		void Clear() override;
 		void Render() override;
-		void Draw(uint indexCount) override;
+		void Resize(int width, int height) override;
 
 		//Shaders and input layout
 		IVertexShader* CreateVertexShader(const std::string &file) override;
@@ -44,9 +44,11 @@ namespace LilEngie
 		IIndexBuffer* CreateIndexBuffer(uint* inds, uint size) override;
 		void BindIndexBuffer(IIndexBuffer* iBuffer) override;
 		void ReleaseIndexBuffer(IIndexBuffer** iBuffer) override;
+		void Draw(uint indexCount) override;
 
 	private:
 		void Shutdown() override;
 		IInputLayout* CreateLayout(void* shaderBlob, InputElement* elements, uint numElements);
+		void SetupRenderTargetView();
 	};
 }

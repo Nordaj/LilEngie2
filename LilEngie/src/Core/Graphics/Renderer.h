@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Core/EventSystem/Events.h>
 #include <Core/Core.h>
 
 namespace LilEngie
@@ -8,7 +9,7 @@ namespace LilEngie
 	struct WinProp;
 	enum GraphicsAPI;
 
-	class LIL_API Renderer
+	class LIL_API Renderer : public IEventListener
 	{
 	private:
 		IGraphics* gfx;
@@ -23,5 +24,8 @@ namespace LilEngie
 
 		void SetClearColor(float r, float g, float b, float a);
 		void Render();
+
+	private:
+		void OnEvent(const Event &e) override;
 	};
 }

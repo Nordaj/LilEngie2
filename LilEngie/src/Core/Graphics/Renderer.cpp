@@ -27,6 +27,8 @@ namespace LilEngie
 		gfx = IGraphics::CreateGraphicsContext(api);
 		gfx->Init(windowProperties);
 		gfx->SetClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+		
+		Subscribe(EventType::WindowResize);
 
 		//Shader and layout creation
 		InputElement elements[1] = {
@@ -87,5 +89,17 @@ namespace LilEngie
 		gfx->Draw(3);
 
 		gfx->Render();
+	}
+
+	void Renderer::OnEvent(const Event &e)
+	{
+		switch (e.type)
+		{
+			case EventType::WindowResize:
+				gfx->Resize(e.args[0].asInt, e.args[1].asInt);
+				break;
+			default:
+				break;
+		}
 	}
 }
