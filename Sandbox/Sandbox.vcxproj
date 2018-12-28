@@ -173,6 +173,8 @@
     </PostBuildEvent>
     <Link>
       <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -231,6 +233,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)LilEngie\bin\$(Configuration)\$(Platform)\*.dll" "$(ProjectDir)bin\$(Configuration)\$(Platform)\" /Y</Command>
