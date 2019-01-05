@@ -7,25 +7,25 @@
 
 namespace LilEngie
 {
-	struct D3D11Ctx;
+	struct GLCtx;
 	struct WinProp;
 
-	class DX11Graphics : public IGraphics
+	class GLGraphics : public IGraphics
 	{
 	private:
-		D3D11Ctx* ctx;
+		GLCtx* ctx;
 		float clearColor[4];
 
 	public:
-		~DX11Graphics() override;
+		~GLGraphics() override;
 
 		void Init(const WinProp &windowProperties) override;
-		
+
 		void SetClearColor(float r, float g, float b, float a) override;
 		void Clear() override;
 		void Render() override;
 		void Resize(int width, int height) override;
-		void SetContextCurrent() override {}
+		void SetContextCurrent() override;
 
 		//Shaders and input layout
 		IVertexShader* CreateVertexShader(const std::string &file) override;
@@ -49,7 +49,7 @@ namespace LilEngie
 
 	private:
 		void Shutdown() override;
-		IInputLayout* CreateLayout(void* shaderBlob, InputElement* elements, uint numElements);
-		void SetupRenderTargetView();
+		IInputLayout* CreateLayout(InputElement* elements, uint numElements);
+		uint CompileShader(const std::string &src, int type);
 	};
 }

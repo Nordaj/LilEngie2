@@ -99,6 +99,12 @@
     <ClInclude Include="src\Core\Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLHandles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Game\Game.cpp">
@@ -156,6 +162,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLHandles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

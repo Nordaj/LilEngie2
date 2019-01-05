@@ -19,6 +19,7 @@ namespace LilEngie
 	class LIL_API InputElement
 	{
 	public:
+		InputElement() {}
 		InputElement(const std::string &name, InputFormat format, unsigned int offset)
 			: name(name), format(format), offset(offset) { }
 

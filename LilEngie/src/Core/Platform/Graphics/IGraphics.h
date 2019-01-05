@@ -11,7 +11,8 @@ namespace LilEngie
 
 	enum GraphicsAPI
 	{
-		DirectX11
+		DirectX11,
+		OpenGL
 	};
 
 	class LIL_API IGraphics
@@ -29,6 +30,7 @@ namespace LilEngie
 		virtual void Clear() = 0;
 		virtual void Render() = 0;
 		virtual void Resize(int width, int height) = 0;
+		virtual void SetContextCurrent() = 0;
 
 		//Shaders and input layout
 		virtual IVertexShader* CreateVertexShader(const std::string &file) = 0;

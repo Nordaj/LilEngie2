@@ -15,6 +15,7 @@ namespace LilEngie
 		//Platform specific
 	#ifdef LIL_WINDOWS
 		void* hwnd;
+		void* hdc;
 	#endif //LIL_WINDOWS
 	};
 

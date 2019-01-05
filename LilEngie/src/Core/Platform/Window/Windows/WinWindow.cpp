@@ -21,7 +21,7 @@ namespace LilEngie
 
 		LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-		bool Init(const char *title, int width, int height, void** handle)
+		bool Init(const char *title, int width, int height, void** handle, void** devCtx)
 		{
 			//Setup window class struct
 			WNDCLASSEX wcex = {};
@@ -82,6 +82,7 @@ namespace LilEngie
 
 			//Give the handle
 			*handle = hwnd;
+			*devCtx = hdc;
 		}
 
 		void Close()

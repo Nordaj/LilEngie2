@@ -1,4 +1,5 @@
 #include "DirectX11/DX11Graphics.h"
+#include "OpenGL/GLGraphics.h"
 #include "InputLayout.h"
 #include "Handles.h"
 #include "IGraphics.h"
@@ -9,9 +10,15 @@ namespace LilEngie
 	{
 		switch (api)
 		{
-			case LilEngie::DirectX11:
+			case GraphicsAPI::DirectX11:
 			{
 				DX11Graphics* g = new DX11Graphics();
+				g->graphicsAPI = api;
+				return g;
+			}
+			case GraphicsAPI::OpenGL:
+			{
+				GLGraphics* g = new GLGraphics();
 				g->graphicsAPI = api;
 				return g;
 			}

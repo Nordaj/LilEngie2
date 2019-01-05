@@ -294,6 +294,8 @@
     <ClInclude Include="src\Core\Platform\Graphics\Handles.h" />
     <ClInclude Include="src\Core\Platform\Graphics\IGraphics.h" />
     <ClInclude Include="src\Core\Platform\Graphics\InputLayout.h" />
+    <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.h" />
+    <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLHandles.h" />
     <ClInclude Include="src\Core\Platform\Window\Window.h" />
     <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
     <ClInclude Include="src\Core\System\PoolAllocator.h" />
@@ -317,6 +319,8 @@
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\IGraphics.cpp" />
+    <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.cpp" />
+    <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLHandles.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Window.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Windows\WinWindow.cpp" />
     <ClCompile Include="src\Core\System\PoolAllocator.cpp" />

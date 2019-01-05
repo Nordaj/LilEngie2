@@ -11,7 +11,7 @@ namespace LilEngie
 		extern Event resizeEvent;
 		extern Event closeEvent;
 
-		bool Init(const char *title, int width, int height, void** handle);
+		bool Init(const char *title, int width, int height, void** handle, void** hdc);
 		void Close();
 
 		void SetSize(int x, int y);

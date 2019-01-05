@@ -14,7 +14,7 @@ namespace LilEngie
 	#ifdef LIL_WINDOWS
 		WinProp val = {};
 
-		WinWindow::Init(title.c_str(), width, height, &val.hwnd);
+		WinWindow::Init(title.c_str(), width, height, &val.hwnd, &val.hdc);
 
 		val.width = width;
 		val.height = height;
