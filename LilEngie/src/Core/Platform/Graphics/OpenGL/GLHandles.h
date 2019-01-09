@@ -6,7 +6,7 @@
 
 namespace LilEngie
 {
-	class GLVertexShader : public IVertexShader
+	class GLShader : public IShader
 	{
 		friend class GLGraphics;
 
@@ -14,20 +14,7 @@ namespace LilEngie
 		uint shader;
 
 	public:
-		GLVertexShader() {}
-		~GLVertexShader();
-	};
-
-	class GLFragmentShader : public IFragmentShader
-	{
-		friend class GLGraphics;
-
-	private:
-		uint shader;
-
-	public:
-		GLFragmentShader() {}
-		~GLFragmentShader();
+		~GLShader();
 	};
 
 	class GLInputLayout : public IInputLayout
@@ -39,7 +26,6 @@ namespace LilEngie
 		uint size;
 
 	public:
-		GLInputLayout() {}
 		~GLInputLayout();
 	};
 
@@ -51,7 +37,6 @@ namespace LilEngie
 		uint buffer;
 
 	public:
-		GLVertexBuffer() {}
 		~GLVertexBuffer();
 	};
 
@@ -63,7 +48,6 @@ namespace LilEngie
 		uint buffer;
 
 	public:
-		GLIndexBuffer() {}
 		~GLIndexBuffer();
 	};
 }

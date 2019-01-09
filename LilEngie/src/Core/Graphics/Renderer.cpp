@@ -6,8 +6,7 @@
 namespace LilEngie
 {
 	IInputLayout* layout;
-	IVertexShader* vert;
-	IFragmentShader* frag;
+	IShader* shader;
 	IVertexBuffer* vBuffer;
 	IIndexBuffer* iBuffer;
 
@@ -35,8 +34,7 @@ namespace LilEngie
 			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0)
 		};
 
-		vert = gfx->CreateVertexShader("LilEngie/res/Shaders/UnlitVS.hlsl", &layout, elements, 1);
-		frag = gfx->CreateFragmentShader("LilEngie/res/Shaders/UnlitFS.hlsl");
+		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS.hlsl", "LilEngie/res/Shaders/UnlitFS.hlsl", &layout, elements, 1);
 
 		//Model creation
 		float verts[] = {
@@ -51,8 +49,7 @@ namespace LilEngie
 
 		//Draw prep
 		gfx->SetInputLayout(layout);
-		gfx->SetVertexShader(vert);
-		gfx->SetFragmentShader(frag);
+		gfx->SetShader(shader);
 
 		gfx->BindVertexBuffer(vBuffer, sizeof(float) * 3);
 		gfx->BindIndexBuffer(iBuffer);
@@ -62,8 +59,7 @@ namespace LilEngie
 	{
 		//Cleanup
 		gfx->ReleaseInputLayout(&layout);
-		gfx->ReleaseVertexShader(&vert);
-		gfx->ReleaseFragmentShader(&frag);
+		gfx->ReleaseShader(&shader);
 
 		gfx->ReleaseVertexBuffer(&vBuffer);
 		gfx->ReleaseIndexBuffer(&iBuffer);

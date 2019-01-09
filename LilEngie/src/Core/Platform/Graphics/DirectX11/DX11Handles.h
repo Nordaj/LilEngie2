@@ -11,28 +11,16 @@ class D3D11Buffer;
 
 namespace LilEngie
 {
-	class DX11VertexShader : public IVertexShader
+	class DX11Shader : public IShader
 	{
 		friend class DX11Graphics;
 
 	private:
-		ID3D11VertexShader* shader;
+		ID3D11VertexShader* vertShader;
+		ID3D11PixelShader* fragShader;
 
 	public:
-		DX11VertexShader() {}
-		~DX11VertexShader();
-	};
-
-	class DX11FragmentShader : public IFragmentShader
-	{
-		friend class DX11Graphics;
-
-	private:
-		ID3D11PixelShader* shader;
-
-	public:
-		DX11FragmentShader() {}
-		~DX11FragmentShader();
+		~DX11Shader();
 	};
 
 	class DX11InputLayout : public IInputLayout
@@ -43,7 +31,6 @@ namespace LilEngie
 		ID3D11InputLayout* layout;
 
 	public:
-		DX11InputLayout() {}
 		~DX11InputLayout();
 	};
 
@@ -55,7 +42,6 @@ namespace LilEngie
 		ID3D11Buffer* buffer;
 
 	public:
-		DX11VertexBuffer() {}
 		~DX11VertexBuffer();
 	};
 
@@ -67,7 +53,6 @@ namespace LilEngie
 		ID3D11Buffer* buffer;
 
 	public:
-		DX11IndexBuffer() {}
 		~DX11IndexBuffer();
 	};
 }

@@ -33,14 +33,20 @@ namespace LilEngie
 		virtual void SetContextCurrent() = 0;
 
 		//Shaders and input layout
-		virtual IVertexShader* CreateVertexShader(const std::string &file) = 0;
-		virtual IVertexShader* CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
-		virtual void SetVertexShader(IVertexShader* shader) = 0;
-		virtual void ReleaseVertexShader(IVertexShader** shader) = 0;
-		virtual IFragmentShader* CreateFragmentShader(const std::string &file) = 0;
-		virtual void SetFragmentShader(IFragmentShader* shader) = 0;
-		virtual void ReleaseFragmentShader(IFragmentShader** shader) = 0;
-		virtual void SetInputLayout(IInputLayout* shader) = 0;
+		//virtual IVertexShader* CreateVertexShader(const std::string &file) = 0;
+		//virtual IVertexShader* CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
+		//virtual void SetVertexShader(IVertexShader* shader) = 0;
+		//virtual void ReleaseVertexShader(IVertexShader** shader) = 0;
+		//virtual IFragmentShader* CreateFragmentShader(const std::string &file) = 0;
+		//virtual void SetFragmentShader(IFragmentShader* shader) = 0;
+		//virtual void ReleaseFragmentShader(IFragmentShader** shader) = 0;
+
+		virtual IShader* CreateShader(const std::string &vert, const std::string &frag) = 0;
+		virtual IShader* CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
+		virtual void SetShader(IShader* shader) = 0;
+		virtual void ReleaseShader(IShader** shader) = 0;
+
+		virtual void SetInputLayout(IInputLayout* layout) = 0;
 		virtual void ReleaseInputLayout(IInputLayout** layout) = 0;
 
 		//Vertex and index buffers

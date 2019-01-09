@@ -28,14 +28,11 @@ namespace LilEngie
 		void SetContextCurrent() override {}
 
 		//Shaders and input layout
-		IVertexShader* CreateVertexShader(const std::string &file) override;
-		IVertexShader* CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements) override;
-		void SetVertexShader(IVertexShader* shader) override;
-		void ReleaseVertexShader(IVertexShader** shader) override;
-		IFragmentShader* CreateFragmentShader(const std::string &file) override;
-		void SetFragmentShader(IFragmentShader* shader) override;
-		void ReleaseFragmentShader(IFragmentShader** shader) override;
-		void SetInputLayout(IInputLayout* shader) override;
+		IShader* CreateShader(const std::string &vert, const std::string &frag) override;
+		IShader* CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements) override;
+		void SetShader(IShader* shader) override;
+		void ReleaseShader(IShader** shader) override;
+		void SetInputLayout(IInputLayout* layout) override;
 		void ReleaseInputLayout(IInputLayout** layout) override;
 
 		//Vertex and index buffers

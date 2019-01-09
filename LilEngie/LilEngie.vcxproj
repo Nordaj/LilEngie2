@@ -319,6 +319,7 @@
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\IGraphics.cpp" />
+    <ClCompile Include="src\Core\Platform\Graphics\InputLayout.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLHandles.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Window.cpp" />

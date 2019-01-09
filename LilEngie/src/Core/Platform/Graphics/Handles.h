@@ -4,16 +4,10 @@
 
 namespace LilEngie
 {
-	class LIL_API IVertexShader
+	class LIL_API IShader
 	{
 	public:
-		virtual ~IVertexShader() {}
-	};
-
-	class LIL_API IFragmentShader
-	{
-	public:
-		virtual ~IFragmentShader() {}
+		virtual ~IShader() {}
 	};
 
 	class LIL_API IInputLayout

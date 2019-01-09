@@ -36,20 +36,20 @@ namespace LilEngie
 
 	void GLGraphics::Init(const WinProp &windowProperties)
 	{
-		//Initialize glew
-		if (!glewInit())
-		{
-			LIL(Log)->Print(Verbosity::Error, "Could not initialize opengl.");
-			return;
-		}
-
+		//Context creation
 		ctx = new GLCtx();
-
 	#ifdef LIL_WINDOWS
 		ctx->devCtx = (HDC)windowProperties.hdc;
 		ctx->renderCtx = wglCreateContext((HDC)windowProperties.hdc);
 		SetContextCurrent();
 	#endif //LIL_WINDOWS
+
+		//Initialize glew
+		if (glewInit() != GLEW_OK)
+		{
+			LIL(Log)->Print(Verbosity::Error, "Could not initialize OpenGL.");
+			return;
+		}
 	}
 
 	void GLGraphics::SetClearColor(float r, float g, float b, float a)
@@ -66,16 +66,14 @@ namespace LilEngie
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	//TODO
 	void GLGraphics::Render()
 	{
-
+		//Doesn't need anything
 	}
 
-	//TODO
 	void GLGraphics::Resize(int width, int height)
 	{
-
+		glViewport(0, 0, width, height);
 	}
 
 	void GLGraphics::SetContextCurrent()
@@ -85,75 +83,104 @@ namespace LilEngie
 	#endif //LIL_WINDOWS
 	}
 
-	IVertexShader* GLGraphics::CreateVertexShader(const std::string &file)
+	IShader* GLGraphics::CreateShader(const std::string &vert, const std::string &frag)
 	{
-		return CreateVertexShader(file, nullptr, nullptr, 0);
+		return CreateShader(vert, frag, nullptr, nullptr, 0);
 	}
 
-	//TODO
-	IVertexShader* GLGraphics::CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements)
+	IShader* GLGraphics::CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements)
 	{
-		/*
 		//Create layout if necessary
 		if (layout != nullptr)
 			*layout = CreateLayout(elements, numElements);
 
-		//File to string
-		std::string src;
-		std::ifstream t("file.txt");
-		std::stringstream buffer;
-		buffer << t.rdbuf();
-		src = buffer.str();
+		//Files to strings
+		std::stringstream vertBuf;
+		vertBuf << std::ifstream(vert).rdbuf();
+		std::string vertSrc = vertBuf.str();
+
+		std::stringstream fragBuf;
+		fragBuf << std::ifstream(frag).rdbuf();
+		std::string fragSrc = fragBuf.str();
 
 		//Setup/Compile shader
 		uint program = glCreateProgram();
 
 		//Compile
-		uint 
-		*/
-		return nullptr;
+		uint vertShader = CompileShader(vertSrc, GL_VERTEX_SHADER);
+		uint fragShader = CompileShader(fragSrc, GL_FRAGMENT_SHADER);
+
+		//Setup program
+		glAttachShader(program, vertShader);
+		glAttachShader(program, fragShader);
+		glLinkProgram(program);
+		glValidateProgram(program);
+
+		//Clean
+		glDeleteShader(vertShader);
+		glDeleteShader(fragShader);
+
+		GLShader* shader = new GLShader();
+		shader->shader = program;
+		return shader;
 	}
 
-	//TODO
-	void GLGraphics::SetVertexShader(IVertexShader* shader)
+	void GLGraphics::SetShader(IShader* shader)
 	{
-		
+		glUseProgram(((GLShader*)shader)->shader);
 	}
 
-	//TODO
-	void GLGraphics::ReleaseVertexShader(IVertexShader** shader)
+	void GLGraphics::ReleaseShader(IShader** shader)
 	{
-
+		glDeleteProgram(((GLShader*)shader)->shader);
+		((GLShader*)shader)->shader = 0;
+		delete *shader;
+		*shader = nullptr;
 	}
 
-	//TODO
-	IFragmentShader* GLGraphics::CreateFragmentShader(const std::string &file)
+	void GLGraphics::SetInputLayout(IInputLayout* layout)
 	{
-		return nullptr;
-	}
+		//Gets the opengl type from the format
+		auto GetGLType = [](InputFormat ie) -> uint
+		{
+			switch (ie)
+			{
+				case LilEngie::FLOAT_R32G32B32A32:
+					return GL_FLOAT;
+					break;
+				case LilEngie::FLOAT_R32G32B32:
+					return GL_FLOAT;
+					break;
+				case LilEngie::FLOAT_R32G32:
+					return GL_FLOAT;
+					break;
+				case LilEngie::FLOAT_R32:
+					return GL_FLOAT;
+					break;
+				case LilEngie::UINT_R32:
+					return GL_UNSIGNED_INT;
+					break;
+				default:
+					return 0;
+					break;
+			}
+		};
 
-	//TODO
-	void GLGraphics::SetFragmentShader(IFragmentShader* shader)
-	{
+		//Unnecessary conversion for simplicity
+		GLInputLayout* l = (GLInputLayout*)layout;
 
-	}
-
-	//TODO
-	void GLGraphics::ReleaseFragmentShader(IFragmentShader** shader)
-	{
-
-	}
-
-	//TODO
-	void GLGraphics::SetInputLayout(IInputLayout* shader)
-	{
-
+		//Set each attrib
+		for (int i = 0; i < l->size; i++)
+		{
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i, l->elements[i].GetSize(), GetGLType(l->elements[i].format), false, 0, 0);
+		}
 	}
 
 	void GLGraphics::ReleaseInputLayout(IInputLayout** layout)
 	{
-		delete[] ((GLInputLayout*)layout)->elements;
-		((GLInputLayout*)layout)->elements = nullptr;
+		delete[] ((GLInputLayout*)*layout)->elements;
+		((GLInputLayout*)*layout)->elements = nullptr;
 		delete *layout;
 		*layout = nullptr;
 	}
@@ -173,7 +200,7 @@ namespace LilEngie
 	//TODO
 	void GLGraphics::ReleaseVertexBuffer(IVertexBuffer** vBuffer)
 	{
-		
+
 	}
 
 	//TODO

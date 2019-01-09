@@ -170,6 +170,9 @@
     <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLHandles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Platform\Graphics\InputLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

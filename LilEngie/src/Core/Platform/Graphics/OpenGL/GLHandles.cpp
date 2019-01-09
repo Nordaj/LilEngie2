@@ -5,21 +5,12 @@
 
 namespace LilEngie
 {
-	GLVertexShader::~GLVertexShader()
+	GLShader::~GLShader()
 	{
 		if (shader == 0)
 			return;
 
-		glDeleteShader(shader);
-		shader = 0;
-	}
-
-	GLFragmentShader::~GLFragmentShader()
-	{
-		if (shader == 0)
-			return;
-
-		glDeleteShader(shader);
+		glDeleteProgram(shader);
 		shader = 0;
 	}
 

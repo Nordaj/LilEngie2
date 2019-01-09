@@ -26,6 +26,9 @@ namespace LilEngie
 		std::string name;
 		InputFormat format;
 		unsigned int offset;
+
+	public:
+		uint GetSize();
 	};
 
 	class LIL_API InputLayoutData

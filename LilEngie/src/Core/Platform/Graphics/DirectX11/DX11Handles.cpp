@@ -5,22 +5,19 @@
 
 namespace LilEngie
 {
-	DX11VertexShader::~DX11VertexShader()
+	DX11Shader::~DX11Shader()
 	{
-		if (shader == nullptr)
-			return;
+		if (vertShader != nullptr)
+		{
+			vertShader->Release();
+			vertShader = nullptr;
+		}
 
-		shader->Release();
-		shader = nullptr;
-	}
-
-	DX11FragmentShader::~DX11FragmentShader()
-	{
-		if (shader == nullptr)
-			return;
-
-		shader->Release();
-		shader = nullptr;
+		if (fragShader != nullptr)
+		{
+			fragShader->Release();
+			fragShader = nullptr;
+		}
 	}
 
 	DX11InputLayout::~DX11InputLayout()

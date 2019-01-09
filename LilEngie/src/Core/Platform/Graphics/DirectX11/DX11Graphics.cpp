@@ -125,97 +125,87 @@ namespace LilEngie
 		ctx->deviceContext->RSSetViewports(1, &viewport);
 	}
 
-	IVertexShader* DX11Graphics::CreateVertexShader(const std::string &file)
+	IShader* DX11Graphics::CreateShader(const std::string &vert, const std::string &frag)
 	{
-		return CreateVertexShader(file, nullptr, nullptr, 0);
+		return CreateShader(vert, frag, nullptr, nullptr, 0);
 	}
 
-	IVertexShader* DX11Graphics::CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements)
+	IShader* DX11Graphics::CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements)
 	{
 		HRESULT hr = S_OK;
+		DX11Shader* shader = new DX11Shader();
 
-		//Convert string to wstring
-		size_t converted;
-		wchar_t* wFile = new wchar_t[file.size() + 1];
-		mbstowcs_s(&converted, wFile, file.size() + 1, file.c_str(), file.size());
-
-		//Compile shader into shader blob
-		ID3DBlob* shaderBlob;
-		hr = CompileShader(wFile, &shaderBlob, "vs_5_0");
-		delete wFile;
-		if (hr != S_OK)
-			return nullptr;
-
-		//Create input layout
-		if (layout != nullptr)
-			*layout = CreateLayout(shaderBlob, elements, numElements);
-
-		//Create shader
-		DX11VertexShader* shader = new DX11VertexShader();
-		hr = ctx->device->CreateVertexShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->shader);
-		if (hr != S_OK)
+		//Vertex
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create vertex shader.");
+			//Convert string to wstring
+			size_t converted;
+			wchar_t* wFile = new wchar_t[vert.size() + 1];
+			mbstowcs_s(&converted, wFile, vert.size() + 1, vert.c_str(), vert.size());
+
+			//Compile shader into shader blob
+			ID3DBlob* shaderBlob;
+			hr = CompileShader(wFile, &shaderBlob, "vs_5_0");
+			delete wFile;
+			if (hr != S_OK)
+				return nullptr;
+
+			//Create input layout
+			if (layout != nullptr)
+				*layout = CreateLayout(shaderBlob, elements, numElements);
+
+			//Create shader
+			hr = ctx->device->CreateVertexShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->vertShader);
+			if (hr != S_OK)
+			{
+				LIL(Log)->Print(Verbosity::Error, "Could not create vertex shader.");
+				shaderBlob->Release();
+				return nullptr;
+			}
 			shaderBlob->Release();
-			return nullptr;
 		}
 
-		shaderBlob->Release();
+		//Fragment
+		{
+			//Convert string to wstring
+			size_t converted;
+			wchar_t* wFile = new wchar_t[frag.size() + 1];
+			mbstowcs_s(&converted, wFile, frag.size() + 1, frag.c_str(), frag.size());
+
+			//Compile shader into shader blob
+			ID3DBlob* shaderBlob;
+			hr = CompileShader(wFile, &shaderBlob, "ps_5_0");
+			delete wFile;
+			if (hr != S_OK)
+				return nullptr;
+
+			//Create shader
+			hr = ctx->device->CreatePixelShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->fragShader);
+			if (hr != S_OK)
+			{
+				LIL(Log)->Print(Verbosity::Error, "Could not create fragment shader.");
+				shaderBlob->Release();
+				return nullptr;
+			}
+			shaderBlob->Release();
+		}
+
 		return shader;
 	}
 
-	void DX11Graphics::SetVertexShader(IVertexShader* shader)
+	void DX11Graphics::SetShader(IShader* shader)
 	{
-		ctx->deviceContext->VSSetShader(((DX11VertexShader*)shader)->shader, NULL, 0);
+		ctx->deviceContext->VSSetShader(((DX11Shader*)shader)->vertShader, NULL, 0);
+		ctx->deviceContext->PSSetShader(((DX11Shader*)shader)->fragShader, NULL, 0);
 	}
 
-	void DX11Graphics::ReleaseVertexShader(IVertexShader** shader)
+	void DX11Graphics::ReleaseShader(IShader** shader)
 	{
-		((DX11VertexShader*)(*shader))->shader->Release();
-		((DX11VertexShader*)(*shader))->shader = nullptr;
-		delete *shader;
-		*shader = nullptr;
-	}
+		((DX11Shader*)(*shader))->vertShader->Release();
+		((DX11Shader*)(*shader))->vertShader = nullptr;
 
-	IFragmentShader* DX11Graphics::CreateFragmentShader(const std::string &file)
-	{
-		HRESULT hr = S_OK;
+		((DX11Shader*)(*shader))->fragShader->Release();
+		((DX11Shader*)(*shader))->fragShader = nullptr;
 
-		//Convert string to wstring
-		size_t converted;
-		wchar_t* wFile = new wchar_t[file.size() + 1];
-		mbstowcs_s(&converted, wFile, file.size() + 1, file.c_str(), file.size());
-
-		//Compile shader into shader blob
-		ID3DBlob* shaderBlob;
-		hr = CompileShader(wFile, &shaderBlob, "ps_5_0");
-		delete wFile;
-		if (hr != S_OK)
-			return nullptr;
-
-		//Create shader
-		DX11FragmentShader* shader = new DX11FragmentShader();
-		hr = ctx->device->CreatePixelShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->shader);
-		if (hr != S_OK)
-		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create fragment shader.");
-			shaderBlob->Release();
-			return nullptr;
-		}
-
-		shaderBlob->Release();
-		return shader;
-	}
-
-	void DX11Graphics::SetFragmentShader(IFragmentShader* shader)
-	{
-		ctx->deviceContext->PSSetShader(((DX11FragmentShader*)shader)->shader, NULL, 0);
-	}
-
-	void DX11Graphics::ReleaseFragmentShader(IFragmentShader** shader)
-	{
-		((DX11FragmentShader*)(*shader))->shader->Release();
-		((DX11FragmentShader*)(*shader))->shader = nullptr;
 		delete *shader;
 		*shader = nullptr;
 	}
