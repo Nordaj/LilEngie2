@@ -34,7 +34,7 @@ namespace LilEngie
 			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0)
 		};
 
-		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS.hlsl", "LilEngie/res/Shaders/UnlitFS.hlsl", &layout, elements, 1);
+		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 1);
 
 		//Model creation
 		float verts[] = {
@@ -48,11 +48,11 @@ namespace LilEngie
 		iBuffer = gfx->CreateIndexBuffer(inds, sizeof(uint) * 3);
 
 		//Draw prep
-		gfx->SetInputLayout(layout);
-		gfx->SetShader(shader);
-
 		gfx->BindVertexBuffer(vBuffer, sizeof(float) * 3);
 		gfx->BindIndexBuffer(iBuffer);
+
+		gfx->SetInputLayout(layout);
+		gfx->SetShader(shader);
 	}
 
 	void Renderer::Shutdown()

@@ -94,13 +94,26 @@ namespace LilEngie
 		if (layout != nullptr)
 			*layout = CreateLayout(elements, numElements);
 
+		//Add extension if not yet added
+		std::string vFile;
+		if (vert.substr(vert.size() - 5, 5) != ".hlsl")
+			vFile = vert + ".hlsl";
+		else
+			vFile = vert;
+
+		std::string fFile;
+		if (frag.substr(frag.size() - 5, 5) != ".hlsl")
+			fFile = frag + ".hlsl";
+		else
+			fFile = frag;
+
 		//Files to strings
 		std::stringstream vertBuf;
-		vertBuf << std::ifstream(vert).rdbuf();
+		vertBuf << std::ifstream(vFile).rdbuf();
 		std::string vertSrc = vertBuf.str();
 
 		std::stringstream fragBuf;
-		fragBuf << std::ifstream(frag).rdbuf();
+		fragBuf << std::ifstream(fFile).rdbuf();
 		std::string fragSrc = fragBuf.str();
 
 		//Setup/Compile shader
@@ -132,8 +145,8 @@ namespace LilEngie
 
 	void GLGraphics::ReleaseShader(IShader** shader)
 	{
-		glDeleteProgram(((GLShader*)shader)->shader);
-		((GLShader*)shader)->shader = 0;
+		glDeleteProgram(((GLShader*)*shader)->shader);
+		((GLShader*)*shader)->shader = 0;
 		delete *shader;
 		*shader = nullptr;
 	}
@@ -172,8 +185,9 @@ namespace LilEngie
 		//Set each attrib
 		for (int i = 0; i < l->size; i++)
 		{
-			glEnableVertexAttribArray(i);
-			glVertexAttribPointer(i, l->elements[i].GetSize(), GetGLType(l->elements[i].format), false, 0, 0);
+			glEnableVertexAttribArray(i); 
+			glVertexAttribPointer(i, l->elements[i].GetCount(), GetGLType(l->elements[i].format), false, 0, (void*)l->elements[i].offset);
+			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
 		}
 	}
 
@@ -185,46 +199,53 @@ namespace LilEngie
 		*layout = nullptr;
 	}
 
-	//TODO
 	IVertexBuffer* GLGraphics::CreateVertexBuffer(float* verts, uint size)
 	{
-		return nullptr;
+		GLVertexBuffer* vbo = new GLVertexBuffer();
+		glGenBuffers(1, &(vbo->buffer));
+		glBindBuffer(GL_ARRAY_BUFFER, vbo->buffer);
+		glBufferData(GL_ARRAY_BUFFER, size, verts, GL_STATIC_DRAW);
+		return vbo;
 	}
 
-	//TODO
 	void GLGraphics::BindVertexBuffer(IVertexBuffer* vBuffer, uint stride)
 	{
-		
+		glBindBuffer(GL_ARRAY_BUFFER, ((GLVertexBuffer*)vBuffer)->buffer);
 	}
 
-	//TODO
 	void GLGraphics::ReleaseVertexBuffer(IVertexBuffer** vBuffer)
 	{
-
+		glDeleteBuffers(1, &((GLVertexBuffer*)*vBuffer)->buffer);
+		((GLVertexBuffer*)*vBuffer)->buffer = 0;
+		delete *vBuffer;
+		*vBuffer = nullptr;
 	}
 
-	//TODO
 	IIndexBuffer* GLGraphics::CreateIndexBuffer(uint* inds, uint size)
 	{
-		return nullptr;
+		GLIndexBuffer* ibo = new GLIndexBuffer();
+		glGenBuffers(1, &(ibo->buffer));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo->buffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, inds, GL_STATIC_DRAW);
+		return ibo;
 	}
 
-	//TODO
 	void GLGraphics::BindIndexBuffer(IIndexBuffer* iBuffer)
 	{
-		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLIndexBuffer*)iBuffer)->buffer);
 	}
 
-	//TODO
 	void GLGraphics::ReleaseIndexBuffer(IIndexBuffer** iBuffer)
 	{
-		
+		glDeleteBuffers(1, &((GLIndexBuffer*)*iBuffer)->buffer);
+		((GLIndexBuffer*)*iBuffer)->buffer = 0;
+		delete *iBuffer;
+		*iBuffer = nullptr;
 	}
 
-	//TODO
 	void GLGraphics::Draw(uint indexCount)
 	{
-		
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 	}
 
 	void GLGraphics::Shutdown()

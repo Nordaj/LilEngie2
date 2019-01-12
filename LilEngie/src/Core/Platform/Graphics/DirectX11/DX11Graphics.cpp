@@ -1,3 +1,4 @@
+#include <string>
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <Windows.h>
@@ -137,10 +138,17 @@ namespace LilEngie
 
 		//Vertex
 		{
+			//Add extension if not yet added
+			std::string vFile;
+			if (vert.substr(vert.size() - 5, 5) != ".hlsl")
+				vFile = vert + ".hlsl";
+			else
+				vFile = vert;
+
 			//Convert string to wstring
 			size_t converted;
-			wchar_t* wFile = new wchar_t[vert.size() + 1];
-			mbstowcs_s(&converted, wFile, vert.size() + 1, vert.c_str(), vert.size());
+			wchar_t* wFile = new wchar_t[vFile.size() + 1];
+			mbstowcs_s(&converted, wFile, vFile.size() + 1, vFile.c_str(), vFile.size());
 
 			//Compile shader into shader blob
 			ID3DBlob* shaderBlob;
@@ -166,10 +174,17 @@ namespace LilEngie
 
 		//Fragment
 		{
+			//Add extension if not yet added
+			std::string fFile;
+			if (frag.substr(frag.size() - 5, 5) != ".hlsl")
+				fFile = frag + ".hlsl";
+			else
+				fFile = frag;
+
 			//Convert string to wstring
 			size_t converted;
-			wchar_t* wFile = new wchar_t[frag.size() + 1];
-			mbstowcs_s(&converted, wFile, frag.size() + 1, frag.c_str(), frag.size());
+			wchar_t* wFile = new wchar_t[fFile.size() + 1];
+			mbstowcs_s(&converted, wFile, fFile.size() + 1, fFile.c_str(), fFile.size());
 
 			//Compile shader into shader blob
 			ID3DBlob* shaderBlob;

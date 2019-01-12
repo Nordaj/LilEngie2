@@ -177,6 +177,8 @@
   <ItemGroup>
     <None Include="cpp.hint" />
     <None Include="src\Core\Debug\Log.ipp" />
+    <None Include="res\Shaders\UnlitVS.glsl" />
+    <None Include="res\Shaders\UnlitFS.glsl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\UnlitVS.hlsl" />

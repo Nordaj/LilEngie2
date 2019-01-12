@@ -29,6 +29,7 @@ namespace LilEngie
 
 	public:
 		uint GetSize();
+		uint GetCount();
 	};
 
 	class LIL_API InputLayoutData
