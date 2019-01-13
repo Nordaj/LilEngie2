@@ -152,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -166,7 +166,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -182,7 +182,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -200,7 +200,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -220,7 +220,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -238,7 +238,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -252,7 +252,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Lib>
@@ -263,7 +263,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Lib>

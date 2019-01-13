@@ -30,25 +30,27 @@ namespace LilEngie
 		Subscribe(EventType::WindowResize);
 
 		//Shader and layout creation
-		InputElement elements[1] = {
-			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0)
+		InputElement elements[2] = {
+			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0),
+			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32, sizeof(float) * 3)
 		};
 
-		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 1);
+		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 2);
 
 		//Model creation
 		float verts[] = {
-			-0.5f, -0.5f, 0,
-			0.0f,  0.5f, 0,
-			0.5f, -0.5f, 0
+			//POSITION			//TEXCOORD
+			-0.5f, -0.5f, 0,	0.0f, 1.0f, //Bottom-Left
+			 0.0f,  0.5f, 0,	0.5f, 0.0f, //Top
+			 0.5f, -0.5f, 0,	1.0f, 1.0f  //Bottom-Right
 		};
 		uint inds[] = { 0, 1, 2 };
 
-		vBuffer = gfx->CreateVertexBuffer(verts, sizeof(float) * 9);
+		vBuffer = gfx->CreateVertexBuffer(verts, sizeof(float) * 15);
 		iBuffer = gfx->CreateIndexBuffer(inds, sizeof(uint) * 3);
 
 		//Draw prep
-		gfx->BindVertexBuffer(vBuffer, sizeof(float) * 3);
+		gfx->BindVertexBuffer(vBuffer, sizeof(float) * 5);
 		gfx->BindIndexBuffer(iBuffer);
 
 		gfx->SetInputLayout(layout);

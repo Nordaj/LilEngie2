@@ -179,15 +179,19 @@ namespace LilEngie
 			}
 		};
 
-		//Unnecessary conversion for simplicity
+		//Unnecessary but easier to read like this
 		GLInputLayout* l = (GLInputLayout*)layout;
+
+		//Get stride
+		uint stride = 0;
+		for (int i = 0; i < l->size; i++)
+			stride += l->elements[i].GetSize();
 
 		//Set each attrib
 		for (int i = 0; i < l->size; i++)
 		{
-			glEnableVertexAttribArray(i); 
-			glVertexAttribPointer(i, l->elements[i].GetCount(), GetGLType(l->elements[i].format), false, 0, (void*)l->elements[i].offset);
-			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i, l->elements[i].GetCount(), GetGLType(l->elements[i].format), false, stride, (void*)l->elements[i].offset);
 		}
 	}
 

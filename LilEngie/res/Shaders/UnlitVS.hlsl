@@ -1,4 +1,19 @@
-float4 main( float4 pos : POSITION ) : SV_POSITION
+struct VSInput
 {
-	return pos;
+	float4 position : POSITION;
+	float2 texCoord : TEXCOORD;
+};
+
+struct VSOutput
+{
+	float4 position : SV_POSITION;
+	float2 texCoord : TEXCOORD;
+};
+
+VSOutput main(in VSInput i)
+{
+	VSOutput o;
+	o.position = i.position;
+	o.texCoord = i.texCoord;
+	return o;
 }
