@@ -19,6 +19,7 @@ namespace LilEngie
 		//Connect global services to service locator
 		serviceLocator.eventManager = &eventManager;
 		serviceLocator.log = &log;
+		log.verbosity = Verbosity::Verbose; //Remove eventually
 
 		//Initialization
 		application.Init();

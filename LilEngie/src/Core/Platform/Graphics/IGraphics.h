@@ -15,6 +15,12 @@ namespace LilEngie
 		OpenGL
 	};
 
+	enum ShaderType 
+	{ 
+		Fragment, 
+		Vertex 
+	};
+
 	class LIL_API IGraphics
 	{
 	private:
@@ -33,19 +39,10 @@ namespace LilEngie
 		virtual void SetContextCurrent() = 0;
 
 		//Shaders and input layout
-		//virtual IVertexShader* CreateVertexShader(const std::string &file) = 0;
-		//virtual IVertexShader* CreateVertexShader(const std::string &file, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
-		//virtual void SetVertexShader(IVertexShader* shader) = 0;
-		//virtual void ReleaseVertexShader(IVertexShader** shader) = 0;
-		//virtual IFragmentShader* CreateFragmentShader(const std::string &file) = 0;
-		//virtual void SetFragmentShader(IFragmentShader* shader) = 0;
-		//virtual void ReleaseFragmentShader(IFragmentShader** shader) = 0;
-
 		virtual IShader* CreateShader(const std::string &vert, const std::string &frag) = 0;
 		virtual IShader* CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
 		virtual void SetShader(IShader* shader) = 0;
 		virtual void ReleaseShader(IShader** shader) = 0;
-
 		virtual void SetInputLayout(IInputLayout* layout) = 0;
 		virtual void ReleaseInputLayout(IInputLayout** layout) = 0;
 
@@ -57,6 +54,14 @@ namespace LilEngie
 		virtual void BindIndexBuffer(IIndexBuffer* iBuffer) = 0;
 		virtual void ReleaseIndexBuffer(IIndexBuffer** iBuffer) = 0;
 		virtual void Draw(uint indexCount) = 0;
+
+		//Constant buffers
+		virtual ICBuffer* CreateCBuffer(uint size, void* initData = nullptr) = 0;
+		virtual void* GetCBufferPtr(ICBuffer* cBuffer) = 0;
+		virtual uint GetCBufferSize(ICBuffer* cBuffer) = 0;
+		virtual void UpdateCBuffer(ICBuffer* cBuffer) = 0;
+		virtual void BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot) = 0;
+		virtual void ReleaseCBuffer(ICBuffer** cBuffer) = 0;
 
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = DirectX11);
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);

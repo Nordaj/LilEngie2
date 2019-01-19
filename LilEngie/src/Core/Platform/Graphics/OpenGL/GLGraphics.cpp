@@ -96,14 +96,14 @@ namespace LilEngie
 
 		//Add extension if not yet added
 		std::string vFile;
-		if (vert.substr(vert.size() - 5, 5) != ".hlsl")
-			vFile = vert + ".hlsl";
+		if (vert.substr(vert.size() - 5, 5) != ".glsl")
+			vFile = vert + ".glsl";
 		else
 			vFile = vert;
 
 		std::string fFile;
-		if (frag.substr(frag.size() - 5, 5) != ".hlsl")
-			fFile = frag + ".hlsl";
+		if (frag.substr(frag.size() - 5, 5) != ".glsl")
+			fFile = frag + ".glsl";
 		else
 			fFile = frag;
 
@@ -250,6 +250,61 @@ namespace LilEngie
 	void GLGraphics::Draw(uint indexCount)
 	{
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+	}
+
+	ICBuffer* GLGraphics::CreateCBuffer(uint size, void* initData)
+	{
+		//Setup cbuffer
+		GLCBuffer* cBuffer = new GLCBuffer();
+		cBuffer->data = new char[size];
+		cBuffer->size = size;
+
+		//Create buffer
+		glGenBuffers(1, &cBuffer->buffer);
+		glBindBuffer(GL_UNIFORM_BUFFER, cBuffer->buffer);
+
+		//Initialize the data if desired
+		if (initData != nullptr)
+		{
+			glBufferData(GL_UNIFORM_BUFFER, size, initData, GL_STATIC_DRAW);
+			memcpy(cBuffer->data, initData, size);
+		}
+
+		return cBuffer;
+	}
+
+	void* GLGraphics::GetCBufferPtr(ICBuffer* cBuffer)
+	{
+		return ((GLCBuffer*)cBuffer)->data;
+	}
+
+	uint GLGraphics::GetCBufferSize(ICBuffer* cBuffer)
+	{
+		return ((GLCBuffer*)cBuffer)->size;
+	}
+
+	void GLGraphics::UpdateCBuffer(ICBuffer* cBuffer)
+	{
+		glBindBuffer(GL_UNIFORM_BUFFER, ((GLCBuffer*)cBuffer)->buffer);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, ((GLCBuffer*)cBuffer)->size, ((GLCBuffer*)cBuffer)->data);
+	}
+
+	void GLGraphics::BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot)
+	{
+		glBindBufferBase(GL_UNIFORM_BUFFER, slot, ((GLCBuffer*)cBuffer)->buffer);
+	}
+
+	void GLGraphics::ReleaseCBuffer(ICBuffer** cBuffer)
+	{
+		//Free the data
+		delete[]((GLCBuffer*)*cBuffer)->data;
+		((GLCBuffer*)*cBuffer)->data = nullptr;
+
+		glDeleteBuffers(1, &((GLCBuffer*)*cBuffer)->buffer);
+		((GLCBuffer*)*cBuffer)->buffer = 0;
+
+		delete *cBuffer;
+		*cBuffer = nullptr;
 	}
 
 	void GLGraphics::Shutdown()

@@ -50,4 +50,17 @@ namespace LilEngie
 	public:
 		~GLIndexBuffer();
 	};
+
+	class GLCBuffer : public ICBuffer
+	{
+		friend class GLGraphics;
+
+	private:
+		uint buffer;
+		void* data;
+		uint size;
+
+	public:
+		~GLCBuffer();
+	};
 }

@@ -1,3 +1,8 @@
+cbuffer Color : register(b0)
+{
+	float4 color;
+}
+
 struct VSOutput
 {
 	float4 position : POSITION;
@@ -6,5 +11,5 @@ struct VSOutput
 
 float4 main(in VSOutput i) : SV_TARGET
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+	return color;
 }

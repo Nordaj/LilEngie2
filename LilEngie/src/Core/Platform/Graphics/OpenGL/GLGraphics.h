@@ -44,6 +44,14 @@ namespace LilEngie
 		void ReleaseIndexBuffer(IIndexBuffer** iBuffer) override;
 		void Draw(uint indexCount) override;
 
+		//Constant buffers
+		ICBuffer* CreateCBuffer(uint size, void* initData = nullptr) override;
+		void* GetCBufferPtr(ICBuffer* cBuffer) override;
+		uint GetCBufferSize(ICBuffer* cBuffer) override;
+		void UpdateCBuffer(ICBuffer* cBuffer) override;
+		void BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot) override;
+		void ReleaseCBuffer(ICBuffer** cBuffer) override;
+
 	private:
 		void Shutdown() override;
 		IInputLayout* CreateLayout(InputElement* elements, uint numElements);

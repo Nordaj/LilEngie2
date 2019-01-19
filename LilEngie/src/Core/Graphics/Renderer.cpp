@@ -9,6 +9,7 @@ namespace LilEngie
 	IShader* shader;
 	IVertexBuffer* vBuffer;
 	IIndexBuffer* iBuffer;
+	ICBuffer* colorBuffer;
 
 	Renderer::Renderer()
 	{
@@ -23,6 +24,20 @@ namespace LilEngie
 
 	void Renderer::Init(const WinProp &windowProperties, GraphicsAPI api)
 	{
+		//Log which api used
+		switch (api)
+		{
+			case GraphicsAPI::DirectX11:
+				LIL(Log)->Print(Verbosity::Verbose, "Initializing DirectX11");
+				break;
+			case GraphicsAPI::OpenGL:
+				LIL(Log)->Print(Verbosity::Verbose, "Initializing OpenGL");
+				break;
+			default:
+				break;
+		}
+
+		//Initialize graphics
 		gfx = IGraphics::CreateGraphicsContext(api);
 		gfx->Init(windowProperties);
 		gfx->SetClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
@@ -36,6 +51,13 @@ namespace LilEngie
 		};
 
 		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 2);
+
+		//Constant buffer creation
+		colorBuffer = gfx->CreateCBuffer(sizeof(float) * 4);
+		void* c = gfx->GetCBufferPtr(colorBuffer);
+		float myColor[4] = { 0.5f, 1, 1, 1 };
+		memcpy(c, &myColor, sizeof(float) * 4);
+		gfx->UpdateCBuffer(colorBuffer);
 
 		//Model creation
 		float verts[] = {
@@ -55,6 +77,8 @@ namespace LilEngie
 
 		gfx->SetInputLayout(layout);
 		gfx->SetShader(shader);
+
+		gfx->BindCBuffer(colorBuffer, ShaderType::Fragment, 0);
 	}
 
 	void Renderer::Shutdown()
@@ -65,6 +89,8 @@ namespace LilEngie
 
 		gfx->ReleaseVertexBuffer(&vBuffer);
 		gfx->ReleaseIndexBuffer(&iBuffer);
+
+		gfx->ReleaseCBuffer(&colorBuffer);
 
 		IGraphics::ShutdownGraphicsContext(&gfx);
 	}

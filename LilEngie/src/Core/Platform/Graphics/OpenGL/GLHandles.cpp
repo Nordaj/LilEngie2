@@ -36,4 +36,19 @@ namespace LilEngie
 		glDeleteBuffers(1, &buffer);
 		buffer = 0;
 	}
+
+	GLCBuffer::~GLCBuffer()
+	{
+		if (buffer != 0)
+		{
+			glDeleteBuffers(1, &buffer);
+			buffer = 0;
+		}
+
+		if (data != nullptr)
+		{
+			delete[] data;
+			data = nullptr;
+		}
+	}
 }

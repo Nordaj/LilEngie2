@@ -55,4 +55,17 @@ namespace LilEngie
 	public:
 		~DX11IndexBuffer();
 	};
+
+	class DX11CBuffer : public ICBuffer
+	{
+		friend class DX11Graphics;
+
+	private:
+		ID3D11Buffer* buffer;
+		void* data;
+		uint size;
+
+	public:
+		~DX11CBuffer();
+	};
 }

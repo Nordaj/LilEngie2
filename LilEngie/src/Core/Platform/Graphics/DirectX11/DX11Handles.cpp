@@ -46,4 +46,19 @@ namespace LilEngie
 		buffer->Release();
 		buffer = nullptr;
 	}
+
+	DX11CBuffer::~DX11CBuffer()
+	{
+		if (buffer != nullptr)
+		{
+			buffer->Release();
+			buffer = nullptr;
+		}
+
+		if (data != nullptr)
+		{
+			delete[] data;
+			data = nullptr;
+		}
+	}
 }

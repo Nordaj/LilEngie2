@@ -27,4 +27,10 @@ namespace LilEngie
 	public:
 		virtual ~IIndexBuffer() {}
 	};
+
+	class LIL_API ICBuffer
+	{
+	public:
+		virtual ~ICBuffer() {}
+	};
 }

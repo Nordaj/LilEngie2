@@ -330,6 +330,88 @@ namespace LilEngie
 		ctx->deviceContext->DrawIndexed(indexCount, 0, 0);
 	}
 
+	//Currently inilializes the buffer with useless memory for no reason. fix it
+	ICBuffer* DX11Graphics::CreateCBuffer(uint size, void* initData)
+	{
+		HRESULT hr = S_OK;
+
+		//Setup cbuffer
+		DX11CBuffer* cBuffer = new DX11CBuffer();
+		cBuffer->data = new char[size];
+		cBuffer->size = size;
+		if (initData != nullptr)
+			memcpy(cBuffer->data, initData, size);
+
+		//Create buffer
+		D3D11_BUFFER_DESC bd = {};
+		bd.ByteWidth = size;
+		bd.Usage = D3D11_USAGE_DYNAMIC;
+		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bd.MiscFlags = NULL;
+		bd.StructureByteStride = NULL;
+
+		D3D11_SUBRESOURCE_DATA sd;
+		sd.pSysMem = cBuffer->data;
+		sd.SysMemPitch = 0;
+		sd.SysMemSlicePitch = 0;
+
+		hr = ctx->device->CreateBuffer(&bd, &sd, &cBuffer->buffer);
+		if (FAILED(hr))
+		{
+			LIL(Log)->Print(Verbosity::Error, "Could not create constant buffer.");
+			return nullptr;
+		}
+
+		return cBuffer;
+	}
+
+	void* DX11Graphics::GetCBufferPtr(ICBuffer* cBuffer)
+	{
+		return ((DX11CBuffer*)cBuffer)->data;
+	}
+
+	uint DX11Graphics::GetCBufferSize(ICBuffer* cBuffer)
+	{
+		return ((DX11CBuffer*)cBuffer)->size;
+	}
+
+	void DX11Graphics::UpdateCBuffer(ICBuffer* cBuffer)
+	{
+		D3D11_MAPPED_SUBRESOURCE msr = {};
+		ctx->deviceContext->Map(((DX11CBuffer*)cBuffer)->buffer, 0, D3D11_MAP_WRITE_DISCARD, NULL, &msr);
+		memcpy(msr.pData, ((DX11CBuffer*)cBuffer)->data, ((DX11CBuffer*)cBuffer)->size);
+		ctx->deviceContext->Unmap(((DX11CBuffer*)cBuffer)->buffer, 0);
+	}
+
+	void DX11Graphics::BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot)
+	{
+		switch (type)
+		{
+			case LilEngie::Fragment:
+				ctx->deviceContext->PSSetConstantBuffers(slot, 1, &((DX11CBuffer*)cBuffer)->buffer);
+				break;
+			case LilEngie::Vertex:
+				ctx->deviceContext->VSSetConstantBuffers(slot, 1, &((DX11CBuffer*)cBuffer)->buffer);
+				break;
+			default:
+				break;
+		}
+	}
+
+	void DX11Graphics::ReleaseCBuffer(ICBuffer** cBuffer)
+	{
+		//Free the data
+		delete[] ((DX11CBuffer*)*cBuffer)->data;
+		((DX11CBuffer*)*cBuffer)->data = nullptr;
+
+		((DX11CBuffer*)*cBuffer)->buffer->Release();
+		((DX11CBuffer*)*cBuffer)->buffer = nullptr;
+
+		delete *cBuffer;
+		*cBuffer = nullptr;
+	}
+
 	void DX11Graphics::Shutdown()
 	{
 		ctx->device->Release();
