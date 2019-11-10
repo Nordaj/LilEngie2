@@ -83,6 +83,9 @@ namespace LilEngie
 		viewport.Height = (float)windowProperties.width;
 		viewport.MaxDepth = 1;
 		ctx->deviceContext->RSSetViewports(1, &viewport);
+
+		//TESTING
+		ctx->renderTargetView->Release();
 	}
 
 	void DX11Graphics::SetClearColor(float r, float g, float b, float a)

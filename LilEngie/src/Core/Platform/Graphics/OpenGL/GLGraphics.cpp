@@ -256,19 +256,15 @@ namespace LilEngie
 	{
 		//Setup cbuffer
 		GLCBuffer* cBuffer = new GLCBuffer();
-		cBuffer->data = new char[size];
+		cBuffer->data = new char[size] { 0 };
 		cBuffer->size = size;
+		if (initData != nullptr)
+			memcpy(cBuffer->data, initData, size);
 
-		//Create buffer
+		//Create and initialize CBuffer
 		glGenBuffers(1, &cBuffer->buffer);
 		glBindBuffer(GL_UNIFORM_BUFFER, cBuffer->buffer);
-
-		//Initialize the data if desired
-		if (initData != nullptr)
-		{
-			glBufferData(GL_UNIFORM_BUFFER, size, initData, GL_STATIC_DRAW);
-			memcpy(cBuffer->data, initData, size);
-		}
+		glBufferData(GL_UNIFORM_BUFFER, size, cBuffer->data, GL_STATIC_DRAW);
 
 		return cBuffer;
 	}
