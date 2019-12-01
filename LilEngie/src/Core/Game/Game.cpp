@@ -16,14 +16,16 @@ namespace LilEngie
 		//Setup events
 		closeEvent = Event(EventType::GameClose);
 
-		//Connect global services to service locator
-		serviceLocator.eventManager = &eventManager;
-		serviceLocator.log = &log;
-		log.verbosity = Verbosity::Verbose; //Remove eventually
+		//Logging
+		Log::core = &logger;
+		logger.verbosity = Verbosity::Verbose; //Remove eventually
+
+		//Event manager
+		EventManager::core = &eventManager;
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -39,7 +41,7 @@ namespace LilEngie
 		}
 
 		//Shutdown
-		SERVICES_GET(EventManager)->Dispatch(closeEvent);
+		eventManager.Dispatch(closeEvent);
 		renderer.Shutdown();
 	}
 

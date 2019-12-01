@@ -11,7 +11,6 @@
 #include <Core/Platform/Graphics/InputLayout.h>
 #include <Core/Platform/Graphics/Handles.h>
 #include <Core/Debug/Log.h>
-#include <Core/Game/ServiceLocator.h>
 #include "GLHandles.h"
 #include "GLGraphics.h"
 
@@ -29,7 +28,7 @@ namespace LilEngie
 	{ 
 		if (ctx != nullptr)
 		{
-			ServiceLocator::Log()->Print(Verbosity::Warning, "OpenGL context destroyed incorrectly. Please use IGraphics::ReleaseGraphicsContext().");
+			LIL_WARN("OpenGL context destroyed incorrectly. Please use IGraphics::ReleaseGraphicsContext().");
 			Shutdown();
 		}
 	}
@@ -47,7 +46,7 @@ namespace LilEngie
 		//Initialize glew
 		if (glewInit() != GLEW_OK)
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not initialize OpenGL.");
+			LIL_ERROR("Could not initialize OpenGL.");
 			return;
 		}
 	}
@@ -321,7 +320,8 @@ namespace LilEngie
 		//Copy element data
 		layout->size = numElements;
 		layout->elements = new InputElement[numElements];
-		memcpy(layout->elements, elements, numElements * sizeof(InputElement));
+		for (int i = 0; i < numElements; i++)
+			layout->elements[i] = elements[i];
 
 		//Return
 		return layout;
@@ -351,7 +351,7 @@ namespace LilEngie
 			glGetShaderInfoLog(shader, len, &len, msg);
 
 			//Output and clean
-			LIL(Log)->Print(Verbosity::Error, "OpenGL shader compilation error.", msg);
+			LIL_ERROR("OpenGL shader compilation error.", msg);
 			delete[] msg;
 		}
 

@@ -9,6 +9,9 @@ namespace LilEngie
 {
 	class LIL_API EventManager
 	{
+	public:
+		static EventManager* core;
+
 	private:
 		std::vector<IEventListener*> listeners[EventType::EventTypeCount];
 

@@ -1,6 +1,6 @@
 #include <Core/Debug/Log.h>
-#include <Core/Game/ServiceLocator.h>
 #include <Core/Platform/Graphics/IGraphics.h>
+#include <Core/Debug/Log.h>
 #include "Renderer.h"
 
 namespace LilEngie
@@ -28,10 +28,10 @@ namespace LilEngie
 		switch (api)
 		{
 			case GraphicsAPI::DirectX11:
-				LIL(Log)->Print(Verbosity::Verbose, "Initializing DirectX11");
+				LIL_LOG(Verbosity::Verbose, "Initializing DirectX11");
 				break;
 			case GraphicsAPI::OpenGL:
-				LIL(Log)->Print(Verbosity::Verbose, "Initializing OpenGL");
+				LIL_LOG(Verbosity::Verbose, "Initializing OpenGL");
 				break;
 			default:
 				break;

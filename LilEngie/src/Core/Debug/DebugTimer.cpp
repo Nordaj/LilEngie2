@@ -1,7 +1,6 @@
 #include <chrono>
 #include <string>
 #include "Log.h"
-#include <Core/Game/ServiceLocator.h>
 #include "DebugTimer.h"
 
 using namespace std::chrono;
@@ -63,7 +62,6 @@ namespace LilEngie
 				break;
 		}
 
-		if (ServiceLocator::Log() != nullptr)
-			ServiceLocator::Log()->Print(GetElapsed(unit), u, " elapsed");
+		LIL_LOG(GetElapsed(unit), u, " elapsed");
 	}
 }

@@ -3,7 +3,7 @@ using namespace LilEngie;
 
 void Start()
 {
-	LIL(Log)->Print("Hello, welcome to Lil Engie 2.");
+	LIL_LOG("Hello, welcome to Lil Engie 2.");
 }
 
 void Update()

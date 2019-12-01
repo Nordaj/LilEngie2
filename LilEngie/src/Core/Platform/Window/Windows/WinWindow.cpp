@@ -3,7 +3,6 @@
 
 #ifdef LIL_WINDOWS
 #include <Windows.h>
-#include <Core/Game/ServiceLocator.h>
 
 namespace LilEngie
 {
@@ -89,7 +88,7 @@ namespace LilEngie
 		{
 			DestroyWindow(hwnd);
 
-			SERVICES_GET(EventManager)->Dispatch(closeEvent);
+			EventManager::core->Dispatch(closeEvent);
 		}
 
 		void SetSize(int x, int y)
@@ -147,7 +146,7 @@ namespace LilEngie
 					//This dispatches the resize event many times. Look into solving this.
 					resizeEvent.args[0].asInt = LOWORD(lParam);
 					resizeEvent.args[1].asInt = HIWORD(lParam);
-					SERVICES_GET(EventManager)->Dispatch(resizeEvent);
+					EventManager::core->Dispatch(resizeEvent);
 					break;
 				default:
 					return DefWindowProc(hwnd, msg, wParam, lParam);

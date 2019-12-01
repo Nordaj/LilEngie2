@@ -3,7 +3,6 @@
 #include <d3dcompiler.h>
 #include <Windows.h>
 #include <Core/Debug/Log.h>
-#include <Core/Game/ServiceLocator.h>
 #include <Core/Platform/Window/Window.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Platform/Graphics/InputLayout.h>
@@ -11,7 +10,7 @@
 #include "DX11Handles.h"
 #include "DX11Graphics.h"
 
-#define GFX_ERROR(x) { ServiceLocator::Log()->Print(Verbosity::Error, x); return; }
+#define GFX_ERROR(x) { LIL_ERROR(x); return; }
 
 namespace LilEngie
 {
@@ -29,7 +28,7 @@ namespace LilEngie
 	{
 		if (ctx != nullptr)
 		{
-			ServiceLocator::Log()->Print(Verbosity::Warning, "Direct3D11 context destroyed incorrectly. Please use IGraphics::ReleaseGraphicsContext().");
+			LIL_WARN("Direct3D11 context destroyed incorrectly. Please use IGraphics::ReleaseGraphicsContext().");
 			Shutdown();
 		}
 	}
@@ -168,7 +167,7 @@ namespace LilEngie
 			hr = ctx->device->CreateVertexShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->vertShader);
 			if (hr != S_OK)
 			{
-				LIL(Log)->Print(Verbosity::Error, "Could not create vertex shader.");
+				LIL_ERROR("Could not create vertex shader.");
 				shaderBlob->Release();
 				return nullptr;
 			}
@@ -200,7 +199,7 @@ namespace LilEngie
 			hr = ctx->device->CreatePixelShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), NULL, &shader->fragShader);
 			if (hr != S_OK)
 			{
-				LIL(Log)->Print(Verbosity::Error, "Could not create fragment shader.");
+				LIL_ERROR("Could not create fragment shader.");
 				shaderBlob->Release();
 				return nullptr;
 			}
@@ -264,7 +263,7 @@ namespace LilEngie
 		hr = ctx->device->CreateBuffer(&bd, &sd, &buffer->buffer);
 		if (FAILED(hr))
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create vertex buffer.");
+			LIL_ERROR("Could not create vertex buffer.");
 			return nullptr;
 		}
 
@@ -308,7 +307,7 @@ namespace LilEngie
 		hr = ctx->device->CreateBuffer(&bd, &sd, &buffer->buffer);
 		if (FAILED(hr))
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create index buffer.");
+			LIL_ERROR("Could not create index buffer.");
 			return nullptr;
 		}
 
@@ -362,7 +361,7 @@ namespace LilEngie
 		hr = ctx->device->CreateBuffer(&bd, &sd, &cBuffer->buffer);
 		if (FAILED(hr))
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create constant buffer.");
+			LIL_ERROR("Could not create constant buffer.");
 			return nullptr;
 		}
 
@@ -448,11 +447,11 @@ namespace LilEngie
 			//If i have an error to give
 			if (errorBlob)
 			{
-				LIL(Log)->Print(Verbosity::Error, "Shader compilation error: \n", (char*)errorBlob->GetBufferPointer());
+				LIL_ERROR("Shader compilation error: \n", (char*)errorBlob->GetBufferPointer());
 				errorBlob->Release();
 			}
 			else
-				LIL(Log)->Print(Verbosity::Error, "Shader compilation failed. Could not recieve error message. Check the shader directory.");
+				LIL_ERROR("Shader compilation failed. Could not recieve error message. Check the shader directory.");
 
 			//If i have a shader blob
 			if (shaderBlob)
@@ -515,7 +514,7 @@ namespace LilEngie
 		hr = ctx->device->CreateInputLayout(e, numElements, ((ID3DBlob*)shdBlb)->GetBufferPointer(), ((ID3DBlob*)shdBlb)->GetBufferSize(), &layout->layout);
 		if (hr != S_OK)
 		{
-			LIL(Log)->Print(Verbosity::Error, "Could not create input layout.");
+			LIL_ERROR("Could not create input layout.");
 			delete[] e;
 			return nullptr;
 		}

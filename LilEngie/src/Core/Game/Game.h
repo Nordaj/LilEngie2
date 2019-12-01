@@ -5,7 +5,6 @@
 #include <Core/EventSystem/Events.h>
 #include <Core/Debug/Log.h>
 #include "Core/Graphics/Renderer.h"
-#include "ServiceLocator.h"
 
 namespace LilEngie
 {
@@ -13,13 +12,13 @@ namespace LilEngie
 
 	class LIL_API Game : IEventListener
 	{
-	private:
-		//Sub systems and services
-		ServiceLocator serviceLocator;
-		Application application;
+	public:
 		EventManager eventManager;
+
+	private:
+		Application application;
 		Renderer renderer;
-		Log log;
+		Log logger;
 
 		bool isRunning = true;
 		Event closeEvent;

@@ -1,6 +1,6 @@
 #include <memory>
 #include <Core/Debug/Log.h>
-#include <Core/Game/ServiceLocator.h>
+#include <Core/Debug/Log.h>
 #include "PoolAllocator.h"
 
 namespace LilEngie
@@ -9,9 +9,9 @@ namespace LilEngie
 		: size(size), nodeSize(nodeSize) 
 	{
 		if (size % nodeSize != 0)
-			LIL(Log)->Print(Verbosity::Error, "PoolAllocator size must be a mutliple of nodeSize.");
+			LIL_ERROR("PoolAllocator size must be a mutliple of nodeSize.");
 		if (nodeSize < sizeof(void*))
-			LIL(Log)->Print(Verbosity::Error, "PoolAllocator nodeSize must be larger than a pointer.");
+			LIL_ERROR("PoolAllocator nodeSize must be larger than a pointer.");
 
 		data = new char[size]();
 		firstFree = data;

@@ -3,6 +3,8 @@
 
 namespace LilEngie
 {
+	EventManager* EventManager::core = nullptr;
+
 	void EventManager::Dispatch(const Event &e) const
 	{
 		for (int i = 0; i < listeners[e.type].size(); i++)

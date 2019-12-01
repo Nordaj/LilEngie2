@@ -3,12 +3,15 @@
 
 namespace LilEngie
 {
+	Log* Log::core = nullptr;
+
 	Log::Log()
 	{
-		//Only want to log fatal errors in release
 	#ifdef LIL_RELEASE
 		verbosity = Verbosity::Fatal;
-	#endif // LIL_RELEASE
+	#else
+		verbosity = Verbosity::Log;
+	#endif //LIL_RELEASE
 	}
 
 	std::string Log::VerbosityToString(Verbosity v)

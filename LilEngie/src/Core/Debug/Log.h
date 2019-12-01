@@ -17,7 +17,9 @@ namespace LilEngie
 	class LIL_API Log
 	{
 	public:
-		Verbosity verbosity = Verbosity::Log;
+		static Log* core;
+
+		Verbosity verbosity;
 
 	public:
 		Log();
@@ -50,5 +52,10 @@ namespace LilEngie
 		std::string VerbosityToString(Verbosity v);
 	};
 }
+
+#define LIL_LOG(...) if (Log::core) Log::core->Print(__VA_ARGS__);
+#define LIL_WARN(...) if (Log::core) Log::core->Print(Verbosity::Warning, __VA_ARGS__);
+#define LIL_ERROR(...) if (Log::core) Log::core->Print(Verbosity::Error, __VA_ARGS__);
+#define LIL_FATAL(...) if (Log::core) Log::core->Print(Verbosity::Fatal, __VA_ARGS__);
 
 #include "Log.ipp"

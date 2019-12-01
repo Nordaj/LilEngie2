@@ -1,4 +1,3 @@
-#include <Core/Game/ServiceLocator.h>
 #include "EventManager.h"
 #include "Event.h"
 #include "IEventListener.h"
@@ -7,16 +6,16 @@ namespace LilEngie
 {
 	IEventListener::~IEventListener()
 	{
-		SERVICES_GET(EventManager)->RemoveListener(this);
+		EventManager::core->RemoveListener(this);
 	}
 
 	void IEventListener::Subscribe(EventType type)
 	{
-		SERVICES_GET(EventManager)->Subscribe(type, this);
+		EventManager::core->Subscribe(type, this);
 	}
 
 	void IEventListener::UnSubscribe(EventType type)
 	{
-		SERVICES_GET(EventManager)->UnSubscribe(type, this);
+		EventManager::core->UnSubscribe(type, this);
 	}
 }

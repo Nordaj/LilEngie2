@@ -151,12 +151,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;assimp-vc-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -165,12 +165,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;assimp-vc-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -181,14 +181,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;assimp-vc-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Release|Win32'">
@@ -199,7 +199,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -207,8 +207,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;assimp-vc141-mt.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -219,14 +219,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D3D11.lib;D3DCompiler.lib;glew32s.lib;opengl32.lib;assimp-vc-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Release|x64'">
@@ -237,7 +237,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -245,30 +245,30 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;assimp-vc141-mt.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;assimp-vc141-mt.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)\Dependencies\GLEW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;assimp-vc141-mt.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -287,7 +287,6 @@
     <ClInclude Include="src\Core\EventSystem\Events.h" />
     <ClInclude Include="src\Core\EventSystem\IEventListener.h" />
     <ClInclude Include="src\Core\Game\Game.h" />
-    <ClInclude Include="src\Core\Game\ServiceLocator.h" />
     <ClInclude Include="src\Core\Graphics\Renderer.h" />
     <ClInclude Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.h" />
     <ClInclude Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.h" />
@@ -314,7 +313,6 @@
     <ClCompile Include="src\Core\EventSystem\EventManager.cpp" />
     <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
     <ClCompile Include="src\Core\Game\Game.cpp" />
-    <ClCompile Include="src\Core\Game\ServiceLocator.cpp" />
     <ClCompile Include="src\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.cpp" />
