@@ -13,6 +13,11 @@ namespace LilEngie
 {
 	Game::Game(Function start, Function update)
 	{
+		//Set core pointers
+		Renderer::core = &renderer;
+		ResourceManager::core = &resourceManager;
+		EventManager::core = &eventManager;
+
 		//Setup events
 		closeEvent = Event(EventType::GameClose);
 
@@ -20,12 +25,9 @@ namespace LilEngie
 		Log::core = &logger;
 		logger.verbosity = Verbosity::Verbose; //Remove eventually
 
-		//Event manager
-		EventManager::core = &eventManager;
-
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -41,6 +43,7 @@ namespace LilEngie
 		}
 
 		//Shutdown
+		resourceManager.UnloadAllResouces();
 		eventManager.Dispatch(closeEvent);
 		renderer.Shutdown();
 	}

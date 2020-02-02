@@ -7,12 +7,15 @@ namespace LilEngie
 {
 	class IGraphics;
 	struct WinProp;
-	enum GraphicsAPI;
+	enum class GraphicsAPI;
 
 	class LIL_API Renderer : public IEventListener
 	{
-	private:
+	public:
+		static Renderer* core;
 		IGraphics* gfx;
+
+	private:
 		float clearColor[4] = { 1, 0, 0.5f, 1 };
 
 	public:

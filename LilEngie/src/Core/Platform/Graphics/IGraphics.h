@@ -9,13 +9,13 @@ namespace LilEngie
 {
 	struct WinProp;
 
-	enum GraphicsAPI
+	enum class GraphicsAPI
 	{
 		DirectX11,
 		OpenGL
 	};
 
-	enum ShaderType 
+	enum class ShaderType 
 	{ 
 		Fragment, 
 		Vertex 
@@ -63,7 +63,7 @@ namespace LilEngie
 		virtual void BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot) = 0;
 		virtual void ReleaseCBuffer(ICBuffer** cBuffer) = 0;
 
-		static IGraphics* CreateGraphicsContext(GraphicsAPI api = DirectX11);
+		static IGraphics* CreateGraphicsContext(GraphicsAPI api = GraphicsAPI::DirectX11);
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);
 
 	private:

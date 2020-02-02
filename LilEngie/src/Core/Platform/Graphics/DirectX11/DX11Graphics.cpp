@@ -390,10 +390,10 @@ namespace LilEngie
 	{
 		switch (type)
 		{
-			case LilEngie::Fragment:
+			case ShaderType::Fragment:
 				ctx->deviceContext->PSSetConstantBuffers(slot, 1, &((DX11CBuffer*)cBuffer)->buffer);
 				break;
-			case LilEngie::Vertex:
+			case ShaderType::Vertex:
 				ctx->deviceContext->VSSetConstantBuffers(slot, 1, &((DX11CBuffer*)cBuffer)->buffer);
 				break;
 			default:

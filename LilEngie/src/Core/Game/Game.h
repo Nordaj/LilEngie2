@@ -4,6 +4,7 @@
 #include <Core/Application/Application.h>
 #include <Core/EventSystem/Events.h>
 #include <Core/Debug/Log.h>
+#include <Core/Resources/ResourceManager.h>
 #include "Core/Graphics/Renderer.h"
 
 namespace LilEngie
@@ -19,6 +20,7 @@ namespace LilEngie
 		Application application;
 		Renderer renderer;
 		Log logger;
+		ResourceManager resourceManager;
 
 		bool isRunning = true;
 		Event closeEvent;

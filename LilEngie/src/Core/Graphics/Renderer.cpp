@@ -1,14 +1,17 @@
 #include <Core/Debug/Log.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Debug/Log.h>
+#include <Core/Resources/ResourceManager.h>
+#include <Core/Resources/Types/MeshResource.h>
 #include "Renderer.h"
 
 namespace LilEngie
 {
+	Renderer* Renderer::core = nullptr;
+
 	IInputLayout* layout;
 	IShader* shader;
-	IVertexBuffer* vBuffer;
-	IIndexBuffer* iBuffer;
+	MeshResource* meshResource;
 	ICBuffer* colorBuffer;
 
 	Renderer::Renderer()
@@ -45,12 +48,14 @@ namespace LilEngie
 		Subscribe(EventType::WindowResize);
 
 		//Shader and layout creation
-		InputElement elements[2] = {
+		InputElement elements[4] = {
 			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0),
-			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32, sizeof(float) * 3)
+			InputElement("NORMAL", InputFormat::FLOAT_R32G32B32, sizeof(float) * 3),
+			InputElement("TANGENT", InputFormat::FLOAT_R32G32B32, sizeof(float) * 6),
+			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32, sizeof(float) * 9)
 		};
 
-		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 2);
+		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 4);
 
 		//Constant buffer creation
 		colorBuffer = gfx->CreateCBuffer(sizeof(float) * 4);
@@ -59,21 +64,10 @@ namespace LilEngie
 		memcpy(c, &myColor, sizeof(float) * 4);
 		gfx->UpdateCBuffer(colorBuffer);
 
-		//Model creation
-		float verts[] = {
-			//POSITION			//TEXCOORD
-			-0.5f, -0.5f, 0,	0.0f, 1.0f, //Bottom-Left
-			 0.0f,  0.5f, 0,	0.5f, 0.0f, //Top
-			 0.5f, -0.5f, 0,	1.0f, 1.0f  //Bottom-Right
-		};
-		uint inds[] = { 0, 1, 2 };
-
-		vBuffer = gfx->CreateVertexBuffer(verts, sizeof(float) * 15);
-		iBuffer = gfx->CreateIndexBuffer(inds, sizeof(uint) * 3);
-
-		//Draw prep
-		gfx->BindVertexBuffer(vBuffer, sizeof(float) * 5);
-		gfx->BindIndexBuffer(iBuffer);
+		//Create mesh here
+		std::string path("LilEngie/res/Models/teapot.fbx");
+		ResourceId id = ResourceId(path, ResourceType::Mesh);
+		meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
 		gfx->SetInputLayout(layout);
 		gfx->SetShader(shader);
@@ -86,9 +80,6 @@ namespace LilEngie
 		//Cleanup
 		gfx->ReleaseInputLayout(&layout);
 		gfx->ReleaseShader(&shader);
-
-		gfx->ReleaseVertexBuffer(&vBuffer);
-		gfx->ReleaseIndexBuffer(&iBuffer);
 
 		gfx->ReleaseCBuffer(&colorBuffer);
 
@@ -108,9 +99,8 @@ namespace LilEngie
 	{
 		gfx->Clear();
 
-		//RENDER
-		//Draw
-		gfx->Draw(3);
+		//draw meshes here
+		meshResource->mesh.Render(gfx);
 
 		gfx->Render();
 	}
