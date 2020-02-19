@@ -29,6 +29,7 @@ namespace LilEngie
 		inline bool IsEnabled();
 
 		void Update();
+		void OnDraw();
 
 		Actor* CreateActor(Actor* parent = nullptr);
 		void DestroyActor(Actor* actor);

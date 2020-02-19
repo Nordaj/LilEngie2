@@ -37,6 +37,7 @@ namespace LilEngie
 
 	private:
 		void Update();
+		void OnDraw();
 	};
 }
 

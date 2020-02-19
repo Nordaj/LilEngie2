@@ -63,4 +63,13 @@ namespace LilEngie
 		for (int i = 0; i < children.size(); i++)
 			children[i]->Update();
 	}
+
+	void Actor::OnDraw()
+	{
+		for (int i = 0; i < components.size(); i++)
+			components[i]->OnDraw();
+
+		for (int i = 0; i < children.size(); i++)
+			children[i]->OnDraw();
+	}
 }

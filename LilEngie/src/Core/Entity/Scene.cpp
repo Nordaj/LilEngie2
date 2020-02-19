@@ -52,6 +52,12 @@ namespace LilEngie
 			root->Update();
 	}
 
+	void Scene::OnDraw()
+	{
+		if (isEnabled)
+			root->OnDraw();
+	}
+
 	Actor* Scene::CreateActor(Actor* parent)
 	{
 		if (isInitialized)
@@ -65,6 +71,7 @@ namespace LilEngie
 
 			return a;
 		}
+		return nullptr;
 	}
 
 	void Scene::DestroyActor(Actor* actor)

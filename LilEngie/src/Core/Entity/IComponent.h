@@ -23,5 +23,7 @@ namespace LilEngie
 	protected:
 		virtual void Start() {}
 		virtual void Update() {}
+
+		virtual void OnDraw() {}
 	};
 }

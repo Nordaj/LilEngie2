@@ -4,6 +4,7 @@
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Resources/Types/MeshResource.h>
 #include <Core/Math/LilMath.h>
+#include <Core/Graphics/Mesh.h>
 #include "Renderer.h"
 
 namespace LilEngie
@@ -12,13 +13,13 @@ namespace LilEngie
 
 	IInputLayout* layout;
 	IShader* shader;
-	MeshResource* meshResource;
+	//MeshResource* meshResource;
 	ICBuffer* colorBuffer;
 	ICBuffer* modMatBuffer;
 
 	Renderer::Renderer()
 	{
-
+		opaqueQueue = std::queue<Mesh*>();
 	}
 
 	Renderer::~Renderer()
@@ -78,9 +79,9 @@ namespace LilEngie
 		gfx->UpdateCBuffer(modMatBuffer);
 
 		//Create mesh here
-		std::string path("LilEngie/res/Models/teapot.fbx");
-		ResourceId id = ResourceId(path, ResourceType::Mesh);
-		meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
+		//std::string path("LilEngie/res/Models/teapot.fbx");
+		//ResourceId id = ResourceId(path, ResourceType::Mesh);
+		//meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
 		gfx->SetInputLayout(layout);
 		gfx->SetShader(shader);
@@ -110,12 +111,21 @@ namespace LilEngie
 		gfx->SetClearColor(r, g, b, a);
 	}
 
+	void Renderer::QueueOpaque(Mesh* mesh)
+	{
+		opaqueQueue.push(mesh);
+	}
+
 	void Renderer::Render()
 	{
 		gfx->Clear();
 
-		//draw meshes here
-		meshResource->mesh.Render(gfx);
+		//Draw Meshes
+		while (opaqueQueue.size() > 0)
+		{
+			opaqueQueue.back()->Render();
+			opaqueQueue.pop();
+		}
 
 		gfx->Render();
 	}

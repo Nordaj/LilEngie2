@@ -7,6 +7,11 @@
 #include <Core/Debug/DebugTimer.h>
 #include <Core/System/PoolAllocator.h>
 #include <Core/Platform/Graphics/IGraphics.h>
+#include <Core/Entity/SceneManager.h>
+#include <Core/Entity/Scene.h>
+#include <Core/Entity/Actor.h>
+#include <Core/Entity/CoreComponents/MeshComponent.h>
+#include <Core/Resources/Types/MeshResource.h>
 
 #include <Core/Math/vec3.h>
 
@@ -21,6 +26,7 @@ namespace LilEngie
 		Renderer::core = &renderer;
 		ResourceManager::core = &resourceManager;
 		EventManager::core = &eventManager;
+		SceneManager::core = &sceneManager;
 
 		//Setup events
 		closeEvent = Event(EventType::GameClose);
@@ -37,7 +43,25 @@ namespace LilEngie
 		Subscribe(EventType::WindowClose);
 
 		//TEST BENCH
-		
+
+
+
+
+		Scene* mainScene = new Scene();
+		sceneManager.scene = mainScene;
+
+		mainScene->Init();
+		Actor* actor = mainScene->CreateActor();
+
+		MeshComponent* mc = actor->CreateComponent<MeshComponent>();
+
+		std::string path("LilEngie/res/Models/teapot.fbx");
+		ResourceId id = ResourceId(path, ResourceType::Mesh);
+		MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
+
+		mc->mesh = &meshResource->mesh;
+
+
 
 		//Main loop
 		if (start) start();
@@ -46,10 +70,14 @@ namespace LilEngie
 			if (update) update();
 			application.Update();
 
+			sceneManager.scene->Update();
+
+			sceneManager.scene->OnDraw();
 			renderer.Render();
 		}
 
 		//Shutdown
+		sceneManager.Shutdown();
 		resourceManager.UnloadAllResouces();
 		eventManager.Dispatch(closeEvent);
 		renderer.Shutdown();

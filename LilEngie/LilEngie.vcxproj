@@ -337,6 +337,7 @@
     <ClInclude Include="src\Core\Entity\Actor.h" />
     <ClInclude Include="src\Core\Entity\CoreComponents\MeshComponent.h" />
     <ClInclude Include="src\Core\Entity\Scene.h" />
+    <ClInclude Include="src\Core\Entity\SceneManager.h" />
     <ClInclude Include="src\Core\EventSystem\Event.h" />
     <ClInclude Include="src\Core\EventSystem\EventManager.h" />
     <ClInclude Include="src\Core\EventSystem\Events.h" />
@@ -376,6 +377,7 @@
     <ClCompile Include="src\Core\Entity\IComponent.cpp" />
     <ClCompile Include="src\Core\Entity\CoreComponents\MeshComponent.cpp" />
     <ClCompile Include="src\Core\Entity\Scene.cpp" />
+    <ClCompile Include="src\Core\Entity\SceneManager.cpp" />
     <ClCompile Include="src\Core\EventSystem\EventManager.cpp" />
     <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
     <ClCompile Include="src\Core\Game\Game.cpp" />
