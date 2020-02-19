@@ -45,6 +45,9 @@ namespace LilEngie
 
 	void Mesh::Render(IGraphics* gfxContext)
 	{
+		if (!gfxContext)
+			gfxContext = Renderer::core->gfx;
+
 		gfxContext->BindVertexBuffer(vertexBuffer, sizeof(Vertex));
 		gfxContext->BindIndexBuffer(indexBuffer);
 		gfxContext->Draw(indexCount);

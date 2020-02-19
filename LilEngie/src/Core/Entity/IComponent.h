@@ -4,6 +4,8 @@
 
 namespace LilEngie
 {
+	class Actor;
+
 	class LIL_API IComponent
 	{
 		friend class Actor;

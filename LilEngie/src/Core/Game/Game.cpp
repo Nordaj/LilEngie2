@@ -7,7 +7,11 @@
 #include <Core/Debug/DebugTimer.h>
 #include <Core/System/PoolAllocator.h>
 #include <Core/Platform/Graphics/IGraphics.h>
+
+#include <Core/Math/vec3.h>
+
 #include "Game.h"
+
 
 namespace LilEngie
 {
@@ -27,10 +31,13 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
+
+		//TEST BENCH
+		
 
 		//Main loop
 		if (start) start();

@@ -24,6 +24,6 @@ namespace LilEngie
 		bool Init(const std::vector<Vertex>& vertices, const std::vector<uint>& indices);
 		bool IsInit();
 
-		void Render(IGraphics* gfxContext);
+		void Render(IGraphics* gfxContext = nullptr);
 	};
 }

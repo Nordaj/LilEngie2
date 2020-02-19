@@ -10,10 +10,15 @@ struct VSOutput
 	float2 texCoord : TEXCOORD;
 };
 
+cbuffer Model : register(b1)
+{
+	float4x4 model;
+}
+
 VSOutput main(in VSInput i)
 {
 	VSOutput o;
-	o.position = i.position;
+	o.position = mul(model, i.position);
 	o.texCoord = i.texCoord;
 	return o;
 }

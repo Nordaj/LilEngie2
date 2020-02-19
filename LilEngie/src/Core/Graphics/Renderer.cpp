@@ -1,8 +1,9 @@
-#include <Core/Debug/Log.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Debug/Log.h>
+#include <Core/Debug/DebugTimer.h>
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Resources/Types/MeshResource.h>
+#include <Core/Math/LilMath.h>
 #include "Renderer.h"
 
 namespace LilEngie
@@ -13,6 +14,7 @@ namespace LilEngie
 	IShader* shader;
 	MeshResource* meshResource;
 	ICBuffer* colorBuffer;
+	ICBuffer* modMatBuffer;
 
 	Renderer::Renderer()
 	{
@@ -57,12 +59,23 @@ namespace LilEngie
 
 		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 4);
 
+		//Model matrix
+		mat4 model = mat4(1);
+		scale(model, vec3(1, 1, 1));
+		rotate(model, vec3(0, 0, 3.14f / 2));
+		translate(model, vec3(0, 0, 0));
+
 		//Constant buffer creation
 		colorBuffer = gfx->CreateCBuffer(sizeof(float) * 4);
-		void* c = gfx->GetCBufferPtr(colorBuffer);
+		void* colLoc = gfx->GetCBufferPtr(colorBuffer);
 		float myColor[4] = { 0.5f, 1, 1, 1 };
-		memcpy(c, &myColor, sizeof(float) * 4);
+		memcpy(colLoc, &myColor, sizeof(float) * 4);
 		gfx->UpdateCBuffer(colorBuffer);
+
+		modMatBuffer = gfx->CreateCBuffer(sizeof(mat4));
+		void* modLoc = gfx->GetCBufferPtr(modMatBuffer);
+		memcpy(modLoc, &model, sizeof(mat4));
+		gfx->UpdateCBuffer(modMatBuffer);
 
 		//Create mesh here
 		std::string path("LilEngie/res/Models/teapot.fbx");
@@ -73,6 +86,7 @@ namespace LilEngie
 		gfx->SetShader(shader);
 
 		gfx->BindCBuffer(colorBuffer, ShaderType::Fragment, 0);
+		gfx->BindCBuffer(modMatBuffer, ShaderType::Vertex, 1);
 	}
 
 	void Renderer::Shutdown()
@@ -82,6 +96,7 @@ namespace LilEngie
 		gfx->ReleaseShader(&shader);
 
 		gfx->ReleaseCBuffer(&colorBuffer);
+		gfx->ReleaseCBuffer(&modMatBuffer);
 
 		IGraphics::ShutdownGraphicsContext(&gfx);
 	}

@@ -213,6 +213,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -263,6 +265,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -286,6 +290,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>opengl32.lib;assimp-vc141-mt.lib;glew32s.lib</AdditionalDependencies>
@@ -306,6 +311,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\x64\;%(AdditionalLibraryDirectories);$(SolutionDir)Dependencies\Assimp\lib\x64\</AdditionalLibraryDirectories>
@@ -339,6 +345,10 @@
     <ClInclude Include="src\Core\Graphics\Mesh.h" />
     <ClInclude Include="src\Core\Graphics\Renderer.h" />
     <ClInclude Include="src\Core\Graphics\Vertex.h" />
+    <ClInclude Include="src\Core\Math\mat4.h" />
+    <ClInclude Include="src\Core\Math\LilMath.h" />
+    <ClInclude Include="src\Core\Math\vec3.h" />
+    <ClInclude Include="src\Core\Math\vec4.h" />
     <ClInclude Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.h" />
     <ClInclude Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.h" />
     <ClInclude Include="src\Core\Platform\Graphics\Handles.h" />
@@ -371,6 +381,9 @@
     <ClCompile Include="src\Core\Game\Game.cpp" />
     <ClCompile Include="src\Core\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Core\Graphics\Renderer.cpp" />
+    <ClCompile Include="src\Core\Math\mat4.cpp" />
+    <ClCompile Include="src\Core\Math\vec3.cpp" />
+    <ClCompile Include="src\Core\Math\vec4.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Graphics.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\DirectX11\DX11Handles.cpp" />
     <ClCompile Include="src\Core\Platform\Graphics\IGraphics.cpp" />

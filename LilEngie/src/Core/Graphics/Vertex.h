@@ -1,15 +1,10 @@
 #pragma once
 
 #include <Core/Core.h>
+#include <Core/Math/LilMath.h>
 
 namespace LilEngie
 {
-	//temp
-	struct LIL_API vec3
-	{
-		float x, y, z;
-	};
-
 	struct LIL_API Vertex
 	{
 		vec3 position;
