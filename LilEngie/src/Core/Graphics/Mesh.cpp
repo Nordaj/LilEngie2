@@ -25,6 +25,7 @@ namespace LilEngie
 		//Create bufers
 		vertexBuffer = Renderer::core->gfx->CreateVertexBuffer((float*)&vertices[0], sizeof(Vertex) * vertices.size());
 		indexCount = indices.size();
+		uint* ptr = (uint*)&(indices[0]);
 		indexBuffer = Renderer::core->gfx->CreateIndexBuffer((uint*)&indices[0], sizeof(uint) * indexCount);
 
 		//Make sure it succeeded

@@ -1,16 +1,17 @@
 #pragma once
 
+#include <Core/Graphics/MeshRenderer.h>
 #include <Core/Entity/IComponent.h>
 #include <Core/Core.h>
 
 namespace LilEngie
 {
-	class Mesh;
+	class MeshRenderer;
 
 	class LIL_API MeshComponent : public IComponent
 	{
 	public:
-		Mesh* mesh = nullptr;
+		MeshRenderer meshRenderer;
 
 	private:
 		//void Start() override;

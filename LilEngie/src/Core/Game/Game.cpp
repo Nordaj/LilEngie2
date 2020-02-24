@@ -59,7 +59,7 @@ namespace LilEngie
 		ResourceId id = ResourceId(path, ResourceType::Mesh);
 		MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
-		mc->mesh = &meshResource->mesh;
+		mc->meshRenderer.mesh = &(meshResource->mesh);
 
 
 

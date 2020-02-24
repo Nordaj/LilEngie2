@@ -103,7 +103,7 @@ namespace LilEngie
 	void DX11Graphics::Render()
 	{
 		HRESULT hr = S_OK;
-		hr = ctx->swapChain->Present(0, 0);
+		hr = ctx->swapChain->Present(1, 0); //1=vsync
 		if (FAILED(hr))
 			GFX_ERROR("Failed to present Direct3D11 swap chain.");
 	}
@@ -403,7 +403,6 @@ namespace LilEngie
 
 	void DX11Graphics::ReleaseCBuffer(ICBuffer** cBuffer)
 	{
-		//Free the data
 		delete[] ((DX11CBuffer*)*cBuffer)->data;
 		((DX11CBuffer*)*cBuffer)->data = nullptr;
 

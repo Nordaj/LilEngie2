@@ -41,13 +41,13 @@ namespace LilEngie
 		for (int i = 0; i < verts.size(); i++)
 		{
 			if (mesh->mNumVertices > 0)
-				verts[i].position = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
+				verts[i].position = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
 
 			if (mesh->HasNormals())
-				verts[i].normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
+				verts[i].normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 1 };
 
 			if (mesh->HasTangentsAndBitangents())
-				verts[i].tangent = { mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z };
+				verts[i].tangent = { mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z, 1 };
 
 			if (mesh->HasTextureCoords(i))
 			{

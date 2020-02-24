@@ -24,6 +24,12 @@ namespace LilEngie
 	#endif // LIL_WINDOWS
 	};
 
+	void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+	{
+		if (type == GL_DEBUG_TYPE_ERROR)
+			LIL_ERROR("GL_ERROR: %s type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
+	}
+
 	GLGraphics::~GLGraphics()
 	{ 
 		if (ctx != nullptr)
@@ -49,6 +55,9 @@ namespace LilEngie
 			LIL_ERROR("Could not initialize OpenGL.");
 			return;
 		}
+
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(MessageCallback, 0);
 	}
 
 	void GLGraphics::SetClearColor(float r, float g, float b, float a)
@@ -248,7 +257,7 @@ namespace LilEngie
 
 	void GLGraphics::Draw(uint indexCount)
 	{
-		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 	}
 
 	ICBuffer* GLGraphics::CreateCBuffer(uint size, void* initData)

@@ -6,8 +6,9 @@
 
 namespace LilEngie
 {
-	class Mesh;
+	class IRenderable;
 	class IGraphics;
+	class ICBuffer;
 	struct WinProp;
 	enum class GraphicsAPI;
 
@@ -17,9 +18,11 @@ namespace LilEngie
 		static Renderer* core;
 		IGraphics* gfx;
 
+		ICBuffer* transformBuffer;
+
 	private:
 		float clearColor[4] = { 1, 0, 0.5f, 1 };
-		std::queue<Mesh*> opaqueQueue;
+		std::queue<IRenderable*> opaqueQueue;
 
 	public:
 		Renderer();
@@ -29,7 +32,7 @@ namespace LilEngie
 		void Shutdown();
 
 		void SetClearColor(float r, float g, float b, float a);
-		void QueueOpaque(Mesh* mesh);
+		void QueueOpaque(IRenderable* renderable);
 		void Render();
 
 	private:

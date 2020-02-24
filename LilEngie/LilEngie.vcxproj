@@ -124,6 +124,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static Release|Win32'">
     <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(ProjectDir)bin\int\$(Configuration)\$(Platform)\</IntDir>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
@@ -136,6 +138,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static Release|x64'">
     <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(ProjectDir)bin\int\$(Configuration)\$(Platform)\</IntDir>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|Win32'">
     <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
@@ -215,6 +219,7 @@
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -267,6 +272,7 @@
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -343,7 +349,9 @@
     <ClInclude Include="src\Core\EventSystem\Events.h" />
     <ClInclude Include="src\Core\EventSystem\IEventListener.h" />
     <ClInclude Include="src\Core\Game\Game.h" />
+    <ClInclude Include="src\Core\Graphics\IRenderable.h" />
     <ClInclude Include="src\Core\Graphics\Mesh.h" />
+    <ClInclude Include="src\Core\Graphics\MeshRenderer.h" />
     <ClInclude Include="src\Core\Graphics\Renderer.h" />
     <ClInclude Include="src\Core\Graphics\Vertex.h" />
     <ClInclude Include="src\Core\Math\mat4.h" />
@@ -382,6 +390,7 @@
     <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
     <ClCompile Include="src\Core\Game\Game.cpp" />
     <ClCompile Include="src\Core\Graphics\Mesh.cpp" />
+    <ClCompile Include="src\Core\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="src\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Core\Math\mat4.cpp" />
     <ClCompile Include="src\Core\Math\vec3.cpp" />

@@ -4,7 +4,7 @@
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Resources/Types/MeshResource.h>
 #include <Core/Math/LilMath.h>
-#include <Core/Graphics/Mesh.h>
+#include "IRenderable.h"
 #include "Renderer.h"
 
 namespace LilEngie
@@ -13,13 +13,10 @@ namespace LilEngie
 
 	IInputLayout* layout;
 	IShader* shader;
-	//MeshResource* meshResource;
-	ICBuffer* colorBuffer;
-	ICBuffer* modMatBuffer;
 
 	Renderer::Renderer()
 	{
-		opaqueQueue = std::queue<Mesh*>();
+		opaqueQueue = std::queue<IRenderable*>();
 	}
 
 	Renderer::~Renderer()
@@ -50,44 +47,18 @@ namespace LilEngie
 		
 		Subscribe(EventType::WindowResize);
 
+		//Create defualt constant buffers
+		transformBuffer = gfx->CreateCBuffer(sizeof(mat4));
+
 		//Shader and layout creation
 		InputElement elements[4] = {
-			InputElement("POSITION", InputFormat::FLOAT_R32G32B32, 0),
-			InputElement("NORMAL", InputFormat::FLOAT_R32G32B32, sizeof(float) * 3),
-			InputElement("TANGENT", InputFormat::FLOAT_R32G32B32, sizeof(float) * 6),
-			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32, sizeof(float) * 9)
+			InputElement("POSITION", InputFormat::FLOAT_R32G32B32A32, 0),
+			InputElement("NORMAL", InputFormat::FLOAT_R32G32B32A32, sizeof(float) * 4),
+			InputElement("TANGENT", InputFormat::FLOAT_R32G32B32A32, sizeof(float) * 8),
+			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32B32A32, sizeof(float) * 12)
 		};
 
 		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 4);
-
-		//Model matrix
-		mat4 model = mat4(1);
-		scale(model, vec3(1, 1, 1));
-		rotate(model, vec3(0, 0, 3.14f / 2));
-		translate(model, vec3(0, 0, 0));
-
-		//Constant buffer creation
-		colorBuffer = gfx->CreateCBuffer(sizeof(float) * 4);
-		void* colLoc = gfx->GetCBufferPtr(colorBuffer);
-		float myColor[4] = { 0.5f, 1, 1, 1 };
-		memcpy(colLoc, &myColor, sizeof(float) * 4);
-		gfx->UpdateCBuffer(colorBuffer);
-
-		modMatBuffer = gfx->CreateCBuffer(sizeof(mat4));
-		void* modLoc = gfx->GetCBufferPtr(modMatBuffer);
-		memcpy(modLoc, &model, sizeof(mat4));
-		gfx->UpdateCBuffer(modMatBuffer);
-
-		//Create mesh here
-		//std::string path("LilEngie/res/Models/teapot.fbx");
-		//ResourceId id = ResourceId(path, ResourceType::Mesh);
-		//meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
-
-		gfx->SetInputLayout(layout);
-		gfx->SetShader(shader);
-
-		gfx->BindCBuffer(colorBuffer, ShaderType::Fragment, 0);
-		gfx->BindCBuffer(modMatBuffer, ShaderType::Vertex, 1);
 	}
 
 	void Renderer::Shutdown()
@@ -96,8 +67,7 @@ namespace LilEngie
 		gfx->ReleaseInputLayout(&layout);
 		gfx->ReleaseShader(&shader);
 
-		gfx->ReleaseCBuffer(&colorBuffer);
-		gfx->ReleaseCBuffer(&modMatBuffer);
+		gfx->ReleaseCBuffer(&transformBuffer);
 
 		IGraphics::ShutdownGraphicsContext(&gfx);
 	}
@@ -111,19 +81,26 @@ namespace LilEngie
 		gfx->SetClearColor(r, g, b, a);
 	}
 
-	void Renderer::QueueOpaque(Mesh* mesh)
+	void Renderer::QueueOpaque(IRenderable* renderable)
 	{
-		opaqueQueue.push(mesh);
+		opaqueQueue.push(renderable);
 	}
 
 	void Renderer::Render()
 	{
 		gfx->Clear();
 
+		//Constant buffer management
+		gfx->BindCBuffer(transformBuffer, ShaderType::Vertex, 1);
+
+		//Setup default shader and input layout
+		gfx->SetInputLayout(layout);
+		gfx->SetShader(shader);
+
 		//Draw Meshes
 		while (opaqueQueue.size() > 0)
 		{
-			opaqueQueue.back()->Render();
+			opaqueQueue.back()->Render(gfx);
 			opaqueQueue.pop();
 		}
 

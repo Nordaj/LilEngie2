@@ -7,9 +7,10 @@ namespace LilEngie
 {
 	struct LIL_API Vertex
 	{
-		vec3 position;
-		vec3 normal;
-		vec3 tangent;
+		vec4 position;
+		vec4 normal;
+		vec4 tangent;
 		float u, v;
+		float padding[2];
 	};
 }
