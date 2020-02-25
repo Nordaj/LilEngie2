@@ -9,6 +9,7 @@ namespace LilEngie
 	class LIL_API IRenderable
 	{
 	public:
+		IRenderable() {}
 		virtual void Render(IGraphics* gfxContext) = 0;
 	};
 }

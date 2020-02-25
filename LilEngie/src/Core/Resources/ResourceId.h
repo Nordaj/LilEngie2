@@ -17,6 +17,7 @@ namespace LilEngie
 		ResourceType type;
 
 	public:
+		ResourceId() {}
 		ResourceId(std::string& path, ResourceType type)
 			: path(path), type(type) { }
 

@@ -38,7 +38,7 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -47,7 +47,7 @@ namespace LilEngie
 
 
 
-
+		
 		Scene* mainScene = new Scene();
 		sceneManager.scene = mainScene;
 
@@ -61,7 +61,7 @@ namespace LilEngie
 		ResourceId id = ResourceId(path, ResourceType::Mesh);
 		MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
-		mc->meshRenderer.mesh = &(meshResource->mesh);
+		mc->meshRenderer.meshResId = id;
 
 		mainScene->Start();
 
