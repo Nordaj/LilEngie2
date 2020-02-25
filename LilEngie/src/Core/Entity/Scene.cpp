@@ -44,6 +44,12 @@ namespace LilEngie
 	bool Scene::IsEnabled()
 	{ return isEnabled; }
 
+	void Scene::Start()
+	{
+		if (isEnabled)
+			root->Start();
+	}
+
 	void Scene::Update()
 	{
 		//Sort of a slow method to updating the scene.

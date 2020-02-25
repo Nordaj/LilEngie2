@@ -10,7 +10,7 @@ namespace LilEngie
 	{
 		friend class Actor;
 
-	private:
+	protected:
 		Actor* actor;
 
 	public:

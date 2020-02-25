@@ -6,12 +6,15 @@
 
 namespace LilEngie
 {
+	class TransformComponent;
+
 	class LIL_API Actor
 	{
 		friend class Scene;
 
 	public:
 		Actor* parent;
+		TransformComponent* transform;
 
 	private:
 		Scene* scene;
@@ -36,6 +39,7 @@ namespace LilEngie
 		T* CreateComponent();
 
 	private:
+		void Start();
 		void Update();
 		void OnDraw();
 	};

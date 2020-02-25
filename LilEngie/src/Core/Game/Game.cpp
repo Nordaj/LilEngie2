@@ -11,6 +11,7 @@
 #include <Core/Entity/Scene.h>
 #include <Core/Entity/Actor.h>
 #include <Core/Entity/CoreComponents/MeshComponent.h>
+#include <Core/Entity/CoreComponents/TransformComponent.h>
 #include <Core/Resources/Types/MeshResource.h>
 
 #include <Core/Math/vec3.h>
@@ -53,6 +54,7 @@ namespace LilEngie
 		mainScene->Init();
 		Actor* actor = mainScene->CreateActor();
 
+		TransformComponent* tc = actor->CreateComponent<TransformComponent>();
 		MeshComponent* mc = actor->CreateComponent<MeshComponent>();
 
 		std::string path("LilEngie/res/Models/teapot.fbx");
@@ -60,6 +62,8 @@ namespace LilEngie
 		MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
 		mc->meshRenderer.mesh = &(meshResource->mesh);
+
+		mainScene->Start();
 
 
 

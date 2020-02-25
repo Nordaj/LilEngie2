@@ -7,6 +7,7 @@ namespace LilEngie
 	{
 		T* component = new T();
 		components.push_back(component);
+		component->actor = this;
 		return component;
 	}
 }

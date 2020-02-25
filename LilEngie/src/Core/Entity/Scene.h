@@ -28,6 +28,7 @@ namespace LilEngie
 		void SetEnabled(bool val);
 		inline bool IsEnabled();
 
+		void Start();
 		void Update();
 		void OnDraw();
 
