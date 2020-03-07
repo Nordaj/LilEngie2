@@ -12,6 +12,7 @@
 #include <Core/Entity/Actor.h>
 #include <Core/Entity/CoreComponents/MeshComponent.h>
 #include <Core/Entity/CoreComponents/TransformComponent.h>
+#include <Core/Entity/CoreComponents/CameraComponent.h>
 #include <Core/Resources/Types/MeshResource.h>
 
 #include <Core/Math/vec3.h>
@@ -38,7 +39,7 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -46,7 +47,7 @@ namespace LilEngie
 		//TEST BENCH
 
 
-
+		//Setup nice projection and view matrix functions
 		
 		Scene* mainScene = new Scene();
 		sceneManager.scene = mainScene;
@@ -56,6 +57,7 @@ namespace LilEngie
 
 		TransformComponent* tc = actor->CreateComponent<TransformComponent>();
 		MeshComponent* mc = actor->CreateComponent<MeshComponent>();
+		CameraComponent* cc = actor->CreateComponent<CameraComponent>();
 
 		std::string path("LilEngie/res/Models/teapot.fbx");
 		ResourceId id = ResourceId(path, ResourceType::Mesh);

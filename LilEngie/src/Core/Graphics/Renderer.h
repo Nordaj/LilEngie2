@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <Core/EventSystem/Events.h>
+#include <Core/Math/LilMath.h>
 #include <Core/Core.h>
 
 namespace LilEngie
@@ -17,8 +18,8 @@ namespace LilEngie
 	public:
 		static Renderer* core;
 		IGraphics* gfx;
-
-		ICBuffer* transformBuffer;
+		ICBuffer* cbPerObject;
+		ICBuffer* cbPerScene;
 
 	private:
 		float clearColor[4] = { 1, 0, 0.5f, 1 };

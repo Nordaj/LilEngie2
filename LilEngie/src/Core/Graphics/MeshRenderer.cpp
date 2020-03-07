@@ -19,9 +19,10 @@ namespace LilEngie
 			return;
 
 		//Update transform constant buffer
-		ICBuffer* cb = Renderer::core->transformBuffer;
-		memcpy(gfx->GetCBufferPtr(cb), &transform, sizeof(mat4));
-		gfx->UpdateCBuffer(cb);
+		ICBuffer* buf = Renderer::core->cbPerObject;
+		void* loc = gfx->GetCBufferPtr(buf);
+		memcpy(loc, &transform, sizeof(mat4));
+		gfx->UpdateCBuffer(buf);
 
 		//Render
 		meshResource->mesh.Render(gfx);

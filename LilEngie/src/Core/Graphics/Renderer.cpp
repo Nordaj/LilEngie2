@@ -48,7 +48,8 @@ namespace LilEngie
 		Subscribe(EventType::WindowResize);
 
 		//Create defualt constant buffers
-		transformBuffer = gfx->CreateCBuffer(sizeof(mat4));
+		cbPerObject = gfx->CreateCBuffer(sizeof(mat4));
+		cbPerScene = gfx->CreateCBuffer(sizeof(mat4));
 
 		//Shader and layout creation
 		InputElement elements[4] = {
@@ -67,7 +68,8 @@ namespace LilEngie
 		gfx->ReleaseInputLayout(&layout);
 		gfx->ReleaseShader(&shader);
 
-		gfx->ReleaseCBuffer(&transformBuffer);
+		gfx->ReleaseCBuffer(&cbPerObject);
+		gfx->ReleaseCBuffer(&cbPerScene);
 
 		IGraphics::ShutdownGraphicsContext(&gfx);
 	}
@@ -91,7 +93,8 @@ namespace LilEngie
 		gfx->Clear();
 
 		//Constant buffer management
-		gfx->BindCBuffer(transformBuffer, ShaderType::Vertex, 1);
+		gfx->BindCBuffer(cbPerObject, ShaderType::Vertex, 1);
+		gfx->BindCBuffer(cbPerScene, ShaderType::Vertex, 2);
 
 		//Setup default shader and input layout
 		gfx->SetInputLayout(layout);

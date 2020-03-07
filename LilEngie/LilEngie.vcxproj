@@ -339,6 +339,7 @@
     <ClInclude Include="src\Core\Debug\DebugTimer.h" />
     <ClInclude Include="src\Core\Debug\Log.h" />
     <ClInclude Include="src\Core\Entity\Actor.ipp" />
+    <ClInclude Include="src\Core\Entity\CoreComponents\CameraComponent.h" />
     <ClInclude Include="src\Core\Entity\CoreComponents\TransformComponent.h" />
     <ClInclude Include="src\Core\Entity\IComponent.h" />
     <ClInclude Include="src\Core\Entity\Actor.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="src\Core\Debug\DebugTimer.cpp" />
     <ClCompile Include="src\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Core\Entity\Actor.cpp" />
+    <ClCompile Include="src\Core\Entity\CoreComponents\CameraComponent.cpp" />
     <ClCompile Include="src\Core\Entity\CoreComponents\TransformComponent.cpp" />
     <ClCompile Include="src\Core\Entity\IComponent.cpp" />
     <ClCompile Include="src\Core\Entity\CoreComponents\MeshComponent.cpp" />
