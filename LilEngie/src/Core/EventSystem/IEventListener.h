@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Core/Core.h>
+#include "Event.h"
 
 namespace LilEngie
 {
@@ -12,7 +13,7 @@ namespace LilEngie
 		IEventListener() {}
 		virtual ~IEventListener();
 
-		virtual void OnEvent(const Event &e) = 0;
+		virtual void OnEvent(const Event& e);
 
 	protected:
 		void Subscribe(EventType type);

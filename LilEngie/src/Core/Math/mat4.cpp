@@ -1,4 +1,6 @@
 #include <cmath>
+#include <ostream>
+#include <iomanip>
 #include "vec3.h"
 #include "vec4.h"
 #include "mat4.h"
@@ -133,5 +135,28 @@ namespace LilEngie::Math
 		m[0][0] *= v.x;
 		m[1][1] *= v.y;
 		m[2][2] *= v.z;
+	}
+
+	mat4 projection(float r, float l, float t, float b, float n, float f)
+	{
+		//Left handed perspective matrix
+		return mat4(
+			{ (2*n)/(r-l),	0.,				(r+l)/(r-l),	0. },
+			{ 0.,			(2*n)/(t-b),	(t+b)/(t-b),	0. },
+			{ 0.,			0.,				(f+n)/(f-n),	-(2*f*n)/(f-n) },
+			{ 0.,			0.,				1.,			0. }
+		);
+	}
+
+	std::ostream& operator<<(std::ostream& os, const mat4& m)
+	{
+		os << "\n" << std::setprecision(3);
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+				os << "\t" << m[j][i];
+			os << "\n";
+		}
+		return os;
 	}
 }

@@ -39,7 +39,7 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -47,23 +47,36 @@ namespace LilEngie
 		//TEST BENCH
 
 
-		//Setup nice projection and view matrix functions
 		
+		//Setup main scene
 		Scene* mainScene = new Scene();
 		sceneManager.scene = mainScene;
-
 		mainScene->Init();
-		Actor* actor = mainScene->CreateActor();
 
-		TransformComponent* tc = actor->CreateComponent<TransformComponent>();
-		MeshComponent* mc = actor->CreateComponent<MeshComponent>();
-		CameraComponent* cc = actor->CreateComponent<CameraComponent>();
+		//Create mesh actor
+		{
+			Actor* actor = mainScene->CreateActor();
 
-		std::string path("LilEngie/res/Models/teapot.fbx");
-		ResourceId id = ResourceId(path, ResourceType::Mesh);
-		MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
+			TransformComponent* tc = actor->CreateComponent<TransformComponent>();
+			MeshComponent* mc = actor->CreateComponent<MeshComponent>();
 
-		mc->meshRenderer.meshResId = id;
+			std::string path("LilEngie/res/Models/square.obj");
+			ResourceId id = ResourceId(path, ResourceType::Mesh);
+			MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
+
+			mc->meshRenderer.meshResId = id;
+		}
+
+		//Create camera actor
+		{
+			Actor* cameraActor = mainScene->CreateActor();
+
+			TransformComponent* tc = cameraActor->CreateComponent<TransformComponent>();
+			CameraComponent* cc = cameraActor->CreateComponent<CameraComponent>();
+
+			//TODO, wont need to mult by -1 once inverse support
+			translate(tc->mat, vec3(0, 0, -6) * -1);
+		}
 
 		mainScene->Start();
 

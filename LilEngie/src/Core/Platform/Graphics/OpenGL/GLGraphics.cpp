@@ -58,6 +58,9 @@ namespace LilEngie
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
+
+		//TODO: remove
+		glDisable(GL_CULL_FACE);
 	}
 
 	void GLGraphics::SetClearColor(float r, float g, float b, float a)

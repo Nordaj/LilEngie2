@@ -8,3 +8,5 @@
 #ifndef NO_MATH_USING
 using namespace LilEngie::Math;
 #endif //NO_MATH_USING
+
+#define PI 3.14159265358979323846

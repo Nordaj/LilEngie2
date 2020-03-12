@@ -16,7 +16,5 @@ layout(std140, binding = 2) uniform PerScene
 
 void main()
 {
-    //mat4 m = mat4(1);
-	//gl_Position = model * pos;
     gl_Position = (vp * model) * position;
 }

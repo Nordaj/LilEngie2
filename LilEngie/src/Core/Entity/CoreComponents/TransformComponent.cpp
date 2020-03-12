@@ -12,6 +12,6 @@ namespace LilEngie
 
 	void TransformComponent::Update()
 	{
-		rotate(mat, vec3(0, 0, .01f));
+
 	}
 }

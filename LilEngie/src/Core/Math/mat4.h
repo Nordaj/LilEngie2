@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ostream>
 #include <Core/Core.h>
 #include "vec4.h"
 #include "vec3.h"
@@ -36,4 +37,8 @@ namespace LilEngie::Math
 	extern void translate(mat4& m, vec3 v);
 	extern void rotate(mat4& m, vec3 euler);
 	extern void scale(mat4& m, vec3 v);
+
+	extern mat4 projection(float r, float l, float t, float b, float n, float f);
+
+	extern std::ostream& operator<<(std::ostream& os, const mat4& m);
 }

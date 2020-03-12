@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Core/Core.h>
+#include <Core/EventSystem/IEventListener.h>
 
 namespace LilEngie
 {
 	class Actor;
 
-	class LIL_API IComponent
+	class LIL_API IComponent : public IEventListener
 	{
 		friend class Actor;
 

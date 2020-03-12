@@ -22,8 +22,8 @@ namespace LilEngie
 	class LIL_API Window : public IEventListener
 	{
 	private:
-		int width = 512;
-		int height = 512;
+		int width = 960;
+		int height = 540;
 		std::string title = "My Game";
 
 	public:
