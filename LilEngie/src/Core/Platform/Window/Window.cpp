@@ -18,6 +18,7 @@ namespace LilEngie
 
 		val.width = width;
 		val.height = height;
+
 		return val;
 	#endif //LIL_WINDOWS
 	}

@@ -1,6 +1,8 @@
 #include <cmath>
 #include <ostream>
 #include <iomanip>
+#include <sstream>
+#include <Core/Debug/Log.h>
 #include "vec3.h"
 #include "vec4.h"
 #include "mat4.h"
@@ -89,12 +91,19 @@ namespace LilEngie::Math
 		return vecs;
 	}
 
-	void translate(mat4& m, vec3 v)
+	mat4 translate(vec3 v)
 	{
+		mat4 m = mat4(1.);
 		m[3].v3 += v;
+		return m;
 	}
 
-	void rotate(mat4& m, vec3 e)
+	void translate(mat4& m, vec3 v)
+	{
+		m = translate(v) * m;
+	}
+
+	mat4 rotate(vec3 e)
 	{
 		//This function is slow as shit, will get to quaternions once i understand the dark magic
 		float sx = sin(e.x);
@@ -114,27 +123,39 @@ namespace LilEngie::Math
 		);
 
 		mat4 rotY = mat4(
-			{  cy, 0., sy, 0. },
-			{  0., 1., 0., 0. },
+			{ cy, 0., sy, 0. },
+			{ 0., 1., 0., 0. },
 			{ -sy, 0., cy, 0. },
-			{  0., 0., 0., 1. }
+			{ 0., 0., 0., 1. }
 		);
 
 		mat4 rotZ = mat4(
 			{ cz, -sz, 0., 0. },
 			{ sz,  cz, 0., 0. },
-			{ 0.,  0., 0., 0. },
+			{ 0.,  0., 1., 0. },
 			{ 0.,  0., 0., 1. }
 		);
 
-		m = m * rotZ * rotY * rotX;
+		return rotZ * rotY * rotX;
+	}
+
+	void rotate(mat4& m, vec3 e)
+	{
+		m = rotate(e) * m;
+	}
+
+	mat4 scale(vec3 v)
+	{
+		mat4 m = mat4(1.);
+		m[0][0] *= v.x;
+		m[1][1] *= v.y;
+		m[2][2] *= v.z;
+		return m;
 	}
 
 	void scale(mat4& m, vec3 v)
 	{
-		m[0][0] *= v.x;
-		m[1][1] *= v.y;
-		m[2][2] *= v.z;
+		m = scale(v) * m;
 	}
 
 	mat4 projection(float r, float l, float t, float b, float n, float f)
@@ -144,8 +165,69 @@ namespace LilEngie::Math
 			{ (2*n)/(r-l),	0.,				(r+l)/(r-l),	0. },
 			{ 0.,			(2*n)/(t-b),	(t+b)/(t-b),	0. },
 			{ 0.,			0.,				(f+n)/(f-n),	-(2*f*n)/(f-n) },
-			{ 0.,			0.,				1.,			0. }
+			{ 0.,			0.,				1.,				0. }
 		);
+	}
+
+	//Column major
+	float det3x3(float m[9])
+	{
+		//Goes through top row
+		return	(m[0] * ((m[4] * m[8]) - (m[7] * m[5]))) - 
+				(m[3] * ((m[1] * m[8]) - (m[7] * m[2]))) + 
+				(m[6] * ((m[1] * m[5]) - (m[2] * m[4])));
+	}
+
+	float determinant(const mat4& m)
+	{
+		//Goes through top row
+		float c0[9] = { m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3] };
+		float c1[9] = { m[0][1], m[0][2], m[0][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3] };
+		float c2[9] = { m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[3][1], m[3][2], m[3][3] };
+		float c3[9] = { m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3] };
+		return	(m[0][0] * det3x3(c0)) - (m[1][0] * det3x3(c1)) + (m[2][0] * det3x3(c2)) - (m[3][0] * det3x3(c3));
+	}
+
+	mat4 inverse(const mat4& m)
+	{
+		//Get determinant
+		float d = determinant(m);
+		if (d == 0) return mat4(0.);
+
+		//Get adjoint matrix
+		mat4 adj = mat4();
+		for (int e = 0; e < 16; e++)
+		{
+			//Get current element value (det of all other rows/cols)
+			int current = 0;
+			float others[9] = { 0 };
+			for (int i = 0; i < 16; i++)
+			{
+				if (i / 4 != e / 4 && i % 4 != e % 4) 
+					others[current++] = m.m[i];
+			}
+
+			adj[e % 4][e / 4] = det3x3(others) * ((e / 4 + e) % 2 == 0 ? 1 : -1);
+		}
+
+		//Return inv
+		return (1 / d) * adj;
+	}
+
+	mat4 transpose(const mat4& m)
+	{
+		//I think this works idk
+		mat4 mt;
+		for (int i = 0; i < 16; i++)
+			mt[i % 4][i / 4] = m.m[i];
+		return mt;
+	}
+
+	mat4 operator*(float f, mat4 m)
+	{
+		for (int i = 0; i < 4; i++)
+			m[i] *= f;
+		return m;
 	}
 
 	std::ostream& operator<<(std::ostream& os, const mat4& m)

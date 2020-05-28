@@ -36,9 +36,19 @@ namespace LilEngie::Math
 		return { x * f, y * f, z * f , w * f };
 	}
 
+	vec4 vec4::operator*=(float f)
+	{
+		return *this = *this * f;
+	}
+
 	vec4 vec4::operator/(float f) const
 	{
 		return { x / f, y / f, z / f, w * f };
+	}
+
+	vec4 vec4::operator/=(float f)
+	{
+		return *this = *this / f;
 	}
 
 	float& vec4::operator[](int i)

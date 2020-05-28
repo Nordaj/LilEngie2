@@ -60,11 +60,13 @@ namespace LilEngie
 			TransformComponent* tc = actor->CreateComponent<TransformComponent>();
 			MeshComponent* mc = actor->CreateComponent<MeshComponent>();
 
-			std::string path("LilEngie/res/Models/square.obj");
+			std::string path("LilEngie/res/Models/teapot.fbx");
 			ResourceId id = ResourceId(path, ResourceType::Mesh);
 			MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
 
 			mc->meshRenderer.meshResId = id;
+
+			translate(tc->mat, vec3(0, 0, 3));
 		}
 
 		//Create camera actor
@@ -74,13 +76,10 @@ namespace LilEngie
 			TransformComponent* tc = cameraActor->CreateComponent<TransformComponent>();
 			CameraComponent* cc = cameraActor->CreateComponent<CameraComponent>();
 
-			//TODO, wont need to mult by -1 once inverse support
-			translate(tc->mat, vec3(0, 0, -6) * -1);
+			translate(tc->mat, vec3(0, 0, 0));
 		}
 
 		mainScene->Start();
-
-
 
 		//Main loop
 		if (start) start();

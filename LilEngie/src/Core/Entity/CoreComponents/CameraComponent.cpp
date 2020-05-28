@@ -6,6 +6,7 @@
 #include <Core/Debug/Log.h>
 #include <Core/Entity/Actor.h>
 #include <Core/Entity/CoreComponents/TransformComponent.h>
+#include <Core/Debug/Log.h>
 #include "CameraComponent.h"
 
 namespace LilEngie
@@ -27,9 +28,7 @@ namespace LilEngie
 	{
 		IGraphics* gfx = Renderer::core->gfx;
 
-		//TODO: use the inverse in the future
-		view = actor->transform->mat;
-
+		view = inverse(actor->transform->mat);
 		mat4 vp = projection * view;
 
 		ICBuffer* buf = Renderer::core->cbPerScene;

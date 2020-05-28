@@ -9,7 +9,7 @@ namespace LilEngie
 {
 	void MeshComponent::Update()
 	{
-		
+
 	}
 
 	void MeshComponent::OnDraw()

@@ -34,11 +34,20 @@ namespace LilEngie::Math
 	extern vec4 mul(const mat4& m, const vec4& v);
 	extern mat4 mul(const mat4& a, const mat4& b);
 
+	extern mat4 translate(vec3 v);
 	extern void translate(mat4& m, vec3 v);
+	extern mat4 rotate(vec3 euler);
 	extern void rotate(mat4& m, vec3 euler);
+	extern mat4 scale(vec3 v);
 	extern void scale(mat4& m, vec3 v);
 
 	extern mat4 projection(float r, float l, float t, float b, float n, float f);
+
+	extern float determinant(const mat4& m);
+	extern mat4 inverse(const mat4& m);
+	extern mat4 transpose(const mat4& m);
+
+	extern mat4 operator*(float f, mat4 m);
 
 	extern std::ostream& operator<<(std::ostream& os, const mat4& m);
 }

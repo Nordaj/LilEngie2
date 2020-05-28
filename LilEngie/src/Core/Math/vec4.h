@@ -26,7 +26,9 @@ namespace LilEngie::Math
 		void operator+=(const vec4& v);
 
 		vec4 operator*(float f) const;
+		vec4 operator*=(float f);
 		vec4 operator/(float f) const;
+		vec4 operator/=(float f);
 
 		float& operator[](int i);
 		float operator[](int i) const;
