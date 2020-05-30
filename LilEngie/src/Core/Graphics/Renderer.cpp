@@ -3,6 +3,7 @@
 #include <Core/Debug/DebugTimer.h>
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Resources/Types/MeshResource.h>
+#include <Core/Graphics/Material.h>
 #include <Core/Math/LilMath.h>
 #include "IRenderable.h"
 #include "Renderer.h"
@@ -60,6 +61,22 @@ namespace LilEngie
 		};
 
 		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 4);
+
+		//Just a sample of material usage
+		{
+			MaterialProperty properties[] = {
+				{"color", MaterialPropertyType::VEC3},
+				{"roughness", MaterialPropertyType::FLOAT}
+			};
+			Material m = Material(shader, properties, 2);
+
+			m.SetProperty("color", vec3(1, 1, 1));
+			m.SetProperty("roughness", .5);
+			m.UpdateProperties();
+
+			gfx->SetShader(m.shader);
+			m.BindCBuffer();
+		}
 	}
 
 	void Renderer::Shutdown()

@@ -39,7 +39,7 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
