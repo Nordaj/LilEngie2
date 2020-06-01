@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <optional>
+#include <vector>
 #include <Core/Core.h>
 #include "IResource.h"
 #include "ResourceId.h"
@@ -26,7 +27,7 @@ namespace LilEngie
 		IResource* LoadResource(const ResourceId& resourceId);
 		IResource* UnloadResource(const ResourceId& resourceId);
 
-		///Returns nullptr if resource is not loaded
+		//Returns nullptr if resource is not loaded
 		IResource* GetResource(const ResourceId& resourceId);
 
 		void UnloadAllResouces();

@@ -7,7 +7,9 @@ namespace LilEngie
 {
 	enum class ResourceType
 	{
-		Mesh
+		Mesh,
+		Shader,
+		Material
 	};
 
 	class LIL_API ResourceId

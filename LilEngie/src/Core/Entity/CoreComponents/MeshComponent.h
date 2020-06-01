@@ -13,6 +13,9 @@ namespace LilEngie
 	public:
 		MeshRenderer meshRenderer;
 
+	public:
+		void SetMaterial(Material* material);
+
 	private:
 		//void Start() override;
 		void Update() override;

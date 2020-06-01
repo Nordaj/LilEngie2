@@ -14,11 +14,13 @@
 #include <Core/Entity/CoreComponents/TransformComponent.h>
 #include <Core/Entity/CoreComponents/CameraComponent.h>
 #include <Core/Resources/Types/MeshResource.h>
+#include <Core/Resources/Types/ShaderResource.h>
+#include <Core/Resources/Types/MaterialResource.h>
+#include <Core/Graphics/Material.h>
 
 #include <Core/Math/vec3.h>
 
 #include "Game.h"
-
 
 namespace LilEngie
 {
@@ -39,7 +41,7 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -62,9 +64,16 @@ namespace LilEngie
 
 			std::string path("LilEngie/res/Models/teapot.fbx");
 			ResourceId id = ResourceId(path, ResourceType::Mesh);
-			MeshResource* meshResource = (MeshResource*)ResourceManager::core->LoadResource(id);
+			MeshResource* meshResource = (MeshResource*)resourceManager.LoadResource(id);
+
+			//Will also load unlit shader
+			std::string materialPath("LilEngie/res/Materials/Unlit.lilmat");
+			ResourceId materialId = ResourceId(materialPath, ResourceType::Material);
+			MaterialResource* materialResource = (MaterialResource*)resourceManager.LoadResource(materialId);
 
 			mc->meshRenderer.meshResId = id;
+			
+			mc->SetMaterial(materialResource->material);
 
 			translate(tc->mat, vec3(0, 0, 3));
 		}

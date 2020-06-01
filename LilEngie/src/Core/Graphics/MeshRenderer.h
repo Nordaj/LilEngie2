@@ -10,6 +10,7 @@ namespace LilEngie
 	class IGraphics;
 	class ICBuffer;
 	class MeshResource;
+	class Material;
 
 	class LIL_API MeshRenderer : public IRenderable
 	{
@@ -17,6 +18,7 @@ namespace LilEngie
 		MeshResource* meshResource;
 
 	public:
+		Material* material = nullptr;
 		ResourceId meshResId;
 		mat4 transform;
 

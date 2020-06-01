@@ -7,6 +7,11 @@
 
 namespace LilEngie
 {
+	void MeshComponent::SetMaterial(Material* material)
+	{
+		meshRenderer.material = material;
+	}
+
 	void MeshComponent::Update()
 	{
 

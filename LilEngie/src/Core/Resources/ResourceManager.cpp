@@ -2,10 +2,12 @@
 #include <string>
 #include <optional>
 #include <Core/Debug/Log.h>
-#include "ResourceManager.h"
 #include "IResource.h"
 #include "ResourceId.h"
 #include "Types/MeshResource.h"
+#include "Types/ShaderResource.h"
+#include "Types/MaterialResource.h"
+#include "ResourceManager.h"
 
 namespace LilEngie
 {
@@ -22,6 +24,11 @@ namespace LilEngie
 
 	IResource* ResourceManager::LoadResource(const ResourceId& resourceId)
 	{
+		//Just return if resource is loaded
+		IResource* res = GetResource(resourceId);
+		if (res) return res;
+
+		//Load resource
 		switch (resourceId.type)
 		{
 			case ResourceType::Mesh:
@@ -34,6 +41,28 @@ namespace LilEngie
 				}
 				resources[resourceId] = meshResource;
 				return meshResource;
+			}
+			case ResourceType::Shader:
+			{
+				ShaderResource* shaderResource = new ShaderResource(resourceId, this, false);
+				if (!shaderResource->LoadShader())
+				{
+					LIL_ERROR("Could not load shader resource...");
+					return nullptr;
+				}
+				resources[resourceId] = shaderResource;
+				return shaderResource;
+			}
+			case ResourceType::Material:
+			{
+				MaterialResource* materialResource = new MaterialResource(resourceId, this, false);
+				if (!materialResource->LoadMaterial())
+				{
+					LIL_ERROR("Could not load material resource...");
+					return nullptr;
+				}
+				resources[resourceId] = materialResource;
+				return materialResource;
 			}
 			default:
 				LIL_WARN("Resource type: ", std::to_string((int)resourceId.type), " not supported. No resourced will be loaded.");

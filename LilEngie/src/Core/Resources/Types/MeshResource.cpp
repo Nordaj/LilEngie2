@@ -11,7 +11,7 @@
 
 namespace LilEngie
 {
-	MeshResource::MeshResource(const ResourceId& resourceId, const ResourceManager* manager, bool load)
+	MeshResource::MeshResource(const ResourceId& resourceId, ResourceManager* manager, bool load)
 		: IResource(resourceId, manager)
 	{ 
 		if (load)

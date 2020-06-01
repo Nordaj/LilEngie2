@@ -334,6 +334,9 @@ namespace LilEngie
 	{
 		HRESULT hr = S_OK;
 
+		//DX11 requires size in multiples of 16, allocate extra if needed
+		size = 16 * ((size - 1) / 16 + 1);
+
 		//Setup cbuffer
 		DX11CBuffer* cBuffer = new DX11CBuffer();
 		cBuffer->data = new char[size];

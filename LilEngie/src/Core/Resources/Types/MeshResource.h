@@ -14,7 +14,7 @@ namespace LilEngie
 		Mesh mesh;
 
 	public:
-		MeshResource(const ResourceId& resourceId, const ResourceManager* manager, bool load = true);
+		MeshResource(const ResourceId& resourceId, ResourceManager* manager, bool load = true);
 		~MeshResource();
 
 		bool LoadMesh();

@@ -3,6 +3,7 @@
 #include <Core/Resources/Types/MeshResource.h>
 #include "Renderer.h"
 #include "Mesh.h"
+#include "Material.h"
 #include "MeshRenderer.h"
 
 namespace LilEngie
@@ -17,6 +18,13 @@ namespace LilEngie
 		//Skip if not ready
 		if (!GetMesh())
 			return;
+
+		//Setup material if using it
+		if (material)
+		{
+			gfx->SetShader(material->shader);
+			material->BindCBuffer();
+		}
 
 		//Update transform constant buffer
 		ICBuffer* buf = Renderer::core->cbPerObject;
