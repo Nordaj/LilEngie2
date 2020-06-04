@@ -9,7 +9,8 @@ namespace LilEngie
 	{
 		Mesh,
 		Shader,
-		Material
+		Material,
+		Texture
 	};
 
 	class LIL_API ResourceId

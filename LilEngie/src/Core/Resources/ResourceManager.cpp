@@ -7,6 +7,7 @@
 #include "Types/MeshResource.h"
 #include "Types/ShaderResource.h"
 #include "Types/MaterialResource.h"
+#include "Types/TextureResource.h"
 #include "ResourceManager.h"
 
 namespace LilEngie
@@ -64,6 +65,17 @@ namespace LilEngie
 				resources[resourceId] = materialResource;
 				return materialResource;
 			}
+			case ResourceType::Texture:
+			{
+				TextureResource* textureResource = new TextureResource(resourceId, this, false);
+				if (!textureResource->LoadTexture())
+				{
+					LIL_ERROR("Could not load texture resource...");
+					return nullptr;
+				}
+				resources[resourceId] = textureResource;
+				return textureResource;
+			}
 			default:
 				LIL_WARN("Resource type: ", std::to_string((int)resourceId.type), " not supported. No resourced will be loaded.");
 				return nullptr;
@@ -79,6 +91,9 @@ namespace LilEngie
 
 	IResource* ResourceManager::GetResource(const ResourceId& resourceId)
 	{
+		if (resources.find(resourceId) == resources.end())
+			return nullptr;
+
 		return resources[resourceId];
 	}
 

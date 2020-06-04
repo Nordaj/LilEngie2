@@ -51,4 +51,13 @@ namespace LilEngie
 			data = nullptr;
 		}
 	}
+
+	GLTexture::~GLTexture()
+	{
+		if (texture == 0)
+			return;
+
+		glDeleteTextures(1, &texture);
+		texture = 0;
+	}
 }

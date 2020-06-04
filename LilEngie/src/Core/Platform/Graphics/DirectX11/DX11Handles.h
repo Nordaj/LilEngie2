@@ -68,4 +68,18 @@ namespace LilEngie
 	public:
 		~DX11CBuffer();
 	};
+
+	class DX11Texture : public ITexture
+	{
+		friend class DX11Graphics;
+
+	private:
+		ID3D11Texture2D* texture;
+		ID3D11ShaderResourceView* view;
+		ID3D11SamplerState* samplerState;
+
+	public:
+		~DX11Texture();
+	};
+
 }

@@ -413,6 +413,112 @@ namespace LilEngie
 		*cBuffer = nullptr;
 	}
 
+	ITexture* DX11Graphics::CreateTexture(uint w, uint h, TextureFormat format, void* data, bool wrap, bool mipmaps, bool filter)
+	{
+		HRESULT hr = S_OK;
+
+		//Create texture obj
+		DX11Texture* tex = new DX11Texture();
+
+		//Get format
+		DXGI_FORMAT dxFormat;
+		uint pSize;
+		switch (format)
+		{
+			case LilEngie::TextureFormat::R8:
+				dxFormat = DXGI_FORMAT_R8_UNORM;
+				pSize = 1;
+				break;
+			case LilEngie::TextureFormat::R8G8:
+				dxFormat = DXGI_FORMAT_R8G8_UNORM;
+				pSize = 2;
+				break;
+			case LilEngie::TextureFormat::R8G8B8A8:
+				dxFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+				pSize = 4;
+				break;
+			default:
+				dxFormat = DXGI_FORMAT_R8_UNORM;
+				pSize = 1;
+				break;
+		}
+
+		//Texture description
+		D3D11_TEXTURE2D_DESC desc = {};
+		desc.Width = w;
+		desc.Height = h;
+		desc.MipLevels = 1; //docs says use 0 for auto generated  miplevels but that doesnt work???
+		desc.ArraySize = 1;
+		desc.Format = dxFormat;
+		desc.SampleDesc.Count = 1;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		desc.MiscFlags = mipmaps ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
+
+		//Initial data
+		D3D11_SUBRESOURCE_DATA initData = {};
+		initData.pSysMem = data;
+		initData.SysMemPitch = w * pSize;
+
+		//Create the texture
+		hr = ctx->device->CreateTexture2D(&desc, &initData, &tex->texture);
+		if (FAILED(hr))
+		{
+			LIL_ERROR("Could not create Texture2D");
+			delete tex;
+			return nullptr;
+		}
+
+		//Create resource view
+		hr = ctx->device->CreateShaderResourceView(tex->texture, nullptr, &tex->view);
+		if (FAILED(hr))
+		{
+			LIL_ERROR("Could not create texture resource view");
+			delete tex;
+			return nullptr;
+		}
+
+		//Sampler state desc
+		D3D11_SAMPLER_DESC samplerDesc = {};
+		samplerDesc.Filter = filter ? D3D11_FILTER_MIN_MAG_MIP_LINEAR : D3D11_FILTER_MIN_MAG_MIP_POINT;
+		samplerDesc.AddressU = wrap ? D3D11_TEXTURE_ADDRESS_WRAP : D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = wrap ? D3D11_TEXTURE_ADDRESS_WRAP : D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = wrap ? D3D11_TEXTURE_ADDRESS_WRAP : D3D11_TEXTURE_ADDRESS_CLAMP;
+
+		//Create sampler state
+		hr = ctx->device->CreateSamplerState(&samplerDesc, &tex->samplerState);
+		if (FAILED(hr))
+		{
+			LIL_ERROR("Could not create sampler state");
+			delete tex;
+			return nullptr;
+		}
+
+		//Mip maps
+		if (mipmaps)
+			ctx->deviceContext->GenerateMips(tex->view);
+
+		return tex;
+	}
+
+	void DX11Graphics::BindTexture(ITexture* texture, uint slot)
+	{
+		DX11Texture* tex = (DX11Texture*)texture;
+
+		ctx->deviceContext->PSSetShaderResources(slot, 1, &tex->view);
+		ctx->deviceContext->PSSetSamplers(slot, 1, &tex->samplerState);
+	}
+
+	void DX11Graphics::ReleaseTexture(ITexture** texture)
+	{
+		if (!texture)
+			return;
+
+		delete* texture;
+		*texture = nullptr;
+	}
+
 	void DX11Graphics::Shutdown()
 	{
 		ctx->device->Release();

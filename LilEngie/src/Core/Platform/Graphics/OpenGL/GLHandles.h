@@ -63,4 +63,15 @@ namespace LilEngie
 	public:
 		~GLCBuffer();
 	};
+
+	class GLTexture : public ITexture
+	{
+		friend class GLGraphics;
+
+	private:
+		uint texture;
+
+	public:
+		~GLTexture();
+	};
 }

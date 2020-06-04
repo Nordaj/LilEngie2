@@ -17,6 +17,7 @@
 #include <Core/Resources/Types/ShaderResource.h>
 #include <Core/Resources/Types/MaterialResource.h>
 #include <Core/Graphics/Material.h>
+#include <Core/Resources/Types/TextureResource.h>
 
 #include <Core/Math/vec3.h>
 
@@ -75,7 +76,8 @@ namespace LilEngie
 			
 			mc->SetMaterial(materialResource->material);
 
-			translate(tc->mat, vec3(0, 0, 3));
+			rotate(tc->mat, vec3(0, 45, 0));
+			translate(tc->mat, vec3(0, 0, 2));
 		}
 
 		//Create camera actor

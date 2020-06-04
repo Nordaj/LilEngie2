@@ -8,6 +8,7 @@ namespace LilEngie
 {
 	class IShader;
 	class ICBuffer;
+	class ITexture;
 	class Renderer;
 
 	enum class MaterialPropertyType : uint { MAT4 = 64, VEC4 = 16, VEC3 = 12, FLOAT = 4 };
@@ -18,6 +19,13 @@ namespace LilEngie
 		MaterialPropertyType type;
 	};
 
+	struct TextureProperty
+	{
+		std::string name;
+		ITexture* texture;
+		uint slot;
+	};
+
 	class LIL_API Material
 	{
 	public:
@@ -26,9 +34,11 @@ namespace LilEngie
 		ICBuffer* cBuffer;
 		MaterialProperty* properties;
 		uint propertyCount;
+		TextureProperty* textures;
+		uint textureCount;
 
 	public:
-		Material(IShader* shader, MaterialProperty properties[], uint propertyCount, Renderer* renderer = nullptr);
+		Material(IShader* shader, MaterialProperty properties[], uint propertyCount, TextureProperty textures[], uint textureCount, Renderer* renderer = nullptr);
 		~Material();
 
 		bool SetProperty(std::string name, const mat4& value);
@@ -37,6 +47,9 @@ namespace LilEngie
 		bool SetProperty(std::string name, float value);
 		void UpdateProperties();
 
-		void BindCBuffer();
+		bool SetTexture(const std::string& name, TextureProperty texture);
+		TextureProperty GetTexture(const std::string& name);
+
+		void BindMaterial();
 	};
 }

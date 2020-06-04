@@ -6,7 +6,7 @@
 
 namespace LilEngie
 {
-	Material::Material(IShader* shader, MaterialProperty properties[], uint n, Renderer* renderer)
+	Material::Material(IShader* shader, MaterialProperty properties[], uint n, TextureProperty ts[], uint tn, Renderer* renderer)
 		: shader(shader), propertyCount(n)
 	{
 		//Setup local buffer
@@ -22,6 +22,20 @@ namespace LilEngie
 		//Keep track of renderer
 		ren = renderer == nullptr ? Renderer::core : renderer;
 
+		//Copy array of texture properties
+		if (tn > 0)
+		{
+			textureCount = tn;
+			textures = new TextureProperty[tn];
+			for (int i = 0; i < tn; i++)
+				textures[i] = ts[i];
+		}
+		else
+		{
+			textures = nullptr;
+			textureCount = 0;
+		}
+
 		//Setup cbuffer
 		cBuffer = ren->gfx->CreateCBuffer(cbSize);
 	}
@@ -30,6 +44,9 @@ namespace LilEngie
 	{
 		ren->gfx->ReleaseCBuffer(&cBuffer);
 		delete[] properties;
+
+		if (textures)
+			delete[] textures;
 	}
 
 	bool Material::SetProperty(std::string name, const mat4& value)
@@ -129,8 +146,33 @@ namespace LilEngie
 		ren->gfx->UpdateCBuffer(cBuffer);
 	}
 
-	void Material::BindCBuffer()
+	bool Material::SetTexture(const std::string& name, TextureProperty texture)
+	{
+		for (int i = 0; i < textureCount; i++)
+		{
+			if (textures[i].name == name)
+			{
+				textures[i] = texture;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	TextureProperty Material::GetTexture(const std::string& name)
+	{
+		for (int i = 0; i < textureCount; i++)
+		{
+			if (textures[i].name == name)
+				return textures[i];
+		}
+	}
+
+	void Material::BindMaterial()
 	{
 		ren->gfx->BindCBuffer(cBuffer, ShaderType::Fragment, 3);
+
+		for (int i = 0; i < textureCount; i++)
+			ren->gfx->BindTexture(textures[i].texture, textures[i].slot);
 	}
 }

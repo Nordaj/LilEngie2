@@ -8,6 +8,7 @@
 #include <Core/Debug/Log.h>
 #include <Core/Math/LilMath.h>
 #include "ShaderResource.h"
+#include "TextureResource.h"
 #include "../ResourceManager.h"
 #include "MaterialResource.h"
 
@@ -71,8 +72,21 @@ namespace LilEngie
 				properties.push_back({ e["name"], MaterialPropertyType::MAT4 });
 		}
 
+		//Get textures
+		std::vector<TextureProperty> texProperties;
+		for (auto& e : obj["textures"])
+		{
+			//Get texture resource
+			std::string path = e["path"];
+			ResourceId texId = ResourceId(path, ResourceType::Texture);
+			TextureResource* texResource = (TextureResource*)manager->LoadResource(texId);
+
+			//Add to texture properties
+			texProperties.push_back({ e["name"], texResource->texture, e["slot"] });
+		}
+
 		//Create material
-		material = new Material(shader, &properties[0], properties.size());
+		material = new Material(shader, &properties[0], properties.size(), &texProperties[0], texProperties.size());
 
 		//Set property default values
 		for (auto& e : obj["properties"])

@@ -33,4 +33,10 @@ namespace LilEngie
 	public:
 		virtual ~ICBuffer() {}
 	};
+
+	class LIL_API ITexture
+	{
+	public:
+		virtual ~ITexture() {}
+	};
 }

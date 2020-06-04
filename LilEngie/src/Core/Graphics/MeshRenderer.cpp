@@ -23,7 +23,7 @@ namespace LilEngie
 		if (material)
 		{
 			gfx->SetShader(material->shader);
-			material->BindCBuffer();
+			material->BindMaterial();
 		}
 
 		//Update transform constant buffer

@@ -21,6 +21,13 @@ namespace LilEngie
 		Vertex 
 	};
 
+	enum class TextureFormat
+	{
+		R8,
+		R8G8,
+		R8G8B8A8
+	};
+
 	class LIL_API IGraphics
 	{
 	private:
@@ -62,6 +69,11 @@ namespace LilEngie
 		virtual void UpdateCBuffer(ICBuffer* cBuffer) = 0;
 		virtual void BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot) = 0;
 		virtual void ReleaseCBuffer(ICBuffer** cBuffer) = 0;
+
+		//Textures
+		virtual ITexture* CreateTexture(uint width, uint height, TextureFormat format, void* data, bool wrap = true, bool mipmaps = true, bool filter = true) = 0;
+		virtual void BindTexture(ITexture* texture, uint slot) = 0;
+		virtual void ReleaseTexture(ITexture** texture) = 0;
 
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = GraphicsAPI::DirectX11);
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);

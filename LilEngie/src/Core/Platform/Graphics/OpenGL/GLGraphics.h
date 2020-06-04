@@ -52,6 +52,11 @@ namespace LilEngie
 		void BindCBuffer(ICBuffer* cBuffer, ShaderType type, uint slot) override;
 		void ReleaseCBuffer(ICBuffer** cBuffer) override;
 
+		//Textures
+		ITexture* CreateTexture(uint width, uint height, TextureFormat format, void* data, bool wrap = true, bool mipmaps = true, bool filter = true) override;
+		void BindTexture(ITexture* texture, uint slot) override;
+		void ReleaseTexture(ITexture** texture) override;
+
 	private:
 		void Shutdown() override;
 		IInputLayout* CreateLayout(InputElement* elements, uint numElements);

@@ -3,6 +3,9 @@ cbuffer PerMaterial : register(b3)
 	float3 color;
 }
 
+sampler samp;
+Texture2D<float4> tex;
+
 struct VSOutput
 {
 	float4 position : POSITION;
@@ -11,5 +14,6 @@ struct VSOutput
 
 float4 main(in VSOutput i) : SV_TARGET
 {
-	return float4(color, 1);
+	//return float4(color, 1);
+	return tex.Sample(samp, i.texCoord);
 }

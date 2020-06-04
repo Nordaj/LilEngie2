@@ -56,11 +56,10 @@ namespace LilEngie
 			return;
 		}
 
+		glEnable(GL_DEPTH_TEST);
+
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
-
-		//TODO: remove
-		glDisable(GL_CULL_FACE);
 	}
 
 	void GLGraphics::SetClearColor(float r, float g, float b, float a)
@@ -312,6 +311,61 @@ namespace LilEngie
 
 		delete *cBuffer;
 		*cBuffer = nullptr;
+	}
+
+	ITexture* GLGraphics::CreateTexture(uint w, uint h, TextureFormat format, void* data, bool wrap, bool mipmaps, bool filter)
+	{
+		GLTexture* tex = new GLTexture();
+
+		glGenTextures(1, &tex->texture);
+		glBindTexture(GL_TEXTURE_2D, tex->texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap ? GL_REPEAT : GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap ? GL_REPEAT : GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter ? GL_LINEAR : GL_POINT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter ? GL_LINEAR : GL_POINT);
+
+		uint glFormat = -1;
+		switch (format)
+		{
+			case TextureFormat::R8:
+				glFormat = GL_RED;
+				break;
+			case TextureFormat::R8G8:
+				glFormat = GL_RG;
+				break;
+			case TextureFormat::R8G8B8A8:
+				glFormat = GL_RGBA;
+				break;
+			default:
+				glFormat = GL_RED;
+		}
+
+		//Set the data
+		glTexImage2D(GL_TEXTURE_2D, 0, glFormat, w, h, 0, glFormat, GL_UNSIGNED_BYTE, data);
+		if (mipmaps)
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+		return tex;
+	}
+
+	void GLGraphics::BindTexture(ITexture* texture, uint slot)
+	{
+		GLTexture* tex = (GLTexture*)texture;
+
+		glBindTexture(GL_TEXTURE_2D, tex->texture);
+
+		glActiveTexture(GL_TEXTURE0 + slot);
+		glBindTexture(GL_TEXTURE_2D, tex->texture);
+	}
+
+	void GLGraphics::ReleaseTexture(ITexture** texture)
+	{
+		if (!texture)
+			return;
+
+		delete *texture;
+		*texture = nullptr;
 	}
 
 	void GLGraphics::Shutdown()

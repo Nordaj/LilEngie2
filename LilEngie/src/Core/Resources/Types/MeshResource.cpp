@@ -49,7 +49,7 @@ namespace LilEngie
 			if (mesh->HasTangentsAndBitangents())
 				verts[i].tangent = { mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z, 1 };
 
-			if (mesh->HasTextureCoords(i))
+			if (mesh->HasTextureCoords(0))
 			{
 				verts[i].u = mesh->mTextureCoords[0][i].x;
 				verts[i].v = mesh->mTextureCoords[0][i].y;

@@ -61,4 +61,25 @@ namespace LilEngie
 			data = nullptr;
 		}
 	}
+
+	DX11Texture::~DX11Texture()
+	{
+		if (texture)
+		{
+			texture->Release();
+			texture = nullptr;
+		}
+
+		if (view)
+		{
+			view->Release();
+			view = nullptr;
+		}
+
+		if (samplerState)
+		{
+			samplerState->Release();
+			samplerState = nullptr;
+		}
+	}
 }

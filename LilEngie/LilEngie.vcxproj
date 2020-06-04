@@ -155,7 +155,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -173,7 +173,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -193,7 +193,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -215,7 +215,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -246,7 +246,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -268,7 +268,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -293,7 +293,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -314,7 +314,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -377,6 +377,7 @@
     <ClInclude Include="src\Core\Resources\Types\MaterialResource.h" />
     <ClInclude Include="src\Core\Resources\Types\MeshResource.h" />
     <ClInclude Include="src\Core\Resources\Types\ShaderResource.h" />
+    <ClInclude Include="src\Core\Resources\Types\TextureResource.h" />
     <ClInclude Include="src\Core\System\PoolAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.ipp" />
@@ -415,6 +416,7 @@
     <ClCompile Include="src\Core\Resources\Types\MaterialResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\MeshResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\ShaderResource.cpp" />
+    <ClCompile Include="src\Core\Resources\Types\TextureResource.cpp" />
     <ClCompile Include="src\Core\System\PoolAllocator.cpp" />
     <ClCompile Include="src\Core\System\StackAllocator.cpp" />
   </ItemGroup>

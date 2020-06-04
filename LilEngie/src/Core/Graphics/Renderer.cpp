@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Debug/Log.h>
 #include <Core/Debug/DebugTimer.h>
@@ -14,6 +16,7 @@ namespace LilEngie
 
 	IInputLayout* layout;
 	IShader* shader;
+	ITexture* texture;
 
 	Renderer::Renderer()
 	{
