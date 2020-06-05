@@ -11,6 +11,7 @@
 #include "DX11Graphics.h"
 
 #define GFX_ERROR(x) { LIL_ERROR(x); return; }
+#define LOG_GFX_ERROR false
 
 namespace LilEngie
 {
@@ -21,7 +22,11 @@ namespace LilEngie
 		ID3D11Device* device;
 		ID3D11DeviceContext* deviceContext;
 		ID3D11RenderTargetView* renderTargetView;
+		ID3D11Texture2D* depthStencil;
+		ID3D11DepthStencilState* depthStencilState;
+		ID3D11DepthStencilView* depthStencilView;
 		IDXGISwapChain* swapChain;
+		ID3D11InfoQueue* debugInfoQueue;
 	};
 
 	DX11Graphics::~DX11Graphics()
@@ -52,15 +57,21 @@ namespace LilEngie
 		scd.SampleDesc.Count = 1;
 		scd.SampleDesc.Quality = 0;
 		scd.Windowed = true;
+		//scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 		//Might want to change later
 		D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_1, D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_1 };
+
+		uint flags = {};
+	#ifdef LIL_DEBUG
+		flags |= D3D11_CREATE_DEVICE_DEBUG;
+	#endif //LIL_DEBUG
 
 		hr = D3D11CreateDeviceAndSwapChain(
 			NULL,
 			D3D_DRIVER_TYPE_HARDWARE,
 			NULL,
-			NULL,
+			flags,
 			featureLevels,
 			3,
 			D3D11_SDK_VERSION,
@@ -73,8 +84,16 @@ namespace LilEngie
 		if (FAILED(hr))
 			GFX_ERROR("Failed to create Direct3D11 device and swap chain.");
 
-		//Setup render target view
-		SetupRenderTargetView();
+		//Debug stuff
+	#ifdef LIL_DEBUG
+		hr = ctx->device->QueryInterface(__uuidof(ID3D11InfoQueue), (void**)&ctx->debugInfoQueue);
+		if (FAILED(hr))
+			GFX_ERROR("Could not create dx11 debug info queue.");
+
+		hr = ctx->debugInfoQueue->PushEmptyStorageFilter();
+		if (FAILED(hr))
+			GFX_ERROR("Something failed with dx11 debug queue");
+	#endif //LIL_DEBUG
 
 		//Set viewport
 		D3D11_VIEWPORT viewport = {};
@@ -82,6 +101,12 @@ namespace LilEngie
 		viewport.Height = (float)windowProperties.height;
 		viewport.MaxDepth = 1;
 		ctx->deviceContext->RSSetViewports(1, &viewport);
+
+		//Create depth stencil buffers
+		SetupDepthStencil(windowProperties.width, windowProperties.height);
+
+		//Setup render target view
+		SetupRenderTargetView();
 	}
 
 	void DX11Graphics::SetClearColor(float r, float g, float b, float a)
@@ -95,6 +120,7 @@ namespace LilEngie
 	void DX11Graphics::Clear()
 	{
 		ctx->deviceContext->ClearRenderTargetView(ctx->renderTargetView, clearColor);
+		ctx->deviceContext->ClearDepthStencilView(ctx->depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1., 0);
 	}
 
 	void DX11Graphics::Render()
@@ -103,6 +129,11 @@ namespace LilEngie
 		hr = ctx->swapChain->Present(1, 0); //1=vsync
 		if (FAILED(hr))
 			GFX_ERROR("Failed to present Direct3D11 swap chain.");
+
+		//Debug only
+	#ifdef LIL_DEBUG
+		HandleDebugMessages();
+	#endif
 	}
 
 	void DX11Graphics::Resize(int width, int height)
@@ -113,6 +144,9 @@ namespace LilEngie
 
 		//Resize the buffers
 		ctx->swapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+
+		//Create new depth stencil buffers
+		SetupDepthStencil(width, height);
 
 		//Setup new render target view
 		SetupRenderTargetView();
@@ -525,6 +559,9 @@ namespace LilEngie
 		ctx->deviceContext->Release();
 		ctx->renderTargetView->Release();
 		ctx->swapChain->Release();
+		ctx->depthStencil->Release();
+		ctx->depthStencilState->Release();
+		ctx->depthStencilView->Release();
 		delete ctx;
 		ctx = nullptr;
 	}
@@ -629,6 +666,79 @@ namespace LilEngie
 		return layout;
 	}
 
+	void DX11Graphics::SetupDepthStencil(int width, int height)
+	{
+		HRESULT hr = S_OK;
+
+		//Create new depth buffers
+		if (ctx->depthStencil)
+		{
+			ctx->depthStencil->Release();
+			ctx->depthStencil = nullptr;
+		}
+
+		D3D11_TEXTURE2D_DESC dd = {};
+		dd.Width = width;
+		dd.Height = height;
+		dd.MipLevels = 1;
+		dd.ArraySize = 1;
+		dd.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		dd.SampleDesc.Count = 1;
+		dd.Usage = D3D11_USAGE_DEFAULT;
+		dd.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+		hr = ctx->device->CreateTexture2D(&dd, nullptr, &ctx->depthStencil);
+		if (FAILED(hr))
+			GFX_ERROR("Failed to create depth stencil buffer");
+
+		//Create depth stencil state
+		if (ctx->depthStencilState)
+		{
+			ctx->depthStencilState->Release();
+			ctx->depthStencilState = nullptr;
+		}
+
+		D3D11_DEPTH_STENCIL_DESC dsd = {};
+		dsd.DepthEnable = true;
+		dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		dsd.DepthFunc = D3D11_COMPARISON_LESS;
+
+		dsd.StencilEnable = true;
+		dsd.StencilReadMask = 0xff;
+		dsd.StencilWriteMask = 0xff;
+
+		dsd.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		dsd.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+		dsd.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		dsd.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+		dsd.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		dsd.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+		dsd.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		dsd.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+		hr = ctx->device->CreateDepthStencilState(&dsd, &ctx->depthStencilState);
+		if (FAILED(hr))
+			GFX_ERROR("Failed to create depth stencil state");
+
+		ctx->deviceContext->OMSetDepthStencilState(ctx->depthStencilState, 1);
+
+		//Create depth stencil view
+		if (ctx->depthStencilView)
+		{
+			ctx->depthStencilView->Release();
+			ctx->depthStencilView = nullptr;
+		}
+
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsdv = {};
+		dsdv.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		dsdv.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+		hr = ctx->device->CreateDepthStencilView(ctx->depthStencil, &dsdv, &ctx->depthStencilView);
+		if (FAILED(hr))
+			GFX_ERROR("Failed to create depth stencil view");
+	}
+
 	void DX11Graphics::SetupRenderTargetView()
 	{
 		HRESULT hr = S_OK;
@@ -647,8 +757,46 @@ namespace LilEngie
 		if (FAILED(hr))
 			GFX_ERROR("Failed to create Direct3D11 render target view.");
 
-		ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, NULL);
+		ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, ctx->depthStencilView);
 
 		tex->Release();
+	}
+
+	void DX11Graphics::HandleDebugMessages()
+	{
+		//Dx11 can be a little too verbose, just a convinient thing to disable
+	#if LOG_GFX_ERROR == false
+		return;
+	#endif //LOG_GFX_ERROR
+
+		uint mc = ctx->debugInfoQueue->GetNumStoredMessages();
+
+		for (int i = 0; i < mc; i++)
+		{
+			size_t msgSize;
+			ctx->debugInfoQueue->GetMessage(i, nullptr, &msgSize);
+
+			//D3D11_MESSAGE* message = (D3D11_MESSAGE*)malloc(msgSize);
+			D3D11_MESSAGE* message = (D3D11_MESSAGE*)new char[msgSize];
+			ctx->debugInfoQueue->GetMessage(i, message, &msgSize);
+
+			//print message here
+			switch (message->Severity)
+			{
+				case D3D11_MESSAGE_SEVERITY_CORRUPTION:
+				case D3D11_MESSAGE_SEVERITY_ERROR:
+					LIL_ERROR(message->pDescription);
+					break;
+				case D3D11_MESSAGE_SEVERITY_WARNING:
+					LIL_WARN(message->pDescription);
+					break;
+				default:
+					break;
+			}
+
+			delete[] message;
+		}
+
+		ctx->debugInfoQueue->ClearStoredMessages();
 	}
 }

@@ -58,8 +58,14 @@ namespace LilEngie
 
 		glEnable(GL_DEPTH_TEST);
 
+		glFrontFace(GL_CW);
+		glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
+
+	#ifdef LIL_DEBUG
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
+	#endif //LIL_DEBUG
 	}
 
 	void GLGraphics::SetClearColor(float r, float g, float b, float a)

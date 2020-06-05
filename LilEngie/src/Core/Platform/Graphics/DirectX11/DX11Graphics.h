@@ -60,6 +60,8 @@ namespace LilEngie
 	private:
 		void Shutdown() override;
 		IInputLayout* CreateLayout(void* shaderBlob, InputElement* elements, uint numElements);
+		void SetupDepthStencil(int width, int height);
 		void SetupRenderTargetView();
+		void HandleDebugMessages();
 	};
 }
