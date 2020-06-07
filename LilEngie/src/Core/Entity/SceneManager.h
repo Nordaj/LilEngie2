@@ -14,6 +14,9 @@ namespace LilEngie
 		Scene* scene = nullptr;
 
 	public:
+		void UnloadScene();
 		void Shutdown();
+
+		bool LoadScene(const char* path);
 	};
 }

@@ -11,6 +11,10 @@ namespace LilEngie
 	public:
 		mat4 mat;
 
+		PROPERTIES(
+			PROPERTY(mat)
+		)
+
 	public:
 		void Start() override;
 		void Update() override;

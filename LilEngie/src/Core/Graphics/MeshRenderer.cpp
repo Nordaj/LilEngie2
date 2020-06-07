@@ -8,11 +8,6 @@
 
 namespace LilEngie
 {
-	MeshRenderer::MeshRenderer()
-	{
-		GetMesh();
-	}
-
 	void MeshRenderer::Render(IGraphics* gfx)
 	{
 		//Skip if not ready
@@ -39,7 +34,7 @@ namespace LilEngie
 	MeshResource* MeshRenderer::GetMesh()
 	{
 		if (!meshResource)
-			meshResource = (MeshResource*)ResourceManager::core->GetResource(meshResId);
+			meshResource = (MeshResource*)ResourceManager::core->LoadResource(meshResId);
 		return meshResource;
 	}
 }

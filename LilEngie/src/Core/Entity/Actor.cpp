@@ -1,5 +1,6 @@
 #include "IComponent.h"
 #include "Scene.h"
+#include "SceneManager.h"
 #include "Actor.h"
 
 namespace LilEngie
@@ -80,5 +81,19 @@ namespace LilEngie
 
 		for (int i = 0; i < children.size(); i++)
 			children[i]->Start();
+	}
+
+	Actor* ActorRef::Get()
+	{
+		if (actor) 
+			return actor;
+
+		actor = SceneManager::core->scene->GetActor(uid);
+		return actor;
+	}
+
+	Actor* ActorRef::operator->()
+	{
+		return Get();
 	}
 }

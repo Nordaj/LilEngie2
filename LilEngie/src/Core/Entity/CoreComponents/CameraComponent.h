@@ -2,6 +2,7 @@
 
 #include <Core/Core.h>
 #include <Core/Math/LilMath.h>
+#include "../Actor.h"
 #include "../IComponent.h"
 
 namespace LilEngie
@@ -17,6 +18,14 @@ namespace LilEngie
 		mat4 view;
 		mat4 projection;
 
+		PROPERTIES(
+			PROPERTY(fov)
+			PROPERTY(n)
+			PROPERTY(f)
+			PROPERTY(ar)
+		)
+
+	public:
 		void Start() override;
 		void Update() override;
 		void OnDraw() override;

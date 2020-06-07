@@ -339,6 +339,8 @@
     <ClInclude Include="src\Core\Debug\DebugTimer.h" />
     <ClInclude Include="src\Core\Debug\Log.h" />
     <ClInclude Include="src\Core\Entity\Actor.ipp" />
+    <ClInclude Include="src\Core\Entity\ComponentInstantiator.h" />
+    <ClInclude Include="src\Core\Entity\ComponentList.h" />
     <ClInclude Include="src\Core\Entity\CoreComponents\CameraComponent.h" />
     <ClInclude Include="src\Core\Entity\CoreComponents\TransformComponent.h" />
     <ClInclude Include="src\Core\Entity\IComponent.h" />
@@ -378,6 +380,7 @@
     <ClInclude Include="src\Core\Resources\Types\MeshResource.h" />
     <ClInclude Include="src\Core\Resources\Types\ShaderResource.h" />
     <ClInclude Include="src\Core\Resources\Types\TextureResource.h" />
+    <ClInclude Include="src\Core\System\ISerializable.h" />
     <ClInclude Include="src\Core\System\PoolAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.ipp" />
@@ -412,11 +415,13 @@
     <ClCompile Include="src\Core\Platform\Graphics\OpenGL\GLHandles.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Window.cpp" />
     <ClCompile Include="src\Core\Platform\Window\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\Core\Resources\ResourceId.cpp" />
     <ClCompile Include="src\Core\Resources\ResourceManager.cpp" />
     <ClCompile Include="src\Core\Resources\Types\MaterialResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\MeshResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\ShaderResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\TextureResource.cpp" />
+    <ClCompile Include="src\Core\System\ISerializable.cpp" />
     <ClCompile Include="src\Core\System\PoolAllocator.cpp" />
     <ClCompile Include="src\Core\System\StackAllocator.cpp" />
   </ItemGroup>

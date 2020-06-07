@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include <Core/Core.h>
 #include "IComponent.h"
@@ -13,6 +14,8 @@ namespace LilEngie
 		friend class Scene;
 
 	public:
+		std::string name;
+		std::string uid;
 		Actor* parent;
 		TransformComponent* transform;
 
@@ -42,6 +45,23 @@ namespace LilEngie
 		void Start();
 		void Update();
 		void OnDraw();
+	};
+
+	class LIL_API ActorRef : public ISerializable
+	{
+	public:
+		std::string uid;
+		Actor* actor;
+
+		PROPERTIES(
+			PROPERTY(uid)
+		)
+
+	public:
+		Actor* Get();
+
+		Actor* operator->();
+		operator Actor*() { return Get(); }
 	};
 }
 

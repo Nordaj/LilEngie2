@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include <Core/Core.h>
 #include "Actor.h"
 
@@ -12,6 +13,7 @@ namespace LilEngie
 		std::string name;
 
 	private:
+		std::map<std::string, Actor*> actors;
 		Actor* root;
 		bool isEnabled;
 		bool isInitialized;
@@ -32,7 +34,9 @@ namespace LilEngie
 		void Update();
 		void OnDraw();
 
-		Actor* CreateActor(Actor* parent = nullptr);
+		Actor* CreateActor(std::string uid, Actor* parent = nullptr);
 		void DestroyActor(Actor* actor);
+
+		Actor* GetActor(std::string uid);
 	};
 }

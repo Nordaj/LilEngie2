@@ -1,0 +1,55 @@
+{
+	"actors": [
+		{
+			"name": "Mesh Actor",
+			"uid": "Mesh Actor",
+			"parent": "ROOT",
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"mat": [1, 0, 0, 0,
+								0, 1, 0, 0,
+								0, 0, 1, 2,
+								0, 0, 0, 1]
+					}
+				},
+
+				{
+					"type": "mesh",
+					"properties": {
+						"meshId": ["LilEngie/res/Models/teapot.fbx", "mesh"],
+						"matId": ["LilEngie/res/Materials/Unlit.lilmat", "material"]
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Camera Actor",
+			"uid": "Camera Actor",
+			"parent": "ROOT",
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"mat": [1, 0, 0, 0,
+								0, 1, 0, 0,
+								0, 0, 1, 0,
+								0, 0, 0, 1]
+					}
+				},
+
+				{
+					"type": "camera",
+					"properties": {
+						"fov": 60,
+						"n": 0.1,
+						"f": 100,
+						"ar": 1.777777
+					}
+				}
+			]
+		}
+	]
+}

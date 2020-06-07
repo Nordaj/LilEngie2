@@ -23,7 +23,7 @@ namespace LilEngie
 		mat4 transform;
 
 	public:
-		MeshRenderer();
+		MeshRenderer() {}
 		void Render(IGraphics* gfxContext);
 
 	private:

@@ -18,8 +18,9 @@
 #include <Core/Resources/Types/MaterialResource.h>
 #include <Core/Graphics/Material.h>
 #include <Core/Resources/Types/TextureResource.h>
+#include <Core/Math/LilMath.h>
 
-#include <Core/Math/vec3.h>
+#include <Core/System/ISerializable.h>
 
 #include "Game.h"
 
@@ -47,50 +48,8 @@ namespace LilEngie
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
 
-		//TEST BENCH
-
-
-		
-		//Setup main scene
-		Scene* mainScene = new Scene();
-		sceneManager.scene = mainScene;
-		mainScene->Init();
-
-		//Create mesh actor
-		{
-			Actor* actor = mainScene->CreateActor();
-
-			TransformComponent* tc = actor->CreateComponent<TransformComponent>();
-			MeshComponent* mc = actor->CreateComponent<MeshComponent>();
-
-			std::string path("LilEngie/res/Models/teapot.fbx");
-			ResourceId id = ResourceId(path, ResourceType::Mesh);
-			MeshResource* meshResource = (MeshResource*)resourceManager.LoadResource(id);
-
-			//Will also load unlit shader
-			std::string materialPath("LilEngie/res/Materials/Unlit.lilmat");
-			ResourceId materialId = ResourceId(materialPath, ResourceType::Material);
-			MaterialResource* materialResource = (MaterialResource*)resourceManager.LoadResource(materialId);
-
-			mc->meshRenderer.meshResId = id;
-			
-			mc->SetMaterial(materialResource->material);
-
-			rotate(tc->mat, vec3(0, 45, 0));
-			translate(tc->mat, vec3(0, 0, 2));
-		}
-
-		//Create camera actor
-		{
-			Actor* cameraActor = mainScene->CreateActor();
-
-			TransformComponent* tc = cameraActor->CreateComponent<TransformComponent>();
-			CameraComponent* cc = cameraActor->CreateComponent<CameraComponent>();
-
-			translate(tc->mat, vec3(0, 0, 0));
-		}
-
-		mainScene->Start();
+		//Load scene from file
+		sceneManager.LoadScene("LilEngie/res/Scenes/Test.lilscn");
 
 		//Main loop
 		if (start) start();

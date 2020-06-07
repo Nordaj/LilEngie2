@@ -1,3 +1,5 @@
+#include <string>
+#include <map>
 #include "Actor.h"
 #include "Scene.h"
 
@@ -64,16 +66,21 @@ namespace LilEngie
 			root->OnDraw();
 	}
 
-	Actor* Scene::CreateActor(Actor* parent)
+	Actor* Scene::CreateActor(std::string uid, Actor* parent)
 	{
 		if (isInitialized)
 		{
 			if (parent == nullptr)
 				parent = root;
 
+			//Actor creation
 			Actor *a = new Actor(this);
 			parent->children.push_back(a);
 			a->parent = parent;
+			a->uid = uid;
+
+			//Keep track of it
+			actors[uid] = a;
 
 			return a;
 		}
@@ -98,5 +105,12 @@ namespace LilEngie
 			//Free actor memory, this will also free all components
 			delete actor;
 		}
+	}
+
+	Actor* Scene::GetActor(std::string uid)
+	{
+		if (actors.find(uid) != actors.end())
+			return actors[uid];
+		return nullptr;
 	}
 }
