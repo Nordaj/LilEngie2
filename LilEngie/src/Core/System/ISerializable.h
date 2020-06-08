@@ -25,11 +25,12 @@ namespace LilEngie
 		void SetProperties(nlohmann::json& j);
 		virtual bool SetProperty(SerializableProperty property, nlohmann::json& value) 
 		{ return false; }
+
+		void SetJson(nlohmann::json& j);
+		virtual bool SetJson(SerializableProperty property, nlohmann::json& j)
+		{ return false; }
 	};
 }
-
-#define _XSTR(a) str(a)
-#define _STR(a) #a
 
 #define PROPERTY(n) { _STR(n), typeid(n).raw_name(), &n, false },
 #define PROPERTY(n, t) { _STR(n), typeid(n).raw_name(), &n, t },

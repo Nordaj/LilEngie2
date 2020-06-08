@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <Core/Core.h>
 #include <Core/Math/LilMath.h>
 #include "../IComponent.h"
@@ -11,6 +12,7 @@ namespace LilEngie
 	public:
 		mat4 mat;
 
+		LIL_TYPE_NAME("transform")
 		PROPERTIES(
 			PROPERTY(mat)
 		)

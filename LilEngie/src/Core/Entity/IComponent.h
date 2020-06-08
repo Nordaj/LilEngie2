@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <Core/Core.h>
 #include <Core/System/ISerializable.h>
 #include <Core/EventSystem/IEventListener.h>
@@ -25,6 +26,9 @@ namespace LilEngie
 		void Destroy();
 
 	protected:
+		//Need to return string type identifier, ex: "transform"
+		virtual std::string TypeName() = 0;
+
 		virtual void Init() {}
 
 		virtual void Start() {}
@@ -33,3 +37,5 @@ namespace LilEngie
 		virtual void OnDraw() {}
 	};
 }
+
+#define LIL_TYPE_NAME(n) std::string TypeName() override { return n; }

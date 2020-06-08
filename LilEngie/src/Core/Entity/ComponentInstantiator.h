@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include <Core/Core.h>
 #include <Core/Debug/Log.h>
 #include "Actor.h"

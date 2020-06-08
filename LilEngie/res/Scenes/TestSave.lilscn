@@ -1,0 +1,86 @@
+{
+    "actors": [
+        {
+            "components": [
+                {
+                    "properties": {
+                        "mat": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "ar": 1.7777769565582275,
+                        "f": 100.0,
+                        "fov": 60.0,
+                        "n": 0.10000000149011612
+                    },
+                    "type": "camera"
+                }
+            ],
+            "name": "Camera Actor",
+            "parent": "ROOT",
+            "uid": "Camera Actor"
+        },
+        {
+            "components": [
+                {
+                    "properties": {
+                        "mat": [
+                            -0.699999988079071,
+                            0.0,
+                            0.699999988079071,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            -0.699999988079071,
+                            0.0,
+                            -0.699999988079071,
+                            2.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "matId": [
+                            "LilEngie/res/Materials/Unlit.lilmat",
+                            "material"
+                        ],
+                        "meshId": [
+                            "LilEngie/res/Models/teapot.fbx",
+                            "mesh"
+                        ]
+                    },
+                    "type": "mesh"
+                }
+            ],
+            "name": "Mesh Actor",
+            "parent": "ROOT",
+            "uid": "Mesh Actor"
+        }
+    ]
+}

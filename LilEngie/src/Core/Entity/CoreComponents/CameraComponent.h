@@ -18,6 +18,7 @@ namespace LilEngie
 		mat4 view;
 		mat4 projection;
 
+		LIL_TYPE_NAME("camera")
 		PROPERTIES(
 			PROPERTY(fov)
 			PROPERTY(n)

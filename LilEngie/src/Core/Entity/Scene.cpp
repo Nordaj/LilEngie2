@@ -18,6 +18,8 @@ namespace LilEngie
 	{
 		//Create the root object
 		root = new Actor(this);
+		root->name = "ROOT";
+		root->uid = "ROOT";
 
 		isEnabled = enable;
 		isInitialized = true;

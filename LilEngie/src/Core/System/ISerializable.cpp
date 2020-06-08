@@ -73,4 +73,60 @@ namespace LilEngie
 			}
 		}
 	}
+
+	void ISerializable::SetJson(json& j)
+	{
+		//Set each property
+		std::vector<SerializableProperty> properties = PropertyMap();
+		for (SerializableProperty p : properties)
+		{
+			const char* tn = p.typeName.c_str();
+			std::string name = p.name;
+
+			if (!strcmp(tn, typeid(float).raw_name()))
+				j[name] = *((float*)p.value);
+			else if (!strcmp(tn, typeid(int).raw_name()))
+				j[name] = *((int*)p.value);
+			else if (!strcmp(tn, typeid(bool).raw_name()))
+				j[name] = *((bool*)p.value);
+			else if (!strcmp(tn, typeid(vec3).raw_name()))
+			{
+				vec3 v = *((vec3*)p.value);
+				for (int i = 0; i < 3; i++)
+					j[name].push_back(v[i]);
+			}
+			else if (!strcmp(tn, typeid(vec4).raw_name()))
+			{
+				vec4 v = *((vec4*)p.value);
+				for (int i = 0; i < 4; i++)
+					j[name].push_back(v[i]);
+			}
+			else if (!strcmp(tn, typeid(mat4).raw_name()))
+			{
+				mat4 m = transpose(*((mat4*)p.value));
+				for (int i = 0; i < 16; i++)
+					j[name].push_back(m.m[i]);
+			}
+			else if (!strcmp(tn, typeid(std::string).raw_name()))
+				j[name] = *((std::string*)p.value);
+			else if (!strcmp(tn, typeid(ResourceId).raw_name()))
+			{
+				ResourceId resId = *((ResourceId*)p.value);
+				j[name].push_back(resId.path);
+
+				for (auto it = resourceTypeNames.begin(); it != resourceTypeNames.end(); it++)
+				{
+					if (it->second == resId.type)
+						j[name].push_back(it->first);
+				}
+			}
+			else if (!SetJson(p, j))
+			{
+				if (p.isISerializable)
+					((ISerializable*)p.value)->SetJson(j[p.name]);
+				else
+					LIL_WARN("Could not figure out how to save property: ", p.name);
+			}
+		}
+	}
 }

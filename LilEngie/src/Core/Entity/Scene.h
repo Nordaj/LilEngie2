@@ -9,6 +9,8 @@ namespace LilEngie
 {
 	class LIL_API Scene
 	{
+		friend class SceneManager;
+
 	public:
 		std::string name;
 

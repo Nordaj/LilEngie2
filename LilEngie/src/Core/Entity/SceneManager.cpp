@@ -103,4 +103,43 @@ namespace LilEngie
 
 		return true;
 	}
+
+	bool SceneManager::SaveScene(const char* path, Scene* scn)
+	{
+		//Make sure we have a scene
+		if (!scn) scn = scene;
+		if (!scene) return false;
+
+		//Begin serialization
+		json j;
+		for (auto it = scn->actors.begin(); it != scn->actors.end(); it++)
+		{
+			Actor* a = it->second;
+
+			//Setup actor obj
+			json actorJson;
+			actorJson["name"] = a->name;
+			actorJson["uid"] = a->uid;
+			actorJson["parent"] = a->parent->uid;
+
+			//Setup each component
+			for (IComponent* c : a->components)
+			{
+				json comp;
+
+				comp["type"] = c->TypeName();
+				c->SetJson(comp["properties"]);
+
+				actorJson["components"].push_back(comp);
+			}
+
+			//Add to actor array
+			j["actors"].push_back(actorJson);
+		}
+
+		//Save json to file
+		std::ofstream os(path, std::ofstream::trunc);
+		os << j.dump(4);
+		os.close();
+	}
 }

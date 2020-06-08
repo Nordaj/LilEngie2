@@ -12,6 +12,7 @@ namespace LilEngie
 	class LIL_API Actor
 	{
 		friend class Scene;
+		friend class SceneManager;
 
 	public:
 		std::string name;
