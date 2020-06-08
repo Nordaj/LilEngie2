@@ -23,11 +23,13 @@ namespace LilEngie
 		{ return {}; }
 
 		void SetProperties(nlohmann::json& j);
-		virtual bool SetProperty(SerializableProperty property, nlohmann::json& value) 
+		void SetJson(nlohmann::json& j);
+
+	protected:
+		virtual bool SetJson(SerializableProperty property, nlohmann::json& j)
 		{ return false; }
 
-		void SetJson(nlohmann::json& j);
-		virtual bool SetJson(SerializableProperty property, nlohmann::json& j)
+		virtual bool SetProperty(SerializableProperty property, nlohmann::json& value) 
 		{ return false; }
 	};
 }
