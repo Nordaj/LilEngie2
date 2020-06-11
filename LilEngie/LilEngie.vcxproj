@@ -382,6 +382,7 @@
     <ClInclude Include="src\Core\Resources\Types\TextureResource.h" />
     <ClInclude Include="src\Core\System\ISerializable.h" />
     <ClInclude Include="src\Core\System\PoolAllocator.h" />
+    <ClInclude Include="src\Core\System\SerializableSpecs.ipp" />
     <ClInclude Include="src\Core\System\StackAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.ipp" />
     <ClInclude Include="src\LilEngie.h" />
@@ -421,7 +422,6 @@
     <ClCompile Include="src\Core\Resources\Types\MeshResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\ShaderResource.cpp" />
     <ClCompile Include="src\Core\Resources\Types\TextureResource.cpp" />
-    <ClCompile Include="src\Core\System\ISerializable.cpp" />
     <ClCompile Include="src\Core\System\PoolAllocator.cpp" />
     <ClCompile Include="src\Core\System\StackAllocator.cpp" />
   </ItemGroup>

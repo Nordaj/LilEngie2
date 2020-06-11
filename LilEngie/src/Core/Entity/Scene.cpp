@@ -21,6 +21,8 @@ namespace LilEngie
 		root->name = "ROOT";
 		root->uid = "ROOT";
 
+		actors["ROOT"] = root;
+
 		isEnabled = enable;
 		isInitialized = true;
 	}
@@ -114,5 +116,33 @@ namespace LilEngie
 		if (actors.find(uid) != actors.end())
 			return actors[uid];
 		return nullptr;
+	}
+
+	void Scene::Deserialize(json& j)
+	{
+		//Start by creating actors manually with the uid's
+		for (auto& a : j["actors"])
+			Actor* actor = CreateActor(a["uid"]);
+
+		//Deserialize each actor
+		for (auto& a : j["actors"])
+		{
+			Actor* actor = GetActor(a["uid"]);
+			actor->Deserialize(a);
+		}
+	}
+
+	void Scene::Serialize(json& j)
+	{
+		for (auto it = actors.begin(); it != actors.end(); it++)
+		{
+			//Skip root
+			if (it->second->uid == "ROOT")
+				continue;
+
+			json actor;
+			it->second->Serialize(actor);
+			j["actors"].push_back(actor);
+		}
 	}
 }

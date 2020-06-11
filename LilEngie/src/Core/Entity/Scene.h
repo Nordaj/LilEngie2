@@ -3,11 +3,12 @@
 #include <string>
 #include <map>
 #include <Core/Core.h>
+#include <Core/System/ISerializable.h>
 #include "Actor.h"
 
 namespace LilEngie
 {
-	class LIL_API Scene
+	class LIL_API Scene : public ISerializable
 	{
 		friend class SceneManager;
 
@@ -40,5 +41,8 @@ namespace LilEngie
 		void DestroyActor(Actor* actor);
 
 		Actor* GetActor(std::string uid);
+
+		void Deserialize(json& j) override;
+		void Serialize(json& j) override;
 	};
 }

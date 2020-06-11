@@ -9,11 +9,11 @@
 #define LIL_COMPONENTS() \
 namespace LilEngie { \
 	class IComponent; \
-	inline IComponent* CreateComponent(Actor* actor, const char* type) { 
+	inline IComponent* CreateComponentFromString(Actor* actor, std::string type) { 
 
 //(unique component string id, class name)
 #define LIL_COMPONENT_CREATOR(a,b) \
-if (!strcmp(type, a)) return actor->CreateComponent<b>(); \
+if (!strcmp(type.c_str(), a)) return actor->CreateComponent<b>(); \
 
 #define LIL_COMPONENTS_END() \
 		LIL_ERROR("could not find a component id match. Please add all components to ComponentList.h."); \

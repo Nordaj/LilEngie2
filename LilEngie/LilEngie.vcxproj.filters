@@ -171,6 +171,9 @@
     <ClInclude Include="src\Core\Entity\ComponentList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\System\SerializableSpecs.ipp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Game\Game.cpp">
@@ -276,9 +279,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Resources\Types\TextureResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\System\ISerializable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Resources\ResourceId.cpp">

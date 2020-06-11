@@ -1,6 +1,7 @@
 #include "IComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "ComponentList.h"
 #include "Actor.h"
 
 namespace LilEngie
@@ -53,6 +54,37 @@ namespace LilEngie
 				delete component;
 				components.erase(components.begin() + i);
 			}
+		}
+	}
+
+	void Actor::Deserialize(json& j)
+	{
+		DeserializeProperty(j, name, "name");
+		parent = scene->GetActor(j["parent"]);
+
+		//Handle each component
+		for (auto& c : j["components"])
+		{
+			IComponent* comp = CreateComponentFromString(this, c["type"]);
+			comp->Deserialize(c["properties"]);
+			if (c["type"] == "transform") transform = (TransformComponent*)comp;
+			comp->Init();
+		}
+	}
+
+	void Actor::Serialize(json& j)
+	{
+		SerializeProperty(j, name, "name");
+		SerializeProperty(j, uid, "uid");
+		SerializeProperty(j, parent->uid, "parent");
+
+		//Serialize each component
+		for (IComponent* comp : components)
+		{
+			json component;
+			component["type"] = comp->TypeName();
+			comp->Serialize(component["properties"]);
+			j["components"].push_back(component);
 		}
 	}
 
