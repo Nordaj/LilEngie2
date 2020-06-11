@@ -10,7 +10,32 @@
 					"properties": {
 						"mat": [-0.7, 0, 0.7, 0,
 								0, 1, 0, 0,
-								-0.7, 0, -0.7, 2,
+								-0.7, 0, -0.7, 0,
+								0, 0, 0, 1]
+					}
+				},
+
+				{
+					"type": "mesh",
+					"properties": {
+						"meshId": ["LilEngie/res/Models/teapot.fbx", "mesh"],
+						"matId": ["LilEngie/res/Materials/Unlit.lilmat", "material"]
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Mesh Actor 2",
+			"uid": "Mesh Actor 2",
+			"parent": "Mesh Actor",
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"mat": [1, 0, 0, 2,
+								0, 1, 0, 0,
+								0, 0, 1, 0,
 								0, 0, 0, 1]
 					}
 				},
@@ -35,7 +60,7 @@
 					"properties": {
 						"mat": [1, 0, 0, 0,
 								0, 1, 0, 0,
-								0, 0, 1, 0,
+								0, 0, 1, -4,
 								0, 0, 0, 1]
 					}
 				},

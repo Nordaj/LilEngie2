@@ -14,4 +14,12 @@ namespace LilEngie
 	{
 
 	}
+
+	mat4 TransformComponent::GlobalTransformation()
+	{
+		mat4 m = mat;
+		for (Actor* p = actor->parent; p->parent; p = p->parent)
+			m = p->transform->mat * m;
+		return m;
+	}
 }

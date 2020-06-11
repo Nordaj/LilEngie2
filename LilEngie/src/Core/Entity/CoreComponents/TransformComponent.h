@@ -20,5 +20,7 @@ namespace LilEngie
 	public:
 		void Start() override;
 		void Update() override;
+
+		mat4 GlobalTransformation();
 	};
 }

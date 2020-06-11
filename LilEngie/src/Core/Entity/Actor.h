@@ -18,7 +18,7 @@ namespace LilEngie
 	public:
 		std::string name;
 		std::string uid;
-		Actor* parent;
+		Actor* parent = nullptr;
 		TransformComponent* transform;
 
 	private:

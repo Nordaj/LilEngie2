@@ -34,7 +34,7 @@ namespace LilEngie
 	void MeshComponent::OnDraw()
 	{
 		//Manage constant buffer data
-		meshRenderer.transform = actor->transform->mat;
+		meshRenderer.transform = actor->transform->GlobalTransformation();
 
 		//In future do cull check here TODO
 
