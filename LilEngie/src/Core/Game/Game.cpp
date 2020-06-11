@@ -19,9 +19,6 @@
 #include <Core/Graphics/Material.h>
 #include <Core/Resources/Types/TextureResource.h>
 #include <Core/Math/LilMath.h>
-
-#include <Core/System/ISerializable.h>
-
 #include "Game.h"
 
 namespace LilEngie
@@ -43,13 +40,13 @@ namespace LilEngie
 
 		//Initialization
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
 
 		//Load scene from file
-		sceneManager.LoadScene("LilEngie/res/Scenes/TestSave.lilscn");
+		sceneManager.LoadScene("LilEngie/res/Scenes/Test.lilscn");
 
 		//sceneManager.SaveScene("LilEngie/res/Scenes/TestSave.lilscn");
 

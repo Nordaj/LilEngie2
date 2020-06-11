@@ -11,7 +11,7 @@
 #include "DX11Graphics.h"
 
 #define GFX_ERROR(x) { LIL_ERROR(x); return; }
-#define LOG_GFX_ERROR false
+#define LOG_GFX_ERROR true
 
 namespace LilEngie
 {
@@ -101,6 +101,9 @@ namespace LilEngie
 		viewport.Height = (float)windowProperties.height;
 		viewport.MaxDepth = 1;
 		ctx->deviceContext->RSSetViewports(1, &viewport);
+
+		//Set primitive topo
+		ctx->deviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//Create depth stencil buffers
 		SetupDepthStencil(windowProperties.width, windowProperties.height);

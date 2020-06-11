@@ -8,6 +8,11 @@
 
 namespace LilEngie
 {
+	void MeshRenderer::Init()
+	{
+		GetMesh();
+	}
+
 	void MeshRenderer::Render(IGraphics* gfx)
 	{
 		//Skip if not ready

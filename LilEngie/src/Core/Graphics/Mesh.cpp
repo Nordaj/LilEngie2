@@ -51,6 +51,8 @@ namespace LilEngie
 
 		gfxContext->BindVertexBuffer(vertexBuffer, sizeof(Vertex));
 		gfxContext->BindIndexBuffer(indexBuffer);
+
+		//OPENGL CRASHES HERE
 		gfxContext->Draw(indexCount);
 	}
 }

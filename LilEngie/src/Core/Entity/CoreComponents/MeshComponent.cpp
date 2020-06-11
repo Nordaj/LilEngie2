@@ -18,6 +18,7 @@ namespace LilEngie
 	void MeshComponent::Init()
 	{
 		meshRenderer.meshResId = meshId;
+		meshRenderer.Init();
 
 		MaterialResource* matRes = (MaterialResource*)matId.Get();
 		if (!matRes) return;

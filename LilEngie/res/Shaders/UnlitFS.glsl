@@ -14,6 +14,6 @@ uniform sampler2D tex;
 
 void main()
 {
-	//col = vec4(color, 1);
+	col = vec4(color, 1);
 	col = vec4(texture(tex, uv).rgb, 1.);
 }

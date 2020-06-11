@@ -24,6 +24,7 @@ namespace LilEngie
 
 	public:
 		MeshRenderer() {}
+		void Init();
 		void Render(IGraphics* gfxContext);
 
 	private:

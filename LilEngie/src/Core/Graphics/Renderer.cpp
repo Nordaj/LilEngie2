@@ -107,7 +107,7 @@ namespace LilEngie
 		//Draw Meshes
 		while (opaqueQueue.size() > 0)
 		{
-			opaqueQueue.back()->Render(gfx);
+			opaqueQueue.front()->Render(gfx);
 			opaqueQueue.pop();
 		}
 
