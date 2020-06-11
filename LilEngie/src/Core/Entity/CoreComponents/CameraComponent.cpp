@@ -28,7 +28,7 @@ namespace LilEngie
 	{
 		IGraphics* gfx = Renderer::core->gfx;
 
-		view = inverse(actor->transform->mat);
+		view = inverse(actor->transform->GlobalTransformation());
 		mat4 vp = projection * view;
 
 		ICBuffer* buf = Renderer::core->cbPerScene;

@@ -10,11 +10,15 @@ namespace LilEngie
 	class LIL_API TransformComponent : public IComponent
 	{
 	public:
-		mat4 mat;
+		vec3 position;
+		vec3 euler;
+		vec3 scale;
 
 		LIL_TYPE_NAME("transform")
 		PROPERTIES(
-			PROPERTY(mat)
+			PROPERTY(position)
+			NAMED_PROPERTY(euler, "rotation")
+			PROPERTY(scale)
 		)
 
 	public:
@@ -22,5 +26,6 @@ namespace LilEngie
 		void Update() override;
 
 		mat4 GlobalTransformation();
+		mat4 LocalTransformation();
 	};
 }

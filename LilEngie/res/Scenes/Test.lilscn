@@ -8,10 +8,9 @@
 				{
 					"type": "transform",
 					"properties": {
-						"mat": [-0.7, 0, 0.7, 0,
-								0, 1, 0, 0,
-								-0.7, 0, -0.7, 0,
-								0, 0, 0, 1]
+						"position": [0, 0, 0],
+						"rotation": [0, 2.6, 0],
+						"scale": [1, 1, 1]
 					}
 				},
 
@@ -33,10 +32,9 @@
 				{
 					"type": "transform",
 					"properties": {
-						"mat": [1, 0, 0, 2,
-								0, 1, 0, 0,
-								0, 0, 1, 0,
-								0, 0, 0, 1]
+						"position": [2, 0, 0],
+						"rotation": [0, 0, 0],
+						"scale": [1, 1, 1]
 					}
 				},
 
@@ -58,10 +56,9 @@
 				{
 					"type": "transform",
 					"properties": {
-						"mat": [1, 0, 0, 0,
-								0, 1, 0, 0,
-								0, 0, 1, -4,
-								0, 0, 0, 1]
+						"position": [0, 0, -4],
+						"rotation": [0, 0, 0],
+						"scale": [1, 1, 1]
 					}
 				},
 
