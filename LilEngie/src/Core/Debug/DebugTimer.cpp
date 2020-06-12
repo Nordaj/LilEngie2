@@ -16,22 +16,23 @@ namespace LilEngie
 
 	double DebugTimer::GetElapsed(TimeUnit unit)
 	{
+		duration<double> d = Clock::now() - start;
 		switch (unit)
 		{
 			case LilEngie::ns:
-				return duration_cast<nanoseconds>(Clock::now() - start).count();
+				return duration_cast<nanoseconds>(d).count();
 			case LilEngie::us:
-				return duration_cast<microseconds>(Clock::now() - start).count();
+				return duration_cast<nanoseconds>(d).count() * 1e-3;
 			case LilEngie::ms:
-				return duration_cast<milliseconds>(Clock::now() - start).count();
+				return duration_cast<nanoseconds>(d).count() * 1e-6;
 			case LilEngie::s:
-				return duration_cast<seconds>(Clock::now() - start).count();
+				return duration_cast<nanoseconds>(d).count() * 1e-9;
 			case LilEngie::m:
-				return duration_cast<minutes>(Clock::now() - start).count();
+				return duration_cast<seconds>(d).count() / 60.f;
 			case LilEngie::h:
-				return duration_cast<hours>(Clock::now() - start).count();
+				return duration_cast<minutes>(d).count() / 60.f;
 			default:
-				return duration_cast<milliseconds>(Clock::now() - start).count();
+				return duration_cast<milliseconds>(d).count();
 		}
 	}
 

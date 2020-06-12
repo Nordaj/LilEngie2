@@ -23,7 +23,18 @@
 
 namespace LilEngie
 {
-	Game::Game(Function start, Function update)
+	Game* Game::core = nullptr;
+
+	Game::Game(Function start, Function update, Function init)
+		: start(start), update(update), init(init), deltaTime(0)
+	{ 
+		core = this;
+	}
+
+	Game::~Game()
+	{ }
+
+	void Game::Run()
 	{
 		//Set core pointers
 		Renderer::core = &renderer;
@@ -42,6 +53,8 @@ namespace LilEngie
 		application.Init();
 		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 
+		if (init) init();
+
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
 
@@ -52,6 +65,7 @@ namespace LilEngie
 
 		//Main loop
 		if (start) start();
+		DebugTimer t;
 		while (isRunning)
 		{
 			if (update) update();
@@ -61,6 +75,9 @@ namespace LilEngie
 
 			sceneManager.scene->OnDraw();
 			renderer.Render();
+
+			deltaTime = t.GetElapsed(TimeUnit::Seconds);
+			t = DebugTimer();
 		}
 
 		//Shutdown
@@ -69,9 +86,6 @@ namespace LilEngie
 		eventManager.Dispatch(closeEvent);
 		renderer.Shutdown();
 	}
-
-	Game::~Game()
-	{ }
 
 	void Game::OnEvent(const Event &e)
 	{

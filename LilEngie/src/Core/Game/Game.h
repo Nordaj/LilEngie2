@@ -15,22 +15,27 @@ namespace LilEngie
 	class LIL_API Game : IEventListener
 	{
 	public:
-		EventManager eventManager;
+		static Game* core;
 
-	private:
+		EventManager eventManager;
 		Application application;
 		Renderer renderer;
 		Log logger;
 		ResourceManager resourceManager;
 		SceneManager sceneManager;
+		float deltaTime;
+
+	private:
+		Function start, update, init;
 
 		bool isRunning = true;
 		Event closeEvent;
 
 	public:
-		Game(Function start, Function update);
+		Game(Function start, Function update, Function init);
 		~Game();
 
+		void Run();
 		void OnEvent(const Event &e) override;
 	};
 }

@@ -337,11 +337,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Components\SpinnerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LilEngie\LilEngie.vcxproj">
       <Project>{d8736e1c-5f65-4d39-b7fd-8a7abffd7151}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ComponentList.h" />
+    <ClInclude Include="src\Components\SpinnerComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -65,7 +65,16 @@ namespace LilEngie
 		//Handle each component
 		for (auto& c : j["components"])
 		{
+			//Try to create component from engine or game, otherwise skip over
 			IComponent* comp = CreateComponentFromString(this, c["type"]);
+			if (!comp && SceneManager::core->gameComponentFactory)
+				comp = SceneManager::core->gameComponentFactory(this, c["type"]);
+			if (!comp)
+			{
+				LIL_WARN("Could not instantiate component type: ", c["type"]);
+				continue;
+			}
+
 			comp->Deserialize(c["properties"]);
 			if (c["type"] == "transform") transform = (TransformComponent*)comp;
 			comp->Init();

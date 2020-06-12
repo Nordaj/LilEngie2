@@ -44,6 +44,13 @@
 						"meshId": ["LilEngie/res/Models/teapot.fbx", "mesh"],
 						"matId": ["LilEngie/res/Materials/Unlit.lilmat", "material"]
 					}
+				},
+
+				{
+					"type": "spinner",
+					"properties": {
+						"rotSpeed": [0, 0, 3.41]
+					}
 				}
 			]
 		},

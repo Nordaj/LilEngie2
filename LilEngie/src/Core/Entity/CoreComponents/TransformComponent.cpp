@@ -25,6 +25,6 @@ namespace LilEngie
 
 	mat4 TransformComponent::LocalTransformation()
 	{
-		return Math::scale(scale) * rotate(euler) * translate(position);
+		return translate(position) * rotate(euler) * Math::scale(scale);
 	}
 }
