@@ -1,0 +1,13 @@
+site_name: Lil Engie 2
+theme: 
+  name: 'readthedocs'
+
+nav:
+  - Welcome: index.md
+  - Debug: 
+      - Log: Debug/Log.md
+  - Math:
+      - LilMath: Math/LilMath.md
+      - vec4: Math/vec4.md
+      - vec3: Math/vec3.md
+      - mat4: Math/mat4.md
