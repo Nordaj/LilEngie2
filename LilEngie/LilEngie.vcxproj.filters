@@ -174,6 +174,12 @@
     <ClInclude Include="src\Core\System\SerializableSpecs.ipp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Platform\Window\Keys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Game\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Game\Game.cpp">
@@ -282,6 +288,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Resources\ResourceId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Game\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

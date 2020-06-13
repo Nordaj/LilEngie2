@@ -16,5 +16,7 @@ namespace LilEngie
 
 		void Init();
 		void Update();
+
+		bool* GetKeyStates();
 	};
 }

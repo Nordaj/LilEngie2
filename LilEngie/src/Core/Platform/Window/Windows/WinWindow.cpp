@@ -11,6 +11,7 @@ namespace LilEngie
 		//Public
 		Event resizeEvent = Event(EventType::WindowResize);
 		Event closeEvent = Event(EventType::WindowClose);
+		bool keyStates[255] = {};
 
 		//Private
 		HWND hwnd;
@@ -147,6 +148,12 @@ namespace LilEngie
 					resizeEvent.args[0].asInt = LOWORD(lParam);
 					resizeEvent.args[1].asInt = HIWORD(lParam);
 					EventManager::core->Dispatch(resizeEvent);
+					break;
+				case WM_KEYDOWN:
+					keyStates[(uint8)wParam] = true;
+					break;
+				case WM_KEYUP:
+					keyStates[(uint8)wParam] = false;
 					break;
 				default:
 					return DefWindowProc(hwnd, msg, wParam, lParam);

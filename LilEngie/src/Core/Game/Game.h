@@ -7,6 +7,7 @@
 #include <Core/Resources/ResourceManager.h>
 #include "Core/Graphics/Renderer.h"
 #include "Core/Entity/SceneManager.h"
+#include "Input.h"
 
 namespace LilEngie
 {
@@ -23,6 +24,7 @@ namespace LilEngie
 		Log logger;
 		ResourceManager resourceManager;
 		SceneManager sceneManager;
+		Input input;
 		float deltaTime;
 
 	private:

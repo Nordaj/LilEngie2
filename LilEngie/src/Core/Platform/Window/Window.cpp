@@ -3,6 +3,7 @@
 #endif
 
 #include <Core/EventSystem/Events.h>
+#include "Keys.h"
 #include "Window.h"
 
 namespace LilEngie
@@ -66,6 +67,20 @@ namespace LilEngie
 	{
 	#ifdef LIL_WINDOWS
 		WinWindow::SwapBuffer();
+	#endif //LIL_WINDOWS
+	}
+
+	bool Window::GetKeyState(Key key)
+	{
+	#ifdef LIL_WINDOWS
+		return WinWindow::keyStates[(uint8)key];
+	#endif //LIL_WINDOWS
+	}
+
+	bool* Window::GetKeyStates()
+	{
+	#ifdef LIL_WINDOWS
+		return WinWindow::keyStates;
 	#endif //LIL_WINDOWS
 	}
 

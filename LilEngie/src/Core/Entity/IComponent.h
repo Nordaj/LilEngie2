@@ -4,6 +4,7 @@
 #include <Core/Core.h>
 #include <Core/System/ISerializable.h>
 #include <Core/EventSystem/IEventListener.h>
+#include <Core/Platform/Window/Keys.h>
 
 namespace LilEngie
 {
@@ -35,6 +36,10 @@ namespace LilEngie
 		virtual void Update() {}
 
 		virtual void OnDraw() {}
+
+		bool GetKey(Key key);
+		bool GetKeyDown(Key key);
+		bool GetKeyUp(Key key);
 	};
 }
 

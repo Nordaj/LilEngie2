@@ -4,6 +4,7 @@
 #include <functional>
 #include <Core/Core.h>
 #include <Core/EventSystem/Events.h>
+#include "Keys.h"
 
 namespace LilEngie
 {
@@ -39,6 +40,9 @@ namespace LilEngie
 
 		inline int GetSizeX() const { return width; }
 		inline int GetSizeY() const { return height; }
+
+		bool GetKeyState(Key key);
+		bool* GetKeyStates();
 
 	private:
 		void OnEvent(const Event &e) override;

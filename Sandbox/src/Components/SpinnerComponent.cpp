@@ -5,5 +5,6 @@
 void SpinnerComponent::Update()
 {
 	//Frame speed dependent, dont really care
-	actor->transform->euler += (rotSpeed * Game::core->deltaTime);
+	if (GetKey(Key::Space))
+		actor->transform->euler += (rotSpeed * Game::core->deltaTime);
 }

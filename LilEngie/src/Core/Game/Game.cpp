@@ -52,6 +52,7 @@ namespace LilEngie
 		//Initialization
 		application.Init();
 		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		input.Init(this);
 
 		if (init) init();
 
@@ -68,9 +69,10 @@ namespace LilEngie
 		DebugTimer t;
 		while (isRunning)
 		{
-			if (update) update();
+			input.CacheKeyStates();
 			application.Update();
 
+			if (update) update();
 			sceneManager.scene->Update();
 
 			sceneManager.scene->OnDraw();

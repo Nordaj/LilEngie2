@@ -353,6 +353,7 @@
     <ClInclude Include="src\Core\EventSystem\Events.h" />
     <ClInclude Include="src\Core\EventSystem\IEventListener.h" />
     <ClInclude Include="src\Core\Game\Game.h" />
+    <ClInclude Include="src\Core\Game\Input.h" />
     <ClInclude Include="src\Core\Graphics\IRenderable.h" />
     <ClInclude Include="src\Core\Graphics\Material.h" />
     <ClInclude Include="src\Core\Graphics\Mesh.h" />
@@ -370,6 +371,7 @@
     <ClInclude Include="src\Core\Platform\Graphics\InputLayout.h" />
     <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.h" />
     <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLHandles.h" />
+    <ClInclude Include="src\Core\Platform\Window\Keys.h" />
     <ClInclude Include="src\Core\Platform\Window\Window.h" />
     <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
     <ClInclude Include="src\Core\Resources\IResource.h" />
@@ -401,6 +403,7 @@
     <ClCompile Include="src\Core\EventSystem\EventManager.cpp" />
     <ClCompile Include="src\Core\EventSystem\IEventListener.cpp" />
     <ClCompile Include="src\Core\Game\Game.cpp" />
+    <ClCompile Include="src\Core\Game\Input.cpp" />
     <ClCompile Include="src\Core\Graphics\Material.cpp" />
     <ClCompile Include="src\Core\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Core\Graphics\MeshRenderer.cpp" />

@@ -14,4 +14,9 @@ namespace LilEngie
 		window.PollEvents();
 		window.SwapBuffer();
 	}
+
+	bool* Application::GetKeyStates()
+	{
+		return window.GetKeyStates();
+	}
 }
