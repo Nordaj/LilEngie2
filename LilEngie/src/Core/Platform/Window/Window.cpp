@@ -56,6 +56,20 @@ namespace LilEngie
 	#endif //LIL_WINDOWS
 	}
 
+	void Window::SetMousePosition(int x, int y)
+	{
+	#ifdef LIL_WINDOWS
+		WinWindow::SetMousePosition(x, y);
+	#endif //LIL_WINDOWS
+	}
+
+	void Window::SetMouseVisibility(bool visible)
+	{
+	#ifdef LIL_WINDOWS
+		WinWindow::SetMouseVisibility(visible);
+	#endif //LIL_WINDOWS
+	}
+
 	void Window::PollEvents()
 	{
 	#ifdef LIL_WINDOWS
@@ -70,6 +84,13 @@ namespace LilEngie
 	#endif //LIL_WINDOWS
 	}
 
+	void Window::GetWindowPos(int* x, int* y)
+	{
+	#ifdef LIL_WINDOWS
+		WinWindow::GetWindowPos(x, y);
+	#endif //LIL_WINDOWS
+	}
+
 	bool Window::GetKeyState(Key key)
 	{
 	#ifdef LIL_WINDOWS
@@ -81,6 +102,13 @@ namespace LilEngie
 	{
 	#ifdef LIL_WINDOWS
 		return WinWindow::keyStates;
+	#endif //LIL_WINDOWS
+	}
+
+	MouseState* Window::GetMouseState()
+	{
+	#ifdef LIL_WINDOWS
+		return &WinWindow::mouseState;
 	#endif //LIL_WINDOWS
 	}
 

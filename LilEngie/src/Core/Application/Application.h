@@ -6,17 +6,20 @@
 
 namespace LilEngie
 {
+	class MouseState;
+
 	class LIL_API Application
 	{
-	private:
-		Window window;
-
 	public:
+		Window window;
 		WinProp windowProperties;
 
 		void Init();
 		void Update();
 
 		bool* GetKeyStates();
+		MouseState* GetMouseState();
+
+		void SetMousePosition(int x, int y);
 	};
 }

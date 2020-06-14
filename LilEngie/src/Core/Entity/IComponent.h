@@ -5,6 +5,8 @@
 #include <Core/System/ISerializable.h>
 #include <Core/EventSystem/IEventListener.h>
 #include <Core/Platform/Window/Keys.h>
+#include <Core/Platform/Window/MouseState.h>
+#include <Core/Game/Input.h>
 
 namespace LilEngie
 {
@@ -18,9 +20,10 @@ namespace LilEngie
 
 	protected:
 		Actor* actor;
+		Input* input;
 
 	public:
-		IComponent() {}
+		IComponent();
 		virtual ~IComponent() {}
 
 		//Destroys the component
@@ -36,10 +39,6 @@ namespace LilEngie
 		virtual void Update() {}
 
 		virtual void OnDraw() {}
-
-		bool GetKey(Key key);
-		bool GetKeyDown(Key key);
-		bool GetKeyUp(Key key);
 	};
 }
 

@@ -69,7 +69,7 @@ namespace LilEngie
 		DebugTimer t;
 		while (isRunning)
 		{
-			input.CacheKeyStates();
+			input.Update();
 			application.Update();
 
 			if (update) update();

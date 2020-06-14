@@ -1,4 +1,6 @@
 #include <functional>
+#include <Core/Debug/Log.h>
+#include "../MouseState.h"
 #include "WinWindow.h"
 
 #ifdef LIL_WINDOWS
@@ -11,6 +13,7 @@ namespace LilEngie
 		//Public
 		Event resizeEvent = Event(EventType::WindowResize);
 		Event closeEvent = Event(EventType::WindowClose);
+		MouseState WinWindow::mouseState = {};
 		bool keyStates[255] = {};
 
 		//Private
@@ -83,6 +86,15 @@ namespace LilEngie
 			//Give the handle
 			*handle = hwnd;
 			*devCtx = hdc;
+
+			//Register raw mouse input
+			RAWINPUTDEVICE rid[1];
+			rid[0].usUsagePage = 0x01;
+			rid[0].usUsage = 0x02;
+			rid[0].dwFlags = 0;
+			rid[0].hwndTarget = 0;
+			if (!RegisterRawInputDevices(rid, 1, sizeof(rid[0])))
+				LIL_ERROR("Could not register raw mouse input...");
 		}
 
 		void Close()
@@ -90,6 +102,14 @@ namespace LilEngie
 			DestroyWindow(hwnd);
 
 			EventManager::core->Dispatch(closeEvent);
+		}
+
+		void GetWindowPos(int* x, int* y)
+		{
+			RECT r;
+			GetWindowRect(hwnd, &r);
+			*x = r.left;
+			*y = r.top;
 		}
 
 		void SetSize(int x, int y)
@@ -109,6 +129,16 @@ namespace LilEngie
 		void SetTitle(const std::string &title)
 		{
 			SetWindowTextA(hwnd, title.c_str());
+		}
+
+		void SetMousePosition(int x, int y)
+		{
+			SetCursorPos(x, y);
+		}
+
+		void SetMouseVisibility(bool visible)
+		{
+			ShowCursor(visible);
 		}
 
 		void PollEvents()
@@ -155,6 +185,55 @@ namespace LilEngie
 				case WM_KEYUP:
 					keyStates[(uint8)wParam] = false;
 					break;
+				case WM_LBUTTONDOWN:
+					mouseState.buttons[(uint)MouseButton::Left] = true;
+					break;
+				case WM_LBUTTONUP:
+					mouseState.buttons[(uint)MouseButton::Left] = false;
+					break;
+				case WM_MBUTTONDOWN:
+					mouseState.buttons[(uint)MouseButton::Middle] = true;
+					break;
+				case WM_MBUTTONUP:
+					mouseState.buttons[(uint)MouseButton::Middle] = false;
+					break;
+				case WM_RBUTTONDOWN:
+					mouseState.buttons[(uint)MouseButton::Right] = true;
+					break;
+				case WM_RBUTTONUP:
+					mouseState.buttons[(uint)MouseButton::Right] = false;
+					break;
+				case WM_XBUTTONDOWN:
+					if (HIWORD(wParam) == XBUTTON1)
+						mouseState.buttons[(uint)MouseButton::XButton1] = true;
+					if (HIWORD(wParam) == XBUTTON2)
+						mouseState.buttons[(uint)MouseButton::XButton2] = true;
+					break;
+				case WM_XBUTTONUP:
+					if (HIWORD(wParam) == XBUTTON1)
+						mouseState.buttons[(uint)MouseButton::XButton1] = false;
+					if (HIWORD(wParam) == XBUTTON2)
+						mouseState.buttons[(uint)MouseButton::XButton2] = false;
+					break;
+				case WM_MOUSEWHEEL:
+					mouseState.wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+					break;
+				case WM_INPUT:
+				{
+					uint dwSize;
+					GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &dwSize, sizeof(RAWINPUTHEADER));
+					LPBYTE lpb = new BYTE[dwSize]{ 0 };
+					GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
+
+					RAWINPUT* raw = (RAWINPUT*)lpb;
+					if (raw->header.dwType == RIM_TYPEMOUSE)
+					{
+						mouseState.mouseX = raw->data.mouse.lLastX;
+						mouseState.mouseY = raw->data.mouse.lLastY;
+					}
+					delete[] lpb;
+					break;
+				}
 				default:
 					return DefWindowProc(hwnd, msg, wParam, lParam);
 					break;

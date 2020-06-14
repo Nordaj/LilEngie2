@@ -5,6 +5,7 @@
 #include <Core/Core.h>
 #include <Core/EventSystem/Events.h>
 #include "Keys.h"
+#include "MouseState.h"
 
 namespace LilEngie
 {
@@ -35,14 +36,20 @@ namespace LilEngie
 		void SetHeight(int y);
 		void SetTitle(const std::string &title);
 
+		void SetMousePosition(int x, int y);
+		void SetMouseVisibility(bool visible);
+
 		void PollEvents();
 		void SwapBuffer();
 
+		void GetWindowPos(int* x, int* y);
 		inline int GetSizeX() const { return width; }
 		inline int GetSizeY() const { return height; }
 
 		bool GetKeyState(Key key);
 		bool* GetKeyStates();
+
+		MouseState* GetMouseState();
 
 	private:
 		void OnEvent(const Event &e) override;

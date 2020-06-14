@@ -372,6 +372,7 @@
     <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLGraphics.h" />
     <ClInclude Include="src\Core\Platform\Graphics\OpenGL\GLHandles.h" />
     <ClInclude Include="src\Core\Platform\Window\Keys.h" />
+    <ClInclude Include="src\Core\Platform\Window\MouseState.h" />
     <ClInclude Include="src\Core\Platform\Window\Window.h" />
     <ClInclude Include="src\Core\Platform\Window\Windows\WinWindow.h" />
     <ClInclude Include="src\Core\Resources\IResource.h" />

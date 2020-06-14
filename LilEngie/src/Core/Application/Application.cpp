@@ -1,5 +1,6 @@
 #include <memory>
 #include <Core/Platform/Window/Window.h>
+#include <Core/Platform/Window/MouseState.h>
 #include "Application.h"
 
 namespace LilEngie
@@ -18,5 +19,15 @@ namespace LilEngie
 	bool* Application::GetKeyStates()
 	{
 		return window.GetKeyStates();
+	}
+
+	MouseState* Application::GetMouseState()
+	{
+		return window.GetMouseState();
+	}
+
+	void Application::SetMousePosition(int x, int y)
+	{
+		window.SetMousePosition(x, y);
 	}
 }
