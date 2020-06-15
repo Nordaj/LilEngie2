@@ -48,6 +48,7 @@ namespace LilEngie
 		//Resets mouse deltas each frame
 		currentMouse->mouseX = 0;
 		currentMouse->mouseY = 0;
+		currentMouse->wheelDelta = 0;
 
 		//Lock mouse position to center of the screen
 		if (lockMousePos)

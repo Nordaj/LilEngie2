@@ -75,6 +75,12 @@ namespace LilEngie
 		virtual void BindTexture(ITexture* texture, uint slot) = 0;
 		virtual void ReleaseTexture(ITexture** texture) = 0;
 
+		//Dear ImGUI TODO: make pure virtual
+		virtual void ImGuiInit(const WinProp& windowProperties) = 0;
+		virtual void ImGuiNewFrame() = 0;
+		virtual void ImGuiRender() = 0;
+		virtual void ImGuiShutdown() = 0;
+
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = GraphicsAPI::DirectX11);
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);
 

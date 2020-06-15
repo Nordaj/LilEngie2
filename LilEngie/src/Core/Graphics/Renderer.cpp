@@ -1,5 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
+#include <Vendor/imgui/imgui.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Debug/Log.h>
 #include <Core/Debug/DebugTimer.h>
@@ -7,6 +8,8 @@
 #include <Core/Resources/Types/MeshResource.h>
 #include <Core/Graphics/Material.h>
 #include <Core/Math/LilMath.h>
+#include <Core/Application/Application.h>
+#include <Core/Game/Game.h>
 #include "IRenderable.h"
 #include "Renderer.h"
 
@@ -29,7 +32,7 @@ namespace LilEngie
 			Shutdown();
 	}
 
-	void Renderer::Init(const WinProp &windowProperties, GraphicsAPI api)
+	void Renderer::Init(const WinProp& windowProperties, GraphicsAPI api)
 	{
 		//Log which api used
 		switch (api)
@@ -47,9 +50,11 @@ namespace LilEngie
 		//Initialize graphics
 		gfx = IGraphics::CreateGraphicsContext(api);
 		gfx->Init(windowProperties);
+		InitImGui(windowProperties);
 		gfx->SetClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 		
 		Subscribe(EventType::WindowResize);
+		Subscribe(EventType::WindowClose);
 
 		//Create defualt constant buffers
 		cbPerObject = gfx->CreateCBuffer(sizeof(mat4));
@@ -69,6 +74,8 @@ namespace LilEngie
 	void Renderer::Shutdown()
 	{
 		//Cleanup
+		gfx->ImGuiShutdown();
+
 		gfx->ReleaseInputLayout(&layout);
 		gfx->ReleaseShader(&shader);
 
@@ -94,6 +101,9 @@ namespace LilEngie
 
 	void Renderer::Render()
 	{
+		//Dont render if going to close
+		if (isClosing) return;
+
 		gfx->Clear();
 
 		//Constant buffer management
@@ -111,6 +121,9 @@ namespace LilEngie
 			opaqueQueue.pop();
 		}
 
+		gfx->ImGuiRender();
+		gfx->ImGuiNewFrame();
+
 		gfx->Render();
 	}
 
@@ -121,8 +134,29 @@ namespace LilEngie
 			case EventType::WindowResize:
 				gfx->Resize(e.args[0].asInt, e.args[1].asInt);
 				break;
+			case EventType::WindowClose:
+				isClosing = true;
+				break;
 			default:
 				break;
 		}
+	}
+
+	void Renderer::InitImGui(const WinProp& windowProperties)
+	{
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsClassic();
+
+		//Init imgui
+		gfx->ImGuiInit(windowProperties);
+
+		//Automatically start first frame
+		gfx->ImGuiNewFrame();
 	}
 }

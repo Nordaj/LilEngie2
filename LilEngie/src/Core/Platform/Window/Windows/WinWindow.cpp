@@ -1,10 +1,14 @@
 #include <functional>
 #include <Core/Debug/Log.h>
+#include <Vendor/imgui/imgui_impl_win32.h>
 #include "../MouseState.h"
 #include "WinWindow.h"
 
 #ifdef LIL_WINDOWS
 #include <Windows.h>
+
+//Manual forward declaration for imgui to avoid windows.h includion
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace LilEngie
 {
@@ -100,8 +104,6 @@ namespace LilEngie
 		void Close()
 		{
 			DestroyWindow(hwnd);
-
-			EventManager::core->Dispatch(closeEvent);
 		}
 
 		void GetWindowPos(int* x, int* y)
@@ -164,6 +166,11 @@ namespace LilEngie
 			PAINTSTRUCT ps;
 			HDC hdc;
 
+		#ifdef LIL_ENABLE_IMGUI
+			if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam))
+				return true;
+		#endif //LIL_ENABLE_IMGUI
+
 			switch (msg)
 			{
 				case WM_PAINT:
@@ -171,6 +178,7 @@ namespace LilEngie
 					EndPaint(hwnd, &ps);
 					break;
 				case WM_DESTROY:
+					EventManager::core->Dispatch(closeEvent);
 					PostQuitMessage(0);
 					break;
 				case WM_SIZE:

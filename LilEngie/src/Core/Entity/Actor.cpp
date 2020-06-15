@@ -115,6 +115,15 @@ namespace LilEngie
 			children[i]->OnDraw();
 	}
 
+	void Actor::OnDrawImGui()
+	{
+		for (int i = 0; i < components.size(); i++)
+			components[i]->OnDrawImGui();
+
+		for (int i = 0; i < children.size(); i++)
+			children[i]->OnDrawImGui();
+	}
+
 	void Actor::Start()
 	{
 		for (int i = 0; i < components.size(); i++)

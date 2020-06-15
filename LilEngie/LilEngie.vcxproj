@@ -156,7 +156,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_DEBUG;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_DEBUG;LIL_BUILD_DLL;LIL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -194,7 +194,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -216,7 +216,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnablePREfast>true</EnablePREfast>
@@ -247,7 +247,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_BUILD_DLL;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -269,7 +269,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnablePREfast>true</EnablePREfast>
@@ -294,7 +294,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_DEBUG;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -315,7 +315,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\Assimp\include\;$(SolutionDir)Dependencies\nlohmannJSON\include\;$(SolutionDir)Dependencies\stb\include\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_DEBUG;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIL_WINDOWS;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;LIL_USE_ASSERTS;LIL_ENABLE_IMGUI;LIL_DEBUG;LIL_DEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -389,6 +389,15 @@
     <ClInclude Include="src\Core\System\StackAllocator.h" />
     <ClInclude Include="src\Core\System\StackAllocator.ipp" />
     <ClInclude Include="src\LilEngie.h" />
+    <ClInclude Include="src\Vendor\imgui\imconfig.h" />
+    <ClInclude Include="src\Vendor\imgui\imgui.h" />
+    <ClInclude Include="src\Vendor\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="src\Vendor\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\Vendor\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="src\Vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="src\Vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\Vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\Vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application\Application.cpp" />
@@ -428,6 +437,13 @@
     <ClCompile Include="src\Core\Resources\Types\TextureResource.cpp" />
     <ClCompile Include="src\Core\System\PoolAllocator.cpp" />
     <ClCompile Include="src\Core\System\StackAllocator.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="src\Vendor\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -460,6 +476,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="src\Vendor\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -76,6 +76,7 @@ namespace LilEngie
 			sceneManager.scene->Update();
 
 			sceneManager.scene->OnDraw();
+			sceneManager.scene->OnDrawImGui();
 			renderer.Render();
 
 			deltaTime = t.GetElapsed(TimeUnit::Seconds);

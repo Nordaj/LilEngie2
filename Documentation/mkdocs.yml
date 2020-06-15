@@ -4,10 +4,12 @@ theme:
 
 nav:
   - Welcome: index.md
+  - Game:
+    - Input: Game/Input.md
   - Debug: 
-      - Log: Debug/Log.md
+    - Log: Debug/Log.md
   - Math:
-      - LilMath: Math/LilMath.md
-      - vec4: Math/vec4.md
-      - vec3: Math/vec3.md
-      - mat4: Math/mat4.md
+    - LilMath: Math/LilMath.md
+    - vec4: Math/vec4.md
+    - vec3: Math/vec3.md
+    - mat4: Math/mat4.md

@@ -6,6 +6,9 @@
 #include <sstream>
 #include <string>
 #include <GL/glew.h>
+#include <Vendor/imgui/imgui.h>
+#include <Vendor/imgui/imgui_impl_win32.h>
+#include <Vendor/imgui/imgui_impl_opengl3.h>
 #include <Core/Platform/Window/Window.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Platform/Graphics/InputLayout.h>
@@ -372,6 +375,42 @@ namespace LilEngie
 
 		delete *texture;
 		*texture = nullptr;
+	}
+
+	void GLGraphics::ImGuiInit(const WinProp& windowProperties)
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		// Setup Platform/Renderer bindings
+		ImGui_ImplWin32_Init(windowProperties.hwnd);
+		ImGui_ImplOpenGL3_Init();
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void GLGraphics::ImGuiNewFrame()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void GLGraphics::ImGuiRender()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void GLGraphics::ImGuiShutdown()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+	#endif LIL_ENABLE_IMGUI
 	}
 
 	void GLGraphics::Shutdown()

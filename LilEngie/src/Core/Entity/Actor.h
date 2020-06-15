@@ -50,6 +50,7 @@ namespace LilEngie
 		void Start();
 		void Update();
 		void OnDraw();
+		void OnDrawImGui();
 	};
 
 	class LIL_API ActorRef : public ISerializable

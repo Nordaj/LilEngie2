@@ -39,6 +39,7 @@ namespace LilEngie
 		virtual void Update() {}
 
 		virtual void OnDraw() {}
+		virtual void OnDrawImGui() {}
 	};
 }
 

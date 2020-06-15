@@ -70,6 +70,14 @@ namespace LilEngie
 			root->OnDraw();
 	}
 
+	void Scene::OnDrawImGui()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		if (isEnabled)
+			root->OnDrawImGui();
+	#endif //LIL_ENABLE_IMGUI
+	}
+
 	Actor* Scene::CreateActor(std::string uid, Actor* parent)
 	{
 		if (isInitialized)

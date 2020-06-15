@@ -2,6 +2,9 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <Windows.h>
+#include <Vendor/imgui/imgui.h>
+#include <Vendor/imgui/imgui_impl_win32.h>
+#include <Vendor/imgui/imgui_impl_dx11.h>
 #include <Core/Debug/Log.h>
 #include <Core/Platform/Window/Window.h>
 #include <Core/Platform/Graphics/IGraphics.h>
@@ -554,6 +557,42 @@ namespace LilEngie
 
 		delete* texture;
 		*texture = nullptr;
+	}
+
+	void DX11Graphics::ImGuiInit(const WinProp& windowProperties)
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		// Setup Platform/Renderer bindings
+		ImGui_ImplWin32_Init(windowProperties.hwnd);
+		ImGui_ImplDX11_Init(ctx->device, ctx->deviceContext);
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void DX11Graphics::ImGuiNewFrame()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		// Start the Dear ImGui frame
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void DX11Graphics::ImGuiRender()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	#endif //LIL_ENABLE_IMGUI
+	}
+
+	void DX11Graphics::ImGuiShutdown()
+	{
+	#ifdef LIL_ENABLE_IMGUI
+		ImGui_ImplDX11_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+	#endif LIL_ENABLE_IMGUI
 	}
 
 	void DX11Graphics::Shutdown()

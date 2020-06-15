@@ -36,6 +36,7 @@ namespace LilEngie
 		void Start();
 		void Update();
 		void OnDraw();
+		void OnDrawImGui();
 
 		Actor* CreateActor(std::string uid, Actor* parent = nullptr);
 		void DestroyActor(Actor* actor);

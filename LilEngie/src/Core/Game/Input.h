@@ -11,6 +11,8 @@ namespace LilEngie
 
 	class LIL_API Input
 	{
+		friend class Game;
+
 	public:
 		static Input* core;
 		
@@ -20,7 +22,7 @@ namespace LilEngie
 		MouseState prevMouse;
 		MouseState* currentMouse;
 
-		bool lockMousePos;
+		bool lockMousePos = false;
 		bool mouseVisible = true;
 
 	private:
@@ -29,8 +31,6 @@ namespace LilEngie
 	public:
 		Input();
 		~Input();
-
-		void Init(Game* game);
 
 		bool GetKey(Key key);
 		bool GetKeyDown(Key key);
@@ -45,6 +45,9 @@ namespace LilEngie
 		float GetWheelDelta();
 		void MouseVisibility(bool visible);
 
+	private:
+		//Only for Game class to call
+		void Init(Game* game);
 		void Update();
 	};
 }

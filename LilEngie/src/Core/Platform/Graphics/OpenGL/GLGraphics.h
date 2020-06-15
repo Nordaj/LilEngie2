@@ -57,6 +57,12 @@ namespace LilEngie
 		void BindTexture(ITexture* texture, uint slot) override;
 		void ReleaseTexture(ITexture** texture) override;
 
+		//Dear ImGUI
+		void ImGuiInit(const WinProp& windowProperties) override;
+		void ImGuiNewFrame() override;
+		void ImGuiRender() override;
+		void ImGuiShutdown() override;
+
 	private:
 		void Shutdown() override;
 		IInputLayout* CreateLayout(InputElement* elements, uint numElements);
