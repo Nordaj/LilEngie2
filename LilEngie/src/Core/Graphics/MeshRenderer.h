@@ -11,21 +11,23 @@ namespace LilEngie
 	class ICBuffer;
 	class MeshResource;
 	class Material;
+	class Renderer;
 
 	class LIL_API MeshRenderer : public IRenderable
 	{
 	private:
-		MeshResource* meshResource;
+		MeshResource* meshResource = nullptr;
 
 	public:
 		Material* material = nullptr;
 		ResourceId meshResId;
 		mat4 transform;
+		Renderer* renderer = nullptr;
 
 	public:
 		MeshRenderer() {}
-		void Init();
-		void Render(IGraphics* gfxContext);
+		void Init(Renderer* renderer);
+		void Render(IGraphics* gfxContext) override;
 
 	private:
 		MeshResource* GetMesh();

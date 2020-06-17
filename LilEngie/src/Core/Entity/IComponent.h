@@ -40,6 +40,10 @@ namespace LilEngie
 
 		virtual void OnDraw() {}
 		virtual void OnDrawImGui() {}
+
+		Actor* GetActor(std::string& uid);
+
+		float DeltaTime();
 	};
 }
 

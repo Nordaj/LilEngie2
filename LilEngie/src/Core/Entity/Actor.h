@@ -9,6 +9,7 @@
 namespace LilEngie
 {
 	class TransformComponent;
+	class Game;
 
 	class LIL_API Actor : public ISerializable
 	{
@@ -19,10 +20,11 @@ namespace LilEngie
 		std::string name;
 		std::string uid;
 		Actor* parent = nullptr;
+		Scene* scene;
+		Game* game;
 		TransformComponent* transform;
 
 	private:
-		Scene* scene;
 		bool isEnabled = true;
 		std::vector<Actor*> children;
 		std::vector<IComponent*> components;
@@ -51,23 +53,6 @@ namespace LilEngie
 		void Update();
 		void OnDraw();
 		void OnDrawImGui();
-	};
-
-	class LIL_API ActorRef : public ISerializable
-	{
-	public:
-		std::string uid;
-		Actor* actor;
-
-		PROPERTIES(
-			PROPERTY(uid)
-		)
-
-	public:
-		Actor* Get();
-
-		Actor* operator->();
-		operator Actor*() { return Get(); }
 	};
 }
 

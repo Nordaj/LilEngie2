@@ -7,6 +7,7 @@ namespace LilEngie
 {
 	class Scene;
 	class Actor;
+	class Game;
 	class IComponent;
 
 	typedef IComponent*(*ComponentFactoryFunc)(Actor*, std::string);
@@ -14,16 +15,16 @@ namespace LilEngie
 	class LIL_API SceneManager
 	{
 	public:
-		static SceneManager* core;
-
+		Game* game = nullptr;
 		Scene* scene = nullptr;
-		ComponentFactoryFunc gameComponentFactory;
+		ComponentFactoryFunc gameComponentFactory = nullptr;
 
 	public:
-		void UnloadScene();
+		void Init(Game* game);
 		void Shutdown();
 
 		bool LoadScene(const char* path);
 		bool SaveScene(const char* path, Scene* scn = nullptr);
+		void UnloadScene();
 	};
 }

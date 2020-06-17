@@ -7,6 +7,7 @@
 #include <Core/Graphics/Renderer.h>
 #include <Core/Debug/Log.h>
 #include <Core/Math/LilMath.h>
+#include <Core/Game/Game.h>
 #include "ShaderResource.h"
 #include "TextureResource.h"
 #include "../ResourceManager.h"
@@ -86,7 +87,8 @@ namespace LilEngie
 		}
 
 		//Create material
-		material = new Material(shader, &properties[0], properties.size(), &texProperties[0], texProperties.size());
+		Renderer* renderer = &manager->game->renderer;
+		material = new Material(shader, &properties[0], properties.size(), &texProperties[0], texProperties.size(), renderer);
 
 		//Set property default values
 		for (auto& e : obj["properties"])

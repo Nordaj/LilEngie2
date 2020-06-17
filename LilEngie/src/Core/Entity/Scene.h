@@ -13,6 +13,7 @@ namespace LilEngie
 		friend class SceneManager;
 
 	public:
+		SceneManager* manager;
 		std::string name;
 
 	private:

@@ -6,7 +6,7 @@
 
 namespace LilEngie
 {
-	class MeshRenderer;
+	class Renderer;
 
 	class LIL_API MeshComponent : public IComponent
 	{
@@ -21,6 +21,9 @@ namespace LilEngie
 			PROPERTY(meshId)
 			PROPERTY(matId)
 		)
+
+	private:
+		Renderer* renderer;
 
 	public:
 		void SetMaterial(Material* material);

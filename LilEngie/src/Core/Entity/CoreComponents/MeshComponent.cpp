@@ -5,6 +5,7 @@
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Resources/Types/MaterialResource.h>
 #include "TransformComponent.h"
+#include <Core/Game/Game.h>
 #include "../Actor.h"
 #include "MeshComponent.h"
 
@@ -17,8 +18,10 @@ namespace LilEngie
 
 	void MeshComponent::Init()
 	{
+		renderer = &actor->game->renderer;
+
 		meshRenderer.meshResId = meshId;
-		meshRenderer.Init();
+		meshRenderer.Init(renderer);
 
 		MaterialResource* matRes = (MaterialResource*)matId.Get();
 		if (!matRes) return;
@@ -39,6 +42,6 @@ namespace LilEngie
 		//In future do cull check here TODO
 
 		//Submit to render queue
-		Renderer::core->QueueOpaque(&meshRenderer);
+		renderer->QueueOpaque(&meshRenderer);
 	}
 }

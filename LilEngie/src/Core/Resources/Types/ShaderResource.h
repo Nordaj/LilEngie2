@@ -18,7 +18,7 @@ namespace LilEngie
 		IGraphics* gfx;
 
 	public:
-		ShaderResource(const ResourceId& resourceId, ResourceManager* manager, bool load = true, IGraphics* gfx = nullptr);
+		ShaderResource(const ResourceId& resourceId, ResourceManager* manager, bool load = true);
 		~ShaderResource();
 
 		//Shader creation from resource id path depends on the path not including the VS/FS types nor file extensions

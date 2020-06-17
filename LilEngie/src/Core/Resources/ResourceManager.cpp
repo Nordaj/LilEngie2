@@ -23,6 +23,11 @@ namespace LilEngie
 			UnloadAllResouces();
 	}
 
+	void ResourceManager::Init(Game* game)
+	{
+		this->game = game;
+	}
+
 	IResource* ResourceManager::LoadResource(const ResourceId& resourceId)
 	{
 		//Just return if resource is loaded
@@ -67,7 +72,7 @@ namespace LilEngie
 			}
 			case ResourceType::Texture:
 			{
-				TextureResource* textureResource = new TextureResource(resourceId, this, false);
+				TextureResource* textureResource = new TextureResource(resourceId, this);
 				if (!textureResource->LoadTexture())
 				{
 					LIL_ERROR("Could not load texture resource...");

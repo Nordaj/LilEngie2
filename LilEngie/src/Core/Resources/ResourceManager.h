@@ -11,11 +11,13 @@
 namespace LilEngie
 {
 	class Mesh;
+	class Game;
 
 	class LIL_API ResourceManager
 	{
 	public:
 		static ResourceManager* core;
+		Game* game;
 
 	private:
 		std::map<ResourceId, IResource*> resources;
@@ -23,6 +25,8 @@ namespace LilEngie
 	public:
 		ResourceManager();
 		~ResourceManager();
+
+		void Init(Game* game);
 
 		IResource* LoadResource(const ResourceId& resourceId);
 		IResource* UnloadResource(const ResourceId& resourceId);

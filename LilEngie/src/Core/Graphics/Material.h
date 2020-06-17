@@ -38,7 +38,7 @@ namespace LilEngie
 		uint textureCount;
 
 	public:
-		Material(IShader* shader, MaterialProperty properties[], uint propertyCount, TextureProperty textures[], uint textureCount, Renderer* renderer = nullptr);
+		Material(IShader* shader, MaterialProperty properties[], uint propertyCount, TextureProperty textures[], uint textureCount, Renderer* renderer);
 		~Material();
 
 		bool SetProperty(std::string name, const mat4& value);

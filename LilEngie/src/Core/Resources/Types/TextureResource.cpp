@@ -3,15 +3,15 @@
 #include <Core/Platform/Graphics/Handles.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Graphics/Renderer.h>
+#include <Core/Game/Game.h>
+#include "../ResourceManager.h"
 #include "TextureResource.h"
 
 namespace LilEngie
 {
-	TextureResource::TextureResource(const ResourceId& resourceId, ResourceManager* manager, IGraphics* gfx)
+	TextureResource::TextureResource(const ResourceId& resourceId, ResourceManager* manager)
 		: IResource(resourceId, manager), texture(nullptr)
-	{ 
-		this->gfx = gfx ? gfx : Renderer::core->gfx;
-	}
+	{ }
 
 	TextureResource::~TextureResource()
 	{
@@ -20,6 +20,9 @@ namespace LilEngie
 
 	bool TextureResource::LoadTexture()
 	{
+		//Get graphics context
+		gfx = manager->game->renderer.gfx;
+
 		//Load texture
 		int w, h, ch;
 		stbi_set_flip_vertically_on_load(true);

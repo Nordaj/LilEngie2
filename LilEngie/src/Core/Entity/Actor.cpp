@@ -11,6 +11,7 @@ namespace LilEngie
 	{ 
 		children = std::vector<Actor*>();
 		components = std::vector<IComponent*>();
+		game = scene->manager->game;
 	}
 
 	Actor::~Actor()
@@ -67,8 +68,8 @@ namespace LilEngie
 		{
 			//Try to create component from engine or game, otherwise skip over
 			IComponent* comp = CreateComponentFromString(this, c["type"]);
-			if (!comp && SceneManager::core->gameComponentFactory)
-				comp = SceneManager::core->gameComponentFactory(this, c["type"]);
+			if (!comp && scene->manager->gameComponentFactory)
+				comp = scene->manager->gameComponentFactory(this, c["type"]);
 			if (!comp)
 			{
 				LIL_WARN("Could not instantiate component type: ", c["type"]);
@@ -131,19 +132,5 @@ namespace LilEngie
 
 		for (int i = 0; i < children.size(); i++)
 			children[i]->Start();
-	}
-
-	Actor* ActorRef::Get()
-	{
-		if (actor) 
-			return actor;
-
-		actor = SceneManager::core->scene->GetActor(uid);
-		return actor;
-	}
-
-	Actor* ActorRef::operator->()
-	{
-		return Get();
 	}
 }

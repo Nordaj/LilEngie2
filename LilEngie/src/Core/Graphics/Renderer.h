@@ -16,7 +16,6 @@ namespace LilEngie
 	class LIL_API Renderer : public IEventListener
 	{
 	public:
-		static Renderer* core;
 		IGraphics* gfx;
 		ICBuffer* cbPerObject;
 		ICBuffer* cbPerScene;

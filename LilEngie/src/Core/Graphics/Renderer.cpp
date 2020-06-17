@@ -15,8 +15,6 @@
 
 namespace LilEngie
 {
-	Renderer* Renderer::core = nullptr;
-
 	IInputLayout* layout;
 	IShader* shader;
 	ITexture* texture;

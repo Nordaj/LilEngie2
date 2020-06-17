@@ -23,12 +23,10 @@
 
 namespace LilEngie
 {
-	Game* Game::core = nullptr;
-
 	Game::Game(Function start, Function update, Function init)
 		: start(start), update(update), init(init), deltaTime(0)
 	{ 
-		core = this;
+
 	}
 
 	Game::~Game()
@@ -37,10 +35,8 @@ namespace LilEngie
 	void Game::Run()
 	{
 		//Set core pointers
-		Renderer::core = &renderer;
 		ResourceManager::core = &resourceManager;
 		EventManager::core = &eventManager;
-		SceneManager::core = &sceneManager;
 
 		//Setup events
 		closeEvent = Event(EventType::GameClose);
@@ -50,6 +46,8 @@ namespace LilEngie
 		logger.verbosity = Verbosity::Verbose; //Remove eventually
 
 		//Initialization
+		sceneManager.Init(this);
+		resourceManager.Init(this);
 		application.Init();
 		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
 		input.Init(this);

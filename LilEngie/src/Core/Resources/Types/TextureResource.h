@@ -17,7 +17,7 @@ namespace LilEngie
 		IGraphics* gfx;
 
 	public:
-		TextureResource(const ResourceId& resourceId, ResourceManager* manager, IGraphics* gfx = nullptr);
+		TextureResource(const ResourceId& resourceId, ResourceManager* manager);
 		~TextureResource();
 
 		bool LoadTexture();

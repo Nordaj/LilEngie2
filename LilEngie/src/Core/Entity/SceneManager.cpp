@@ -12,16 +12,9 @@ using json = nlohmann::json;
 
 namespace LilEngie
 {
-	SceneManager* SceneManager::core = nullptr;
-
-	void SceneManager::UnloadScene()
+	void SceneManager::Init(Game* game)
 	{
-		//In the future will also allocate scenes but for now we are only deallocating
-		if (scene)
-		{
-			scene->Clean();
-			delete scene;
-		}
+		this->game = game;
 	}
 
 	void SceneManager::Shutdown()
@@ -36,6 +29,7 @@ namespace LilEngie
 
 		//Create scene object (use local scene later)
 		Scene* scn = new Scene();
+		scn->manager = this;
 		scene = scn;
 		scn->Init();
 
@@ -76,5 +70,15 @@ namespace LilEngie
 		std::ofstream os(path, std::ofstream::trunc);
 		os << j.dump(4);
 		os.close();
+	}
+
+	void SceneManager::UnloadScene()
+	{
+		//In the future will also allocate scenes but for now we are only deallocating
+		if (scene)
+		{
+			scene->Clean();
+			delete scene;
+		}
 	}
 }

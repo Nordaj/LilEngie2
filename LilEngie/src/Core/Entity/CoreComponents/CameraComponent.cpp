@@ -7,6 +7,7 @@
 #include <Core/Entity/Actor.h>
 #include <Core/Entity/CoreComponents/TransformComponent.h>
 #include <Core/Debug/Log.h>
+#include <Core/Game/Game.h>
 #include "CameraComponent.h"
 
 namespace LilEngie
@@ -17,6 +18,8 @@ namespace LilEngie
 
 		//Subscribe to window resize
 		Subscribe(EventType::WindowResize);
+
+		renderer = &actor->game->renderer;
 	}
 
 	void CameraComponent::Update()
@@ -26,12 +29,12 @@ namespace LilEngie
 
 	void CameraComponent::OnDraw()
 	{
-		IGraphics* gfx = Renderer::core->gfx;
+		IGraphics* gfx = renderer->gfx;
 
 		view = inverse(actor->transform->GlobalTransformation());
 		mat4 vp = projection * view;
 
-		ICBuffer* buf = Renderer::core->cbPerScene;
+		ICBuffer* buf = renderer->cbPerScene;
 		void* loc = gfx->GetCBufferPtr(buf);
 		memcpy(loc, &vp, sizeof(mat4));
 		gfx->UpdateCBuffer(buf);

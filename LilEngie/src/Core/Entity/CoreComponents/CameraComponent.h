@@ -7,6 +7,8 @@
 
 namespace LilEngie
 {
+	class Renderer;
+
 	class LIL_API CameraComponent : public IComponent
 	{
 	public:
@@ -25,6 +27,9 @@ namespace LilEngie
 			PROPERTY(f)
 			PROPERTY(ar)
 		)
+
+	private:
+		Renderer* renderer;
 
 	public:
 		void Start() override;

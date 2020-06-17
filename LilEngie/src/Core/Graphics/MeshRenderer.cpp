@@ -8,8 +8,9 @@
 
 namespace LilEngie
 {
-	void MeshRenderer::Init()
+	void MeshRenderer::Init(Renderer* renderer)
 	{
+		this->renderer = renderer;
 		GetMesh();
 	}
 
@@ -27,13 +28,13 @@ namespace LilEngie
 		}
 
 		//Update transform constant buffer
-		ICBuffer* buf = Renderer::core->cbPerObject;
+		ICBuffer* buf = renderer->cbPerObject;
 		void* loc = gfx->GetCBufferPtr(buf);
 		memcpy(loc, &transform, sizeof(mat4));
 		gfx->UpdateCBuffer(buf);
 
 		//Render
-		meshResource->mesh.Render(gfx);
+		meshResource->mesh.Render();
 	}
 
 	MeshResource* MeshRenderer::GetMesh()

@@ -7,6 +7,9 @@
 #include <Core/Debug/Log.h>
 #include <Core/Graphics/Mesh.h>
 #include <Core/Graphics/Vertex.h>
+#include <Core/Game/Game.h>
+#include <Core/Graphics/Renderer.h>
+#include "../ResourceManager.h"
 #include "MeshResource.h"
 
 namespace LilEngie
@@ -66,7 +69,8 @@ namespace LilEngie
 		}
 
 		//Actually init mesh
-		return this->mesh.Init(verts, inds);
+		IGraphics* gfx = manager->game->renderer.gfx;
+		return this->mesh.Init(verts, inds, gfx);
 	}
 
 	bool MeshResource::IsLoaded()

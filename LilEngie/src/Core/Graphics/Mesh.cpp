@@ -12,21 +12,24 @@ namespace LilEngie
 
 	Mesh::~Mesh()
 	{ 
-		Renderer::core->gfx->ReleaseVertexBuffer(&vertexBuffer);
-		Renderer::core->gfx->ReleaseIndexBuffer(&indexBuffer);
+		gfx->ReleaseVertexBuffer(&vertexBuffer);
+		gfx->ReleaseIndexBuffer(&indexBuffer);
 	}
 
-	bool Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint>& indices)
+	bool Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint>& indices, IGraphics* gfx)
 	{
 		//Make sure not currently init
 		if (IsInit())
 			return false;
 
+		//Get graphics context
+		this->gfx = gfx;
+
 		//Create bufers
-		vertexBuffer = Renderer::core->gfx->CreateVertexBuffer((float*)&vertices[0], sizeof(Vertex) * vertices.size());
+		vertexBuffer = gfx->CreateVertexBuffer((float*)&vertices[0], sizeof(Vertex) * vertices.size());
 		indexCount = indices.size();
 		uint* ptr = (uint*)&(indices[0]);
-		indexBuffer = Renderer::core->gfx->CreateIndexBuffer((uint*)&indices[0], sizeof(uint) * indexCount);
+		indexBuffer = gfx->CreateIndexBuffer((uint*)&indices[0], sizeof(uint) * indexCount);
 
 		//Make sure it succeeded
 		if (!vertexBuffer || !indexBuffer)
@@ -44,15 +47,11 @@ namespace LilEngie
 		return indexCount > 0;
 	}
 
-	void Mesh::Render(IGraphics* gfxContext)
+	void Mesh::Render()
 	{
-		if (!gfxContext)
-			gfxContext = Renderer::core->gfx;
+		gfx->BindVertexBuffer(vertexBuffer, sizeof(Vertex));
+		gfx->BindIndexBuffer(indexBuffer);
 
-		gfxContext->BindVertexBuffer(vertexBuffer, sizeof(Vertex));
-		gfxContext->BindIndexBuffer(indexBuffer);
-
-		//OPENGL CRASHES HERE
-		gfxContext->Draw(indexCount);
+		gfx->Draw(indexCount);
 	}
 }

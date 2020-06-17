@@ -20,7 +20,7 @@ namespace LilEngie
 			this->properties[i] = properties[i];
 
 		//Keep track of renderer
-		ren = renderer == nullptr ? Renderer::core : renderer;
+		ren = renderer;
 
 		//Copy array of texture properties
 		if (tn > 0)

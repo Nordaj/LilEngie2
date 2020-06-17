@@ -16,8 +16,6 @@ namespace LilEngie
 	class LIL_API Game : IEventListener
 	{
 	public:
-		static Game* core;
-
 		EventManager eventManager;
 		Application application;
 		Renderer renderer;
