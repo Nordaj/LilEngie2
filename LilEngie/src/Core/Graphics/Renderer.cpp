@@ -66,7 +66,7 @@ namespace LilEngie
 			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32B32A32, sizeof(float) * 12)
 		};
 
-		shader = gfx->CreateShader("LilEngie/res/Shaders/UnlitVS", "LilEngie/res/Shaders/UnlitFS", &layout, elements, 4);
+		shader = gfx->CreateShader("res/Shaders/UnlitVS", "res/Shaders/UnlitFS", &layout, elements, 4);
 	}
 
 	void Renderer::Shutdown()

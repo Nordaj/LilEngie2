@@ -815,7 +815,7 @@ namespace LilEngie
 
 		for (int i = 0; i < mc; i++)
 		{
-			size_t msgSize;
+			SIZE_T msgSize;
 			ctx->debugInfoQueue->GetMessage(i, nullptr, &msgSize);
 
 			//D3D11_MESSAGE* message = (D3D11_MESSAGE*)malloc(msgSize);

@@ -58,9 +58,9 @@ namespace LilEngie
 		Subscribe(EventType::WindowClose);
 
 		//Load scene from file
-		sceneManager.LoadScene("LilEngie/res/Scenes/Test.lilscn");
+		sceneManager.LoadScene("res/Scenes/Test.lilscn");
 
-		//sceneManager.SaveScene("LilEngie/res/Scenes/TestSave.lilscn");
+		//sceneManager.SaveScene("res/Scenes/TestSave.lilscn");
 
 		//Main loop
 		if (start) start();

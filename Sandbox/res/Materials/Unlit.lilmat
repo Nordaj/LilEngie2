@@ -1,5 +1,5 @@
 {
-    "shader": "LilEngie/res/Shaders/Unlit",
+    "shader": "res/Shaders/Unlit",
     "properties": [
         {
             "name": "color",
@@ -10,7 +10,7 @@
     "textures": [
         {
             "name": "BaseColor",
-            "path": "LilEngie/res/Textures/saki.jpg",
+            "path": "res/Textures/saki.jpg",
             "slot": 0
         }
     ]

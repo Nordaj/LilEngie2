@@ -1,3 +1,7 @@
 .vs/
 *bin/
-LilEngieTODO.txt
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+imgui.ini
