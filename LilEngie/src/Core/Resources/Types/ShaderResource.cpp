@@ -24,10 +24,12 @@ namespace LilEngie
 
 	bool ShaderResource::LoadShader(std::string vert, std::string frag)
 	{
+		std::string resPath = manager->GetResourcePath(resourceId);
+
 		if (vert != "" && frag != "")
 			shader = gfx->CreateShader(vert, frag);
 		else
-			shader = gfx->CreateShader(resourceId.path + "VS", resourceId.path + "FS");
+			shader = gfx->CreateShader(resPath + "VS", resPath + "FS");
 		return IsLoaded();
 	}
 

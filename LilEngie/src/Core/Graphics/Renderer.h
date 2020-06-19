@@ -10,6 +10,7 @@ namespace LilEngie
 	class IRenderable;
 	class IGraphics;
 	class ICBuffer;
+	class Game;
 	struct WinProp;
 	enum class GraphicsAPI;
 
@@ -24,12 +25,13 @@ namespace LilEngie
 		float clearColor[4] = { 1, 0, 0.5f, 1 };
 		std::queue<IRenderable*> opaqueQueue;
 		bool isClosing = false;
+		Game* game;
 
 	public:
 		Renderer();
 		~Renderer();
 
-		void Init(const WinProp& windowProperties, GraphicsAPI api);
+		void Init(const WinProp& windowProperties, GraphicsAPI api, Game* game);
 		void Shutdown();
 
 		void SetClearColor(float r, float g, float b, float a);

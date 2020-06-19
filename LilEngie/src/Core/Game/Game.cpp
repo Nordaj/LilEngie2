@@ -49,7 +49,7 @@ namespace LilEngie
 		sceneManager.Init(this);
 		resourceManager.Init(this);
 		application.Init();
-		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL);
+		renderer.Init(application.windowProperties, GraphicsAPI::OpenGL, this);
 		input.Init(this);
 
 		if (init) init();

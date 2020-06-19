@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <Core/Core.h>
 #include <Core/Application/Application.h>
 #include <Core/EventSystem/Events.h>
@@ -24,6 +25,8 @@ namespace LilEngie
 		SceneManager sceneManager;
 		Input input;
 		float deltaTime;
+
+		std::string gamePath;
 
 	private:
 		Function start, update, init;

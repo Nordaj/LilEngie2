@@ -26,7 +26,8 @@ namespace LilEngie
 		//Load texture
 		int w, h, ch;
 		stbi_set_flip_vertically_on_load(true);
-		uint8* image = stbi_load(resourceId.path.c_str(), &w, &h, &ch, STBI_rgb_alpha);
+		std::string resPath = manager->GetResourcePath(resourceId);
+		uint8* image = stbi_load(resPath.c_str(), &w, &h, &ch, STBI_rgb_alpha);
 
 		//Create texture if i can
 		if (image)

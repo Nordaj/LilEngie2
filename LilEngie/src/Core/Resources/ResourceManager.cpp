@@ -2,6 +2,7 @@
 #include <string>
 #include <optional>
 #include <Core/Debug/Log.h>
+#include <Core/Game/Game.h>
 #include "IResource.h"
 #include "ResourceId.h"
 #include "Types/MeshResource.h"
@@ -100,6 +101,16 @@ namespace LilEngie
 			return nullptr;
 
 		return resources[resourceId];
+	}
+
+	std::string ResourceManager::GetResourcePath(const ResourceId& resourceId)
+	{
+		return game->gamePath + resourceId.path;
+	}
+
+	std::string ResourceManager::GetResourcePath(std::string& relPath)
+	{
+		return game->gamePath + relPath;
 	}
 
 	void ResourceManager::UnloadAllResouces()

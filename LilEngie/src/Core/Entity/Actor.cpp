@@ -61,7 +61,7 @@ namespace LilEngie
 	void Actor::Deserialize(json& j)
 	{
 		DeserializeProperty(j, name, "name");
-		parent = scene->GetActor(j["parent"]);
+		scene->SetActorParent(this, scene->GetActor(j["parent"]));
 
 		//Handle each component
 		for (auto& c : j["components"])

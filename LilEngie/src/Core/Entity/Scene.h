@@ -43,6 +43,7 @@ namespace LilEngie
 		void DestroyActor(Actor* actor);
 
 		Actor* GetActor(std::string uid);
+		void SetActorParent(Actor* actor, Actor* parent);
 
 		void Deserialize(json& j) override;
 		void Serialize(json& j) override;

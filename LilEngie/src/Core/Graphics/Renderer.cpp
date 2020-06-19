@@ -30,8 +30,10 @@ namespace LilEngie
 			Shutdown();
 	}
 
-	void Renderer::Init(const WinProp& windowProperties, GraphicsAPI api)
+	void Renderer::Init(const WinProp& windowProperties, GraphicsAPI api, Game* game)
 	{
+		this->game = game;
+
 		//Log which api used
 		switch (api)
 		{
@@ -66,7 +68,8 @@ namespace LilEngie
 			InputElement("TEXCOORD", InputFormat::FLOAT_R32G32B32A32, sizeof(float) * 12)
 		};
 
-		shader = gfx->CreateShader("res/Shaders/UnlitVS", "res/Shaders/UnlitFS", &layout, elements, 4);
+		std::string shaderPath = game->gamePath + "res/Shaders/Unlit";
+		shader = gfx->CreateShader(shaderPath + "VS", shaderPath + "FS", &layout, elements, 4);
 	}
 
 	void Renderer::Shutdown()

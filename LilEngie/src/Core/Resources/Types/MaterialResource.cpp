@@ -35,7 +35,7 @@ namespace LilEngie
 		std::string str;
 
 		std::ifstream f;
-		f.open(resourceId.path);
+		f.open(manager->GetResourcePath(resourceId));
 
 		if (f.is_open())
 		{

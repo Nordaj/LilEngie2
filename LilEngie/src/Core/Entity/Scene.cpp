@@ -126,6 +126,25 @@ namespace LilEngie
 		return nullptr;
 	}
 
+	void Scene::SetActorParent(Actor* actor, Actor* parent)
+	{
+		if (!actor->parent) return;
+		if (!parent) return;
+
+		//Remove actor from current parent
+		for (int i = 0; i < actor->parent->children.size(); i++)
+		{
+			if (actor->parent->children[i] == actor)
+				actor->parent->children.erase(actor->parent->children.begin() + i);
+		}
+
+		//Add actor to new parent
+		parent->children.push_back(actor);
+
+		//Rename parent uid of actor
+		actor->parent = parent;
+	}
+
 	void Scene::Deserialize(json& j)
 	{
 		//Start by creating actors manually with the uid's

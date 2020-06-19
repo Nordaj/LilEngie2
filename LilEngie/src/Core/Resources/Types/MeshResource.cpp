@@ -28,7 +28,7 @@ namespace LilEngie
 	{
 		//Load into importer (currently not completely safe)
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(resourceId.path, aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_CalcTangentSpace);
+		const aiScene* scene = importer.ReadFile(manager->GetResourcePath(resourceId), aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{

@@ -34,6 +34,9 @@ namespace LilEngie
 		//Returns nullptr if resource is not loaded
 		IResource* GetResource(const ResourceId& resourceId);
 
+		std::string GetResourcePath(const ResourceId& resourceId);
+		std::string GetResourcePath(std::string& relPath);
+
 		void UnloadAllResouces();
 	};
 }

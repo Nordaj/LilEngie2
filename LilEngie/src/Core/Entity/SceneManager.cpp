@@ -5,6 +5,8 @@
 #include <nlohmann/json.hpp>
 #include <Core/Math/LilMath.h>
 #include <Core/Resources/ResourceId.h>
+#include <Core/Resources/ResourceManager.h>
+#include <Core/Game/Game.h>
 #include "Scene.h"
 #include "SceneManager.h"
 
@@ -33,10 +35,14 @@ namespace LilEngie
 		scene = scn;
 		scn->Init();
 
+		//Get the actual path of the scene from resources relative path
+		std::string realPath = path;
+		realPath = game->resourceManager.GetResourcePath(realPath);
+
 		//Get json string content of file
 		std::string str;
 		std::ifstream f;
-		f.open(path);
+		f.open(realPath);
 
 		if (f.is_open())
 		{

@@ -22,7 +22,7 @@ namespace LilEngie
 		Actor* parent = nullptr;
 		Scene* scene;
 		Game* game;
-		TransformComponent* transform;
+		TransformComponent* transform = nullptr;
 
 	private:
 		bool isEnabled = true;
