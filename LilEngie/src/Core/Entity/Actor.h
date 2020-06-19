@@ -23,11 +23,11 @@ namespace LilEngie
 		Scene* scene;
 		Game* game;
 		TransformComponent* transform = nullptr;
+		std::vector<IComponent*> components; //TODO: move back to private after ability to access is given
 
 	private:
 		bool isEnabled = true;
 		std::vector<Actor*> children;
-		std::vector<IComponent*> components;
 
 	public:
 		Actor(Scene* scene);

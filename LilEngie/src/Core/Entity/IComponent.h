@@ -29,10 +29,10 @@ namespace LilEngie
 		//Destroys the component
 		void Destroy();
 
-	protected:
 		//Need to return string type identifier, ex: "transform"
 		virtual std::string TypeName() = 0;
 
+	protected:
 		virtual void Init() {}
 
 		virtual void Start() {}

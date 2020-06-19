@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
+#include <Core/System/ISerializable.h>
 #include "IEditorWindow.h"
 #include "LilTreeWindow.h"
 #include "PropertiesWindow.h"
@@ -26,24 +27,32 @@ namespace LilEddie
 			json j;
 			sa->Serialize(j);
 
-			//Display each components data
-			for (auto& component : j["components"])
+			for (int i = 0; i < sa->components.size(); i++)
 			{
-				ImGui::Text(component["type"].get<std::string>().c_str());
-				ImGui::Indent();
-				for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
+				std::string typeName = sa->components[i]->TypeName();
+				current = sa->components[i];
+
+				//Kind of a slow solution, iterating components then checking each json comp for match
+				for (auto& component : j["components"])
 				{
-					DrawProperty(it.key(), it.value());
+					if (component["type"] == typeName)
+					{
+						ImGui::Text(component["type"].get<std::string>().c_str());
+						ImGui::Indent();
+						for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
+						{
+							DrawProperty(it.key(), it.value());
+						}
+						ImGui::Unindent();
+						ImGui::Separator();
+					}
 				}
-				ImGui::Unindent();
-				ImGui::Separator();
 			}
 		}
 
 		ImGui::End();
 	}
 
-	//TODO: does not yet persist data
 	void PropertiesWindow::DrawProperty(std::string name, json value)
 	{
 		switch (value.type())
@@ -54,31 +63,36 @@ namespace LilEddie
 			case json::value_t::string:
 			{
 				std::string s = value.get<std::string>();
-				ImGui::InputText(name.c_str(), &s[0], s.size());
+				if (ImGui::InputText(name.c_str(), &s[0], s.size()) && current)
+					current->SetProperty(name, s);
 				break;
 			}
 			case json::value_t::boolean:
 			{
 				bool b = value.get<bool>();
-				ImGui::Checkbox(name.c_str(), &b);
+				if (ImGui::Checkbox(name.c_str(), &b) && current)
+					current->SetProperty(name, b);
 				break;
 			}
 			case json::value_t::number_integer:
 			{
 				int i = value.get<int>();
-				ImGui::DragInt(name.c_str(), &i);
+				if (ImGui::DragInt(name.c_str(), &i) && current)
+					current->SetProperty(name, i);
 				break;
 			}
 			case json::value_t::number_unsigned:
 			{
 				int i = value.get<int>();
-				ImGui::DragInt(name.c_str(), &i);
+				if (ImGui::DragInt(name.c_str(), &i) && current)
+					current->SetProperty(name, i);
 				break;
 			}
 			case json::value_t::number_float:
 			{
 				float f = value.get<float>();
-				ImGui::DragFloat(name.c_str(), &f);
+				if (ImGui::DragFloat(name.c_str(), &f) && current)
+					current->SetProperty(name, f);
 				break;
 			}
 			case json::value_t::array:
@@ -109,19 +123,75 @@ namespace LilEddie
 			case json::value_t::string:
 			{
 				std::vector<std::string> vals = arr.get<std::vector<std::string>>();
+
+				//Only show for resource id's
+				if (vals.size() != 2 || resourceTypeNames.find(vals[1]) == resourceTypeNames.end())
+				{
+					ImGui::TextDisabled((name + " : NOT DISPLAYABLE").c_str());
+					return;
+				}
+
+				//Make sure string size is large enough
+				vals[0].resize(255);
+
+				//Display property
 				ImGui::Text(name.c_str());
 
 				ImGui::Indent();
-				for (std::string& s : vals)
-					ImGui::InputText("", &s[0], s.size());
+				bool mod = false;
+				mod = ImGui::InputText(("##" + name).c_str(), &vals[0][0], vals[0].size());
+				
+				//Display type
+				if (ImGui::BeginCombo("Type", vals[1].c_str()))
+				{
+					for (auto it = resourceTypeNames.begin(); it != resourceTypeNames.end(); it++)
+					{
+						bool isSelected = it->first == vals[1];
+						if (ImGui::Selectable(it->first.c_str(), isSelected))
+						{
+							vals[1] = it->first;
+							mod = true;
+						}
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+
+					ImGui::EndCombo();
+				}
+
 				ImGui::Unindent();
+
+				//Apply if modified
+				if (mod && current)
+				{
+					//Set if it does
+					ResourceId rid = ResourceId(vals[0], resourceTypeNames[vals[1]]);
+					current->SetProperty(name, rid);
+				}
 
 				break;
 			}
 			case json::value_t::number_float:
 			{
+				//Only show for vec3/vec4
+				if (arr.size() != 3 && arr.size() != 4)
+				{
+					ImGui::TextDisabled((name + " : NOT DISPLAYABLE").c_str());
+					return;
+				}
+
 				std::vector<float> vals = arr.get<std::vector<float>>();
-				ImGui::DragScalarN(name.c_str(), ImGuiDataType_Float, &vals[0], vals.size(), .1f, 0, 0, "%.2f");
+				bool mod = ImGui::DragScalarN(name.c_str(), ImGuiDataType_Float, &vals[0], vals.size(), .1f, 0, 0, "%.2f");
+
+				//assume vec3/4, TODO: somehow figure out how to distinguish between vecs and arrays
+				if (mod && current)
+				{
+					if (arr.size() == 3)
+						current->SetProperty(name, vec3(vals[0], vals[1], vals[2]));
+					else if (arr.size() == 4)
+						current->SetProperty(name, vec4(vals[0], vals[1], vals[2], vals[3]));
+				}
+
 				break;
 			}
 			default:

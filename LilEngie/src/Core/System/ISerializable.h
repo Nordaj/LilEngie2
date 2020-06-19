@@ -23,9 +23,35 @@ namespace LilEngie
 		virtual void Deserialize(json& j)
 		{ Serialization(j, false); }
 
+		//Singular property setting/getting by name
+		template <class T>
+		void SetProperty(std::string name, T value)
+		{
+			//Creating a json with property name to set
+			json j;
+			j["propName"] = name;
+
+			//Serializing it to the json
+			SerializeProperty<T>(j, value, name);
+
+			//Serialize it normally
+			Serialization(j, false, true);
+		}
+
+		template <class T>
+		T GetProperty(std::string name)
+		{
+			//Creating a json with property name to set
+			json j;
+			j["propName"] = name;
+
+			//Serialize it normally
+			Serialization(j, true, true);
+		}
+
 	protected:
 		//Can handle both serialize and deserialize, up to derrived which to override
-		virtual void Serialization(json& j, bool serialize)
+		virtual void Serialization(json& j, bool serialize, bool single = false)
 		{ LIL_ERROR("No serialization handled for ISerializable class..."); }
 
 		//Disperses serialization
@@ -43,8 +69,6 @@ namespace LilEngie
 		{
 			if (std::is_base_of<ISerializable, T>())
 				Serialize(j[name]);
-			else
-				LIL_WARN("Property: ", name, " is not serializable. Specialize SerializeProperty<T>() to add support.");
 		}
 
 		//Deserialization template (to be specialized)
@@ -53,18 +77,21 @@ namespace LilEngie
 		{
 			if (std::is_base_of<ISerializable, T>())
 				Deserialize(j[name]);
-			else
-				LIL_WARN("Property: ", name, " is not deserializable. Specialize DeserializeProperty<T>() to add support.");
 		}
 	};
 }
 
-#define PROPERTY(p) PropertySerialization(j, p, _STR(p), serialize);
-#define NAMED_PROPERTY(p,n) PropertySerialization(j, p, n, serialize);
+#define PROPERTY(p) \
+if (!single || j["propName"] == _STR(p)) \
+{PropertySerialization(j, p, _STR(p), serialize);} \
+
+#define NAMED_PROPERTY(p,n) \
+if (!single || j["propName"] == n) \
+{PropertySerialization(j, p, n, serialize);} \
 
 #define PROPERTIES(x) \
 protected: \
-void Serialization(json& j, bool serialize) override \
+void Serialization(json& j, bool serialize, bool single = false) override \
 { \
 	x \
 }

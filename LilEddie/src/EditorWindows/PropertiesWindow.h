@@ -16,6 +16,7 @@ namespace LilEddie
 
 	private:
 		SceneManager* scnMgr = nullptr;
+		ISerializable* current;
 
 	public:
 		PropertiesWindow(Game* game)
