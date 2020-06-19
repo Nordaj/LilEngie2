@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <nlohmann/json.hpp>
 #include <LilEngie.h>
 #include "IEditorWindow.h"
 
@@ -22,5 +23,9 @@ namespace LilEddie
 
 		void Init() override;
 		void OnDraw() override;
+
+	private:
+		void DrawProperty(std::string name, json value);
+		void DrawArrayProperty(std::string& name, json arr);
 	};
 }
