@@ -4,6 +4,7 @@
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
 #include <Core/System/ISerializable.h>
+#include <Core/Entity/ComponentList.h>
 #include "IEditorWindow.h"
 #include "LilTreeWindow.h"
 #include "PropertiesWindow.h"
@@ -23,6 +24,29 @@ namespace LilEddie
 
 		if (sa)
 		{
+			//Add component button
+			float width = ImGui::GetWindowWidth();
+			if (ImGui::Button("New Component", ImVec2(width - 20, 25)))
+				ImGui::OpenPopup("New Component");
+
+			if (ImGui::BeginPopup("New Component"))
+			{
+				for (int i = 0; i < globalComponentIdList.size(); i++)
+				{
+					if (ImGui::Button(globalComponentIdList[i].c_str()))
+					{
+						//Add the component if not already existing
+						if (!sa->ContainsComponent(globalComponentIdList[i]))
+							CreateComponentFromString(sa, globalComponentIdList[i]);
+
+						ImGui::CloseCurrentPopup();
+					}
+				}
+
+				ImGui::EndPopup();
+			}
+
+			//Component properties
 			//Get json data
 			json j;
 			sa->Serialize(j);
@@ -40,9 +64,7 @@ namespace LilEddie
 						ImGui::Text(component["type"].get<std::string>().c_str());
 						ImGui::Indent();
 						for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
-						{
 							DrawProperty(it.key(), it.value());
-						}
 						ImGui::Unindent();
 						ImGui::Separator();
 					}

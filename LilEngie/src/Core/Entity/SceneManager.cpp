@@ -7,6 +7,7 @@
 #include <Core/Resources/ResourceId.h>
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Game/Game.h>
+#include "ComponentList.h"
 #include "Scene.h"
 #include "SceneManager.h"
 
@@ -14,9 +15,14 @@ using json = nlohmann::json;
 
 namespace LilEngie
 {
+	std::vector<std::string> globalComponentIdList = {};
+
 	void SceneManager::Init(Game* game)
 	{
 		this->game = game;
+
+		//Push all component id's to global list
+		CreateComponentFromString(nullptr, "__init");
 	}
 
 	void SceneManager::Shutdown()

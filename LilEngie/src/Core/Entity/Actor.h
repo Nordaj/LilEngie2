@@ -44,6 +44,7 @@ namespace LilEngie
 		void DestroyComponent(IComponent* component);
 		template<typename T>
 		T* CreateComponent();
+		bool ContainsComponent(std::string id);
 
 		void Deserialize(json& j) override;
 		void Serialize(json& j) override;

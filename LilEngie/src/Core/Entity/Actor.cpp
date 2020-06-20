@@ -58,6 +58,16 @@ namespace LilEngie
 		}
 	}
 
+	bool Actor::ContainsComponent(std::string id)
+	{
+		for (IComponent* comp : components)
+		{
+			if (comp->TypeName() == id)
+				return true;
+		}
+		return false;
+	}
+
 	void Actor::Deserialize(json& j)
 	{
 		DeserializeProperty(j, name, "name");
