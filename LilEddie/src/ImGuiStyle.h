@@ -20,7 +20,7 @@ inline void SetupImGuiStyle()
 	//Styling
 	ImGuiStyle& s = ImGui::GetStyle();
 	s.WindowRounding = 0;
-	s.FrameRounding = 0;
+	s.FrameRounding = 5;
 	s.ScrollbarRounding = 0;
 	s.Alpha = 1;
 
@@ -37,9 +37,9 @@ inline void SetupImGuiStyle()
     s.Colors[ImGuiCol_PopupBg] = bg;
 	s.Colors[ImGuiCol_MenuBarBg] = bg;
 
-    s.Colors[ImGuiCol_FrameBg] = fg;
-    s.Colors[ImGuiCol_FrameBgHovered] = fg;
-    s.Colors[ImGuiCol_FrameBgActive] = fg * .5;
+    s.Colors[ImGuiCol_FrameBg] = fg * .3;
+    s.Colors[ImGuiCol_FrameBgHovered] = highlight * .3;
+    s.Colors[ImGuiCol_FrameBgActive] = fg * .3;
 
     s.Colors[ImGuiCol_Border] = highlight;
     //s.Colors[ImGuiCol_BorderShadow] = highlight; //Keep default
@@ -54,8 +54,8 @@ inline void SetupImGuiStyle()
 	s.Colors[ImGuiCol_ScrollbarGrabActive] = fg * .7;
 
     s.Colors[ImGuiCol_Button] = fg * .3;
-    s.Colors[ImGuiCol_ButtonHovered] = fg * .6;
-    s.Colors[ImGuiCol_ButtonActive] = fg * .4;
+    s.Colors[ImGuiCol_ButtonHovered] = fg * .5;
+    s.Colors[ImGuiCol_ButtonActive] = fg * .3;
 
     s.Colors[ImGuiCol_Header] = fg * .4;
     s.Colors[ImGuiCol_HeaderHovered] = fg * .6;

@@ -15,6 +15,7 @@ namespace LilEddie
 		SceneManager* scnMgr = nullptr;
 		std::string newActorUid;
 		std::string newActorName;
+		bool renaming = false;
 
 	public:
 		LilTreeWindow(Game* game) 

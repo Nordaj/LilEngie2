@@ -164,7 +164,7 @@ namespace LilEddie
 				mod = ImGui::InputText(("##" + name).c_str(), &vals[0][0], vals[0].size());
 				
 				//Display type
-				if (ImGui::BeginCombo("Type", vals[1].c_str()))
+				if (ImGui::BeginCombo(("Type##" + name).c_str(), vals[1].c_str()))
 				{
 					for (auto it = resourceTypeNames.begin(); it != resourceTypeNames.end(); it++)
 					{

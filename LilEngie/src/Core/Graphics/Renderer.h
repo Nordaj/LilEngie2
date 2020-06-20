@@ -22,7 +22,7 @@ namespace LilEngie
 		ICBuffer* cbPerScene;
 
 	private:
-		float clearColor[4] = { 1, 0, 0.5f, 1 };
+		float clearColor[4] = { .1f, .1f, .1f, 1 };
 		std::queue<IRenderable*> opaqueQueue;
 		bool isClosing = false;
 		Game* game;

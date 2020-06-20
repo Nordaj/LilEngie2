@@ -19,10 +19,14 @@ namespace LilEddie
 		if (!scnMgr) return;
 		Scene* s = scnMgr->scene;
 
+		//Check for renaming (F2)
+		if (game->input.GetKeyDown(Key::F2) && ImGui::IsWindowFocused() && selected != "")
+			renaming = true;
+
 		ImGui::Begin("LilTree");
 
 		//Add actor button
-		if (ImGui::Button("Add Actor", ImVec2(ImGui::GetWindowWidth(), 25)))
+		if (ImGui::Button("Add Actor", ImVec2(ImGui::GetWindowWidth() - 20, 25)))
 		{
 			ImGui::OpenPopup("Create Actor");
 		}
