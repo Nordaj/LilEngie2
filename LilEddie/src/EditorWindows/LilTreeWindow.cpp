@@ -9,6 +9,9 @@ namespace LilEddie
 	void LilTreeWindow::Init()
 	{
 		scnMgr = &game->sceneManager;
+
+		newActorUid.resize(255);
+		newActorName.resize(255);
 	}
 
 	void LilTreeWindow::OnDraw()
@@ -18,6 +21,30 @@ namespace LilEddie
 
 		ImGui::Begin("LilTree");
 
+		//Add actor button
+		if (ImGui::Button("Add Actor", ImVec2(ImGui::GetWindowWidth(), 25)))
+		{
+			ImGui::OpenPopup("Create Actor");
+		}
+
+		if (ImGui::BeginPopup("Create Actor"))
+		{
+			ImGui::InputText("UID", &newActorUid[0], newActorUid.size());
+			ImGui::InputText("Name", &newActorName[0], newActorName.size());
+
+			if (ImGui::Button("Create"))
+			{
+				//Create actor here
+				Actor* a = s->CreateActor(newActorUid);
+				a->name = newActorName;
+
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+
+		//Scene tree
 		DrawActorList(s->GetActor("ROOT"));
 
 		ImGui::End();
