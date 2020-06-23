@@ -56,6 +56,10 @@ namespace LilEddie
 
 	void LilTreeWindow::DrawActorList(Actor* actor)
 	{
+		//Make sure its supposed to show
+		if (actor->hideInTree)
+			return;
+
 		//Setup default flags
 		ImGuiTreeNodeFlags flags = 0;
 		flags |= ImGuiTreeNodeFlags_DefaultOpen;

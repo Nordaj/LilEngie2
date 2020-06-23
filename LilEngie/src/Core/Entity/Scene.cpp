@@ -167,6 +167,10 @@ namespace LilEngie
 			if (it->second->uid == "ROOT")
 				continue;
 
+			//Skip if serialize marked false
+			if (!it->second->serialize)
+				continue;
+
 			json actor;
 			it->second->Serialize(actor);
 			j["actors"].push_back(actor);

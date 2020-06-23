@@ -4,6 +4,8 @@
 			"name": "Mesh Actor",
 			"uid": "Mesh Actor",
 			"parent": "ROOT",
+			"editorOnly": false,
+			"hideInTree": false,
 			"components": [
 				{
 					"type": "transform",
@@ -28,6 +30,8 @@
 			"name": "Mesh Actor 2",
 			"uid": "Mesh Actor 2",
 			"parent": "Mesh Actor",
+			"editorOnly": false,
+			"hideInTree": false,
 			"components": [
 				{
 					"type": "transform",
@@ -59,6 +63,8 @@
 			"name": "Camera Actor",
 			"uid": "Camera Actor",
 			"parent": "ROOT",
+			"editorOnly": false,
+			"hideInTree": false,
 			"components": [
 				{
 					"type": "transform",

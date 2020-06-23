@@ -24,6 +24,10 @@ namespace LilEngie
 		Game* game;
 		TransformComponent* transform = nullptr;
 
+		bool editorOnly = false;
+		bool hideInTree = false;
+		bool serialize = true;
+
 	private:
 		std::vector<IComponent*> components;
 		bool isEnabled = true;
