@@ -483,6 +483,16 @@ namespace LilEngie
 	#ifdef LIL_ENABLE_IMGUI
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			//TODO: Fix opengl+win32 ImGui viewports issue (possibly an imgui bug), will be an editor limitation for now
+
+			ImGui::UpdatePlatformWindows();
+			//ImGui::RenderPlatformWindowsDefault();
+			SetContextCurrent();
+		}
 	#endif //LIL_ENABLE_IMGUI
 	}
 

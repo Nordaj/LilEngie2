@@ -711,9 +711,12 @@ namespace LilEngie
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-		//TODO: only do this if io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	#endif //LIL_ENABLE_IMGUI
 	}
 
