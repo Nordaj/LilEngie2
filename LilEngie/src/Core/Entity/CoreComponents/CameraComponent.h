@@ -9,6 +9,7 @@
 namespace LilEngie
 {
 	class Renderer;
+	class IFramebuffer;
 
 	class LIL_API CameraComponent : public IComponent
 	{
@@ -16,6 +17,10 @@ namespace LilEngie
 		float fov = 60;
 		float n = .1f;
 		float f = 100;
+
+		bool useFramebuffer = false;
+		IFramebuffer* framebuffer;
+		int width, height;
 
 		vec4 clearColor = vec4(.05, .05, .05, 1);
 
@@ -28,6 +33,9 @@ namespace LilEngie
 			PROPERTY(n)
 			PROPERTY(f)
 			PROPERTY(clearColor)
+			PROPERTY(useFramebuffer)
+			PROPERTY(width)
+			PROPERTY(height)
 		)
 
 	private:

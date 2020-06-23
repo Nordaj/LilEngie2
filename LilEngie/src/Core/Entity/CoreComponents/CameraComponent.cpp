@@ -22,6 +22,12 @@ namespace LilEngie
 		renderer = &actor->game->renderer;
 
 		renderer->cameras.push_back(&camera);
+
+		if (useFramebuffer)
+		{
+			framebuffer = renderer->gfx->CreateFramebuffer(width, height);
+			camera.framebuffer = framebuffer;
+		}
 	}
 
 	void CameraComponent::Update()
