@@ -82,4 +82,31 @@ namespace LilEngie
 			samplerState = nullptr;
 		}
 	}
+
+	DX11Framebuffer::~DX11Framebuffer()
+	{
+		if (colorRenderView)
+		{
+			colorRenderView->Release();
+			colorRenderView = nullptr;
+		}
+
+		if (depthRenderView)
+		{
+			depthRenderView->Release();
+			depthRenderView = nullptr;
+		}
+
+		if (color)
+		{
+			delete color;
+			color = nullptr;
+		}
+
+		if (depthStencil)
+		{
+			delete depthStencil;
+			depthStencil = nullptr;
+		}
+	}
 }

@@ -51,10 +51,10 @@ namespace LilEddie
 			json j;
 			sa->Serialize(j);
 
-			for (int i = 0; i < sa->components.size(); i++)
+			for (int i = 0; i < sa->ComponentsCount(); i++)
 			{
-				std::string typeName = sa->components[i]->TypeName();
-				current = sa->components[i];
+				std::string typeName = sa->GetComponent(i)->TypeName();
+				current = sa->GetComponent(i);
 
 				//Kind of a slow solution, iterating components then checking each json comp for match
 				for (auto& component : j["components"])

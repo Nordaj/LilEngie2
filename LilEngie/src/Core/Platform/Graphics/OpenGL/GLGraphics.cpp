@@ -24,6 +24,7 @@ namespace LilEngie
 	#ifdef LIL_WINDOWS
 		HGLRC renderCtx;
 		HDC devCtx;
+		int w, h;
 	#endif // LIL_WINDOWS
 	};
 
@@ -51,6 +52,9 @@ namespace LilEngie
 		ctx->renderCtx = wglCreateContext((HDC)windowProperties.hdc);
 		SetContextCurrent();
 	#endif //LIL_WINDOWS
+
+		ctx->w = windowProperties.width;
+		ctx->h = windowProperties.height;
 
 		//Initialize glew
 		if (glewInit() != GLEW_OK)
@@ -93,6 +97,8 @@ namespace LilEngie
 	void GLGraphics::Resize(int width, int height)
 	{
 		glViewport(0, 0, width, height);
+		ctx->w = width;
+		ctx->h = height;
 	}
 
 	void GLGraphics::SetContextCurrent()
@@ -377,6 +383,77 @@ namespace LilEngie
 		*texture = nullptr;
 	}
 
+	IFramebuffer* GLGraphics::CreateFramebuffer(int width, int height)
+	{
+		GLFramebuffer* framebuffer = new GLFramebuffer();
+		framebuffer->w = width;
+		framebuffer->h = height;
+
+		//Create color texture
+		glGenTextures(1, &framebuffer->colorTexture.texture);
+		glBindTexture(GL_TEXTURE_2D, framebuffer->colorTexture.texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+		//Create depth texture
+		glGenTextures(1, &framebuffer->depthTexture.texture);
+		glBindTexture(GL_TEXTURE_2D, framebuffer->depthTexture.texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, nullptr);
+
+		//Create framebuffer
+		glGenFramebuffers(1, &framebuffer->framebuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer->framebuffer);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebuffer->colorTexture.texture, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, framebuffer->depthTexture.texture, 0);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return framebuffer;
+	}
+
+	void GLGraphics::BindFramebuffer(IFramebuffer* framebuffer)
+	{
+		GLFramebuffer* fb = (GLFramebuffer*)framebuffer;
+
+		glBindFramebuffer(GL_FRAMEBUFFER, fb->framebuffer);
+		glViewport(0, 0, fb->w, fb->h);
+	}
+
+	void GLGraphics::UnbindFramebuffer()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, ctx->w, ctx->h);
+	}
+
+	ITexture* GLGraphics::GetFramebufferTexture(IFramebuffer* framebuffer, bool depth)
+	{
+		if (!depth)
+			return &((GLFramebuffer*)framebuffer)->colorTexture;
+		else
+			return &((GLFramebuffer*)framebuffer)->depthTexture;
+	}
+
+	void GLGraphics::ReleaseFramebuffer(IFramebuffer** framebuffer)
+	{
+		if (!framebuffer)
+			return;
+
+		delete *framebuffer;
+		*framebuffer = nullptr;
+	}
+
 	void GLGraphics::ImGuiInit(const WinProp& windowProperties)
 	{
 	#ifdef LIL_ENABLE_IMGUI
@@ -411,6 +488,11 @@ namespace LilEngie
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
 	#endif LIL_ENABLE_IMGUI
+	}
+
+	void* GLGraphics::ImGuiGetTex(ITexture* tex)
+	{
+		return (void*)((GLTexture*)tex)->texture;
 	}
 
 	void GLGraphics::Shutdown()

@@ -20,6 +20,8 @@ namespace LilEngie
 		Subscribe(EventType::WindowResize);
 
 		renderer = &actor->game->renderer;
+
+		renderer->cameras.push_back(&camera);
 	}
 
 	void CameraComponent::Update()
@@ -32,32 +34,16 @@ namespace LilEngie
 		IGraphics* gfx = renderer->gfx;
 
 		view = inverse(actor->transform->GlobalTransformation());
-		mat4 vp = projection * view;
+		ResetProjection();
+		camera.vp = projection * view;
 
-		ICBuffer* buf = renderer->cbPerScene;
-		void* loc = gfx->GetCBufferPtr(buf);
-		memcpy(loc, &vp, sizeof(mat4));
-		gfx->UpdateCBuffer(buf);
-	}
-
-	void CameraComponent::OnEvent(const Event& e)
-	{
-		if (e.type == EventType::WindowResize)
-		{
-			//Recalc aspect ratio
-			int w = e.args[0].asInt;
-			int h = e.args[1].asInt;
-			ar = (float)w / (float)h;
-
-			//Reset projection matrix
-			ResetProjection();
-		}
+		camera.clearColor = clearColor;
 	}
 
 	void CameraComponent::ResetProjection()
 	{
 		float t = n * tan(fov / 2 * (PI / 180.f));
-		float r = t * ar;
+		float r = t * actor->game->renderer.aspectRatio;
 		projection = Math::projection(r, -r, t, -t, n, f);
 	}
 }

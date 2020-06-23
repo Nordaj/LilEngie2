@@ -7,6 +7,7 @@
 #include "EditorWindows/IEditorWindow.h"
 #include "EditorWindows/LilTreeWindow.h"
 #include "EditorWindows/PropertiesWindow.h"
+#include "EditorWindows/GameWindow.h"
 
 namespace LilEddie
 {
@@ -23,6 +24,8 @@ namespace LilEddie
 		PropertiesWindow* propertiesWindow = new PropertiesWindow(game);
 		propertiesWindow->treeWindow = (LilTreeWindow*)windows[0];
 		windows.push_back(propertiesWindow);
+
+		windows.push_back(new GameWindow(game));
 	}
 
 	void Start()

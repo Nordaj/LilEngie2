@@ -10,12 +10,12 @@ struct VSOutput
 	float2 texCoord : TEXCOORD;
 };
 
-cbuffer PerObject : register(b1)
+cbuffer PerObject : register(b2)
 {
 	float4x4 model;
 }
 
-cbuffer PerScene : register(b2)
+cbuffer PerCamera : register(b1)
 {
     float4x4 vp;
 }

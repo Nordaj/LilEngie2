@@ -82,4 +82,18 @@ namespace LilEngie
 		~DX11Texture();
 	};
 
+	class DX11Framebuffer : public IFramebuffer
+	{
+		friend class DX11Graphics;
+
+	private:
+		ID3D11RenderTargetView* colorRenderView;
+		DX11Texture* color;
+		ID3D11DepthStencilView* depthRenderView;
+		DX11Texture* depthStencil;
+		int w, h;
+
+	public:
+		~DX11Framebuffer();
+	};
 }

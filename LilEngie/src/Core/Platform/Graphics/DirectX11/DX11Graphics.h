@@ -57,11 +57,19 @@ namespace LilEngie
 		void BindTexture(ITexture* texture, uint slot) override;
 		void ReleaseTexture(ITexture** texture) override;
 
+		//Framebuffers
+		IFramebuffer* CreateFramebuffer(int width, int height) override;
+		void BindFramebuffer(IFramebuffer* framebuffer) override;
+		void UnbindFramebuffer() override;
+		ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) override;
+		void ReleaseFramebuffer(IFramebuffer** framebuffer) override;
+
 		//Dear ImGUI
 		void ImGuiInit(const WinProp& windowProperties) override;
 		void ImGuiNewFrame() override;
 		void ImGuiRender() override;
 		void ImGuiShutdown() override;
+		void* ImGuiGetTex(ITexture* tex) override;
 
 	private:
 		void Shutdown() override;

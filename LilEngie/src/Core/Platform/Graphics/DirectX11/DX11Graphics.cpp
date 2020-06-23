@@ -30,6 +30,8 @@ namespace LilEngie
 		ID3D11DepthStencilView* depthStencilView;
 		IDXGISwapChain* swapChain;
 		ID3D11InfoQueue* debugInfoQueue;
+		DX11Framebuffer* currentFramebuffer = nullptr;
+		int w, h;
 	};
 
 	DX11Graphics::~DX11Graphics()
@@ -46,6 +48,9 @@ namespace LilEngie
 		HRESULT hr = S_OK;
 
 		ctx = new D3D11Ctx();
+
+		ctx->w = windowProperties.width;
+		ctx->h = windowProperties.height;
 
 		//Setup device and swap chain
 		DXGI_SWAP_CHAIN_DESC scd = {};
@@ -125,8 +130,16 @@ namespace LilEngie
 
 	void DX11Graphics::Clear()
 	{
-		ctx->deviceContext->ClearRenderTargetView(ctx->renderTargetView, clearColor);
-		ctx->deviceContext->ClearDepthStencilView(ctx->depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1., 0);
+		if (!ctx->currentFramebuffer)
+		{
+			ctx->deviceContext->ClearRenderTargetView(ctx->renderTargetView, clearColor);
+			ctx->deviceContext->ClearDepthStencilView(ctx->depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1., 0);
+		}
+		else
+		{
+			ctx->deviceContext->ClearRenderTargetView(ctx->currentFramebuffer->colorRenderView, clearColor);
+			ctx->deviceContext->ClearDepthStencilView(ctx->currentFramebuffer->depthRenderView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1., 0);
+		}
 	}
 
 	void DX11Graphics::Render()
@@ -144,12 +157,16 @@ namespace LilEngie
 
 	void DX11Graphics::Resize(int width, int height)
 	{
+		ctx->w = width;
+		ctx->h = height;
+
+
 		//Need to release render target view before resizing
 		ctx->renderTargetView->Release();
 		ctx->renderTargetView = nullptr;
 
 		//Resize the buffers
-		ctx->swapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+		ctx->swapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
 
 		//Create new depth stencil buffers
 		SetupDepthStencil(width, height);
@@ -477,6 +494,10 @@ namespace LilEngie
 				dxFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 				pSize = 4;
 				break;
+			case LilEngie::TextureFormat::D24S8:
+				dxFormat = DXGI_FORMAT_R24G8_TYPELESS;
+				pSize = 4;
+				break;
 			default:
 				dxFormat = DXGI_FORMAT_R8_UNORM;
 				pSize = 1;
@@ -496,13 +517,24 @@ namespace LilEngie
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		desc.MiscFlags = mipmaps ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
 
+		if (format == TextureFormat::D24S8)
+		{
+			desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+			desc.CPUAccessFlags = 0;
+		}
+
 		//Initial data
+		D3D11_SUBRESOURCE_DATA* d = nullptr;
 		D3D11_SUBRESOURCE_DATA initData = {};
-		initData.pSysMem = data;
-		initData.SysMemPitch = w * pSize;
+		if (data)
+		{
+			initData.pSysMem = data;
+			initData.SysMemPitch = w * pSize;
+			d = &initData;
+		}
 
 		//Create the texture
-		hr = ctx->device->CreateTexture2D(&desc, &initData, &tex->texture);
+		hr = ctx->device->CreateTexture2D(&desc, d, &tex->texture);
 		if (FAILED(hr))
 		{
 			LIL_ERROR("Could not create Texture2D");
@@ -510,8 +542,20 @@ namespace LilEngie
 			return nullptr;
 		}
 
+		//Desc only necessary for depth textures
+		D3D11_SHADER_RESOURCE_VIEW_DESC* srvdPtr = nullptr;
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvd = {};
+		if (format == TextureFormat::D24S8)
+		{
+			srvd.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+			srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			srvd.Texture2D.MostDetailedMip = 0;
+			srvd.Texture2D.MipLevels = -1;
+			srvdPtr = &srvd;
+		}
+
 		//Create resource view
-		hr = ctx->device->CreateShaderResourceView(tex->texture, nullptr, &tex->view);
+		hr = ctx->device->CreateShaderResourceView(tex->texture, srvdPtr, &tex->view);
 		if (FAILED(hr))
 		{
 			LIL_ERROR("Could not create texture resource view");
@@ -559,6 +603,89 @@ namespace LilEngie
 		*texture = nullptr;
 	}
 
+	IFramebuffer* DX11Graphics::CreateFramebuffer(int width, int height)
+	{
+		HRESULT hr = S_OK;
+
+		DX11Framebuffer* fb = new DX11Framebuffer();
+		fb->w = width;
+		fb->h = height;
+
+		//Create textures
+		fb->color = (DX11Texture*)CreateTexture(width, height, TextureFormat::R8G8B8A8, nullptr, false, false, false);
+		fb->depthStencil = (DX11Texture*)CreateTexture(width, height, TextureFormat::D24S8, nullptr, false, false, false);
+
+		//Create render target views
+		hr = ctx->device->CreateRenderTargetView(fb->color->texture, NULL, &fb->colorRenderView);
+		if (FAILED(hr))
+		{
+			LIL_ERROR("Could not create render color target view for frambuffer");
+			delete fb;
+			return nullptr;
+		}
+
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsdv = {};
+		dsdv.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		dsdv.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+		hr = ctx->device->CreateDepthStencilView(fb->depthStencil->texture, &dsdv, &fb->depthRenderView);
+		if (FAILED(hr))
+		{
+			LIL_ERROR("Could not create render depth target view for frambuffer");
+			delete fb;
+			return nullptr;
+		}
+
+		return fb;
+	}
+
+	void DX11Graphics::BindFramebuffer(IFramebuffer* framebuffer)
+	{
+		DX11Framebuffer* fb = (DX11Framebuffer*)framebuffer;
+
+		ctx->deviceContext->OMSetRenderTargets(1, &fb->colorRenderView, fb->depthRenderView);
+		ctx->currentFramebuffer = (DX11Framebuffer*)framebuffer;
+
+		//Setup viewport
+		D3D11_VIEWPORT viewport = {};
+		viewport.Width = fb->w;
+		viewport.Height = fb->h;
+		viewport.MaxDepth = 1;
+		ctx->deviceContext->RSSetViewports(1, &viewport);
+	}
+
+	void DX11Graphics::UnbindFramebuffer()
+	{
+		ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, ctx->depthStencilView);
+		ctx->currentFramebuffer = nullptr;
+
+		//Setup viewport
+		D3D11_VIEWPORT viewport = {};
+		viewport.Width = ctx->w;
+		viewport.Height = ctx->h;
+		viewport.MaxDepth = 1;
+		ctx->deviceContext->RSSetViewports(1, &viewport);
+	}
+
+	ITexture* DX11Graphics::GetFramebufferTexture(IFramebuffer* framebuffer, bool depth)
+	{
+		DX11Framebuffer* fb = (DX11Framebuffer*)framebuffer;
+
+		if (!depth)
+			return fb->color;
+		else
+			return fb->depthStencil;
+	}
+
+	void DX11Graphics::ReleaseFramebuffer(IFramebuffer** framebuffer)
+	{
+		if (!framebuffer)
+			return;
+
+		delete* framebuffer;
+		*framebuffer = nullptr;
+	}
+
 	void DX11Graphics::ImGuiInit(const WinProp& windowProperties)
 	{
 	#ifdef LIL_ENABLE_IMGUI
@@ -593,6 +720,12 @@ namespace LilEngie
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
 	#endif LIL_ENABLE_IMGUI
+	}
+
+	void* DX11Graphics::ImGuiGetTex(ITexture* tex)
+	{
+		DX11Texture* t = (DX11Texture*)tex;
+		return t->view;
 	}
 
 	void DX11Graphics::Shutdown()

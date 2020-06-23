@@ -68,6 +68,16 @@ namespace LilEngie
 		return false;
 	}
 
+	int Actor::ComponentsCount()
+	{
+		return components.size();
+	}
+
+	IComponent* Actor::GetComponent(int i)
+	{
+		return components[i];
+	}
+
 	void Actor::Deserialize(json& j)
 	{
 		DeserializeProperty(j, name, "name");

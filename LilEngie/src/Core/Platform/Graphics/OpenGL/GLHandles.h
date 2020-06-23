@@ -74,4 +74,18 @@ namespace LilEngie
 	public:
 		~GLTexture();
 	};
+
+	class GLFramebuffer : public IFramebuffer
+	{
+		friend class GLGraphics;
+
+	private:
+		uint framebuffer;
+		GLTexture colorTexture;
+		GLTexture depthTexture;
+		int w, h;
+
+	public:
+		~GLFramebuffer();
+	};
 }

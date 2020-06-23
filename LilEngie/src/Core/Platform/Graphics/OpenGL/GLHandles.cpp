@@ -60,4 +60,13 @@ namespace LilEngie
 		glDeleteTextures(1, &texture);
 		texture = 0;
 	}
+
+	GLFramebuffer::~GLFramebuffer()
+	{
+		if (!framebuffer)
+			return;
+
+		glDeleteFramebuffers(1, &framebuffer);
+		framebuffer = 0;
+	}
 }

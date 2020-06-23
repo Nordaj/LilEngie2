@@ -27,6 +27,11 @@ namespace LilEngie
 		}
 	}
 
+	GraphicsAPI IGraphics::GetGraphicsAPI()
+	{
+		return graphicsAPI;
+	}
+
 	void IGraphics::ShutdownGraphicsContext(IGraphics** graphicsContext)
 	{
 		(*graphicsContext)->Shutdown();

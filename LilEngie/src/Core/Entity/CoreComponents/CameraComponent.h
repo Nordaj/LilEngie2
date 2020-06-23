@@ -2,6 +2,7 @@
 
 #include <Core/Core.h>
 #include <Core/Math/LilMath.h>
+#include <Core/Graphics/Camera.h>
 #include "../Actor.h"
 #include "../IComponent.h"
 
@@ -15,7 +16,8 @@ namespace LilEngie
 		float fov = 60;
 		float n = .1f;
 		float f = 100;
-		float ar = 16.f / 9.f;
+
+		vec4 clearColor = vec4(.05, .05, .05, 1);
 
 		mat4 view;
 		mat4 projection;
@@ -25,18 +27,17 @@ namespace LilEngie
 			PROPERTY(fov)
 			PROPERTY(n)
 			PROPERTY(f)
-			PROPERTY(ar)
+			PROPERTY(clearColor)
 		)
 
 	private:
+		Camera camera;
 		Renderer* renderer;
 
 	public:
 		void Start() override;
 		void Update() override;
 		void OnDraw() override;
-
-		void OnEvent(const Event& e) override;
 
 	private:
 		void ResetProjection();

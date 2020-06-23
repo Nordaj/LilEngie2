@@ -52,13 +52,15 @@ namespace LilEngie
 		gfx->Init(windowProperties);
 		InitImGui(windowProperties);
 		gfx->SetClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-		
+
+		aspectRatio = windowProperties.width / (float)windowProperties.height;
+
 		Subscribe(EventType::WindowResize);
 		Subscribe(EventType::WindowClose);
 
 		//Create defualt constant buffers
 		cbPerObject = gfx->CreateCBuffer(sizeof(mat4));
-		cbPerScene = gfx->CreateCBuffer(sizeof(mat4));
+		cbPerCamera = gfx->CreateCBuffer(sizeof(mat4));
 
 		//Shader and layout creation
 		InputElement elements[4] = {
@@ -81,9 +83,32 @@ namespace LilEngie
 		gfx->ReleaseShader(&shader);
 
 		gfx->ReleaseCBuffer(&cbPerObject);
-		gfx->ReleaseCBuffer(&cbPerScene);
+		gfx->ReleaseCBuffer(&cbPerCamera);
+
+		if (framebuffer)
+			gfx->ReleaseFramebuffer(&framebuffer);
 
 		IGraphics::ShutdownGraphicsContext(&gfx);
+	}
+
+	void Renderer::UseFramebuffer()
+	{
+		if (framebuffer)
+			return;
+
+		int w = game->application.windowProperties.width;
+		int h = game->application.windowProperties.height;
+		framebuffer = gfx->CreateFramebuffer(w, h);
+	}
+
+	void Renderer::ResizeFramebuffer(int w, int h)
+	{
+		if (!framebuffer)
+			return;
+
+		gfx->ReleaseFramebuffer(&framebuffer);
+		framebuffer = gfx->CreateFramebuffer(w, h);
+		aspectRatio = w / (float)h;
 	}
 
 	void Renderer::SetClearColor(float r, float g, float b, float a)
@@ -105,22 +130,23 @@ namespace LilEngie
 		//Dont render if going to close
 		if (isClosing) return;
 
-		gfx->Clear();
-
 		//Constant buffer management
-		gfx->BindCBuffer(cbPerObject, ShaderType::Vertex, 1);
-		gfx->BindCBuffer(cbPerScene, ShaderType::Vertex, 2);
+		gfx->BindCBuffer(cbPerCamera, ShaderType::Vertex, 1);
+		gfx->BindCBuffer(cbPerObject, ShaderType::Vertex, 2);
 
 		//Setup default shader and input layout
 		gfx->SetInputLayout(layout);
 		gfx->SetShader(shader);
 
-		//Draw Meshes
-		while (opaqueQueue.size() > 0)
-		{
-			opaqueQueue.front()->Render(gfx);
-			opaqueQueue.pop();
-		}
+		//Clear window
+		gfx->SetClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+		gfx->Clear();
+
+		//Render the camers after setup
+		RenderAllCameras();
+
+		//Render ImGui (maybe disable when no imgui)
+		gfx->UnbindFramebuffer();
 
 		gfx->ImGuiRender();
 		gfx->ImGuiNewFrame();
@@ -134,12 +160,44 @@ namespace LilEngie
 		{
 			case EventType::WindowResize:
 				gfx->Resize(e.args[0].asInt, e.args[1].asInt);
+				if (!framebuffer)
+					aspectRatio = e.args[0].asInt / (float)e.args[1].asInt;
 				break;
 			case EventType::WindowClose:
 				isClosing = true;
 				break;
 			default:
 				break;
+		}
+	}
+
+	void Renderer::RenderAllCameras()
+	{
+		for (Camera* c : cameras)
+		{
+			//Bind framebuffer if present, otherwise just render to screen
+			if (c->framebuffer)
+				gfx->BindFramebuffer(c->framebuffer);
+			else if (framebuffer)
+				gfx->BindFramebuffer(framebuffer);
+			else
+				gfx->UnbindFramebuffer();
+
+			//Clear
+			gfx->SetClearColor(c->clearColor.r, c->clearColor.g, c->clearColor.b, c->clearColor.a);
+			gfx->Clear();
+
+			//Update camera cbuffer
+			void* loc = gfx->GetCBufferPtr(cbPerCamera);
+			memcpy(loc, &c->vp, sizeof(mat4));
+			gfx->UpdateCBuffer(cbPerCamera);
+
+			//Render opaque geometry (only works once: TODO fix)
+			while (opaqueQueue.size() > 0)
+			{
+				opaqueQueue.front()->Render(gfx);
+				opaqueQueue.pop();
+			}
 		}
 	}
 

@@ -39,4 +39,10 @@ namespace LilEngie
 	public:
 		virtual ~ITexture() {}
 	};
+
+	class LIL_API IFramebuffer
+	{
+	public:
+		virtual ~IFramebuffer() {}
+	};
 }

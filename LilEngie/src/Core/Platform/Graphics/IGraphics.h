@@ -25,7 +25,8 @@ namespace LilEngie
 	{
 		R8,
 		R8G8,
-		R8G8B8A8
+		R8G8B8A8,
+		D24S8
 	};
 
 	class LIL_API IGraphics
@@ -75,13 +76,22 @@ namespace LilEngie
 		virtual void BindTexture(ITexture* texture, uint slot) = 0;
 		virtual void ReleaseTexture(ITexture** texture) = 0;
 
+		//Framebuffers TODO: make pure virtual
+		virtual IFramebuffer* CreateFramebuffer(int width, int height) { return nullptr; }
+		virtual void BindFramebuffer(IFramebuffer* framebuffer) {}
+		virtual void UnbindFramebuffer() {}
+		virtual ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) { return nullptr; }
+		virtual void ReleaseFramebuffer(IFramebuffer** framebuffer) {}
+
 		//Dear ImGUI TODO: make pure virtual
 		virtual void ImGuiInit(const WinProp& windowProperties) = 0;
 		virtual void ImGuiNewFrame() = 0;
 		virtual void ImGuiRender() = 0;
 		virtual void ImGuiShutdown() = 0;
+		virtual void* ImGuiGetTex(ITexture* tex) { return nullptr; } //TODO: make pure virtual
 
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = GraphicsAPI::DirectX11);
+		GraphicsAPI GetGraphicsAPI();
 		static void ShutdownGraphicsContext(IGraphics** graphicsContext);
 
 	private:
