@@ -44,9 +44,15 @@ inline void SetupImGuiStyle()
     s.Colors[ImGuiCol_Border] = highlight;
     //s.Colors[ImGuiCol_BorderShadow] = highlight; //Keep default
 
-	s.Colors[ImGuiCol_TitleBg] = highlight;
+    s.Colors[ImGuiCol_TitleBg] = highlight;
 	s.Colors[ImGuiCol_TitleBgCollapsed] = highlight;
 	s.Colors[ImGuiCol_TitleBgActive] = highlight;
+
+    s.Colors[ImGuiCol_Tab] = bg * .5;
+    s.Colors[ImGuiCol_TabHovered] = bg;
+    s.Colors[ImGuiCol_TabActive] = bg;
+    s.Colors[ImGuiCol_TabUnfocused] = bg;
+    s.Colors[ImGuiCol_TabUnfocusedActive] = bg;
 
 	s.Colors[ImGuiCol_ScrollbarBg] = bg;
 	s.Colors[ImGuiCol_ScrollbarGrab] = fg * .5;
@@ -68,10 +74,6 @@ inline void SetupImGuiStyle()
         ImGuiCol_ResizeGrip,
         ImGuiCol_ResizeGripHovered,
         ImGuiCol_ResizeGripActive,
-        ImGuiCol_Tab,
-        ImGuiCol_TabHovered,
-        ImGuiCol_TabActive,
-        ImGuiCol_TabUnfocused,
         ImGuiCol_TabUnfocusedActive,
         ImGuiCol_PlotLines,
         ImGuiCol_PlotLinesHovered,

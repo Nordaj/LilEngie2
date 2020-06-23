@@ -352,6 +352,9 @@ namespace LilEngie
 			case TextureFormat::R8G8B8A8:
 				glFormat = GL_RGBA;
 				break;
+			case TextureFormat::D24S8:
+				glFormat = GL_DEPTH_COMPONENT; //Kind of a lie, ik. ill get stencil stuff working later
+				break;
 			default:
 				glFormat = GL_RED;
 		}
@@ -385,6 +388,8 @@ namespace LilEngie
 
 	IFramebuffer* GLGraphics::CreateFramebuffer(int width, int height)
 	{
+		//TODO: should just use GLTextures for the textures like dx11 does
+
 		GLFramebuffer* framebuffer = new GLFramebuffer();
 		framebuffer->w = width;
 		framebuffer->h = height;

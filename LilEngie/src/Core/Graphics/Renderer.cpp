@@ -151,6 +151,7 @@ namespace LilEngie
 		gfx->ImGuiRender();
 		gfx->ImGuiNewFrame();
 
+
 		gfx->Render();
 	}
 
@@ -207,6 +208,9 @@ namespace LilEngie
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		//Kind of editor only 
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
