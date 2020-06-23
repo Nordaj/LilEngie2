@@ -12,7 +12,7 @@ namespace LilEngie
 	public:
 		vec3 position;
 		vec3 euler;
-		vec3 scale;
+		vec3 scale = vec3(1, 1, 1);
 
 		LIL_TYPE_NAME("transform")
 		PROPERTIES(

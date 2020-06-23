@@ -47,6 +47,8 @@ namespace LilEngie
 		void Update() override;
 		void OnDraw() override;
 
+		void ResizeFramebuffer(int width, int height);
+
 	private:
 		void ResetProjection();
 	};

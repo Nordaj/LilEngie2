@@ -46,6 +46,18 @@ namespace LilEngie
 		camera.clearColor = clearColor;
 	}
 
+	void CameraComponent::ResizeFramebuffer(int width, int height)
+	{
+		if (framebuffer)
+		{
+			renderer->gfx->ReleaseFramebuffer(&framebuffer);
+			framebuffer = renderer->gfx->CreateFramebuffer(width, height);
+			camera.framebuffer = framebuffer;
+			this->width = width;
+			this->height = height;
+		}
+	}
+
 	void CameraComponent::ResetProjection()
 	{
 		float t = n * tan(fov / 2 * (PI / 180.f));

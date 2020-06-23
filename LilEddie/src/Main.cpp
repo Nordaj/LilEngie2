@@ -7,6 +7,7 @@
 #include "EditorWindows/IEditorWindow.h"
 #include "EditorWindows/LilTreeWindow.h"
 #include "EditorWindows/PropertiesWindow.h"
+#include "EditorWindows/SceneWindow.h"
 #include "EditorWindows/GameWindow.h"
 
 namespace LilEddie
@@ -26,6 +27,7 @@ namespace LilEddie
 		windows.push_back(propertiesWindow);
 
 		windows.push_back(new GameWindow(game));
+		windows.push_back(new SceneWindow(game));
 	}
 
 	void Start()
@@ -40,6 +42,8 @@ namespace LilEddie
 
 	void Update()
 	{
+		game->sceneManager.scene->EditorUpdate();
+
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);

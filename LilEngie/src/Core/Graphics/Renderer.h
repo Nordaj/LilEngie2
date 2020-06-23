@@ -1,6 +1,6 @@
 #pragma once
 
-#include <queue>
+#include <vector>
 #include <Core/EventSystem/Events.h>
 #include <Core/Math/LilMath.h>
 #include <Core/Core.h>
@@ -27,7 +27,7 @@ namespace LilEngie
 
 	private:
 		float clearColor[4] = { .2f, .2f, .2f, 1 };
-		std::queue<IRenderable*> opaqueQueue;
+		std::vector<IRenderable*> opaqueQueue;
 		bool isClosing = false;
 		Game* game;
 

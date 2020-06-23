@@ -59,6 +59,7 @@ namespace LilEngie
 		void Start();
 		void Update();
 		void OnDraw();
+		void EditorUpdate();
 		void OnDrawImGui();
 	};
 }

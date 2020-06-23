@@ -64,6 +64,12 @@ namespace LilEngie
 			root->Update();
 	}
 
+	void Scene::EditorUpdate()
+	{
+		if (isEnabled)
+			root->EditorUpdate();
+	}
+
 	void Scene::OnDraw()
 	{
 		if (isEnabled)

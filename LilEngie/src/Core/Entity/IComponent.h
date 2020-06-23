@@ -37,6 +37,7 @@ namespace LilEngie
 
 		virtual void Start() {}
 		virtual void Update() {}
+		virtual void EditorUpdate() {}
 
 		virtual void OnDraw() {}
 		virtual void OnDrawImGui() {}

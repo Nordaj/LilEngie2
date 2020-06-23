@@ -21,7 +21,7 @@ namespace LilEngie
 
 	Renderer::Renderer()
 	{
-		opaqueQueue = std::queue<IRenderable*>();
+		opaqueQueue = std::vector<IRenderable*>();
 	}
 
 	Renderer::~Renderer()
@@ -122,7 +122,7 @@ namespace LilEngie
 
 	void Renderer::QueueOpaque(IRenderable* renderable)
 	{
-		opaqueQueue.push(renderable);
+		opaqueQueue.push_back(renderable);
 	}
 
 	void Renderer::Render()
@@ -194,12 +194,11 @@ namespace LilEngie
 			gfx->UpdateCBuffer(cbPerCamera);
 
 			//Render opaque geometry (only works once: TODO fix)
-			while (opaqueQueue.size() > 0)
-			{
-				opaqueQueue.front()->Render(gfx);
-				opaqueQueue.pop();
-			}
+			for (IRenderable* r : opaqueQueue)
+				r->Render(gfx);
 		}
+
+		opaqueQueue.clear();
 	}
 
 	void Renderer::InitImGui(const WinProp& windowProperties)

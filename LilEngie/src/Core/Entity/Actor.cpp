@@ -140,6 +140,15 @@ namespace LilEngie
 			children[i]->OnDraw();
 	}
 
+	void Actor::EditorUpdate()
+	{
+		for (int i = 0; i < components.size(); i++)
+			components[i]->EditorUpdate();
+
+		for (int i = 0; i < children.size(); i++)
+			children[i]->EditorUpdate();
+	}
+
 	void Actor::OnDrawImGui()
 	{
 		for (int i = 0; i < components.size(); i++)
