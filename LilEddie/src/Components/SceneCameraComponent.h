@@ -9,6 +9,7 @@ namespace LilEddie
 	public:
 		float lookSpeed = .01f;
 		float moveSpeed = 5;
+		bool hovered = false;
 
 		LIL_TYPE_NAME("__EddieSceneCamera");
 		PROPERTIES(

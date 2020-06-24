@@ -5,7 +5,7 @@ namespace LilEddie
 {
 	void SceneCameraComponent::EditorUpdate()
 	{
-		if (input->GetMouseBtnDown(MouseButton::Right))
+		if (input->GetMouseBtnDown(MouseButton::Right) && hovered)
 		{
 			isLooking = true;
 

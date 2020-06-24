@@ -20,7 +20,7 @@ namespace LilEddie
 		camera->width = 1;
 		camera->height = 1;
 		camera->Start();
-		sceneCamera->CreateComponent<SceneCameraComponent>();
+		scnCam = sceneCamera->CreateComponent<SceneCameraComponent>();
 
 		gfx = game->renderer.gfx;
 
@@ -42,6 +42,8 @@ namespace LilEddie
 	void SceneWindow::OnDraw()
 	{
 		ImGui::Begin("Scene View");
+
+		scnCam->hovered = ImGui::IsWindowHovered();
 
 		//Handle window resizing
 		if (ImGui::GetContentRegionAvail().x != frameSize.x || ImGui::GetContentRegionAvail().y != frameSize.y)

@@ -60,8 +60,10 @@ namespace LilEngie
 
 	void CameraComponent::ResetProjection()
 	{
+		float ar = useFramebuffer ? width / (float)height : actor->game->renderer.aspectRatio;
+
 		float t = n * tan(fov / 2 * (PI / 180.f));
-		float r = t * actor->game->renderer.aspectRatio;
+		float r = t * ar;
 		projection = Math::projection(r, -r, t, -t, n, f);
 	}
 }

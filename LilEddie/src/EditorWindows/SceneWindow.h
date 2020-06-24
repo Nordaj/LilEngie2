@@ -2,6 +2,7 @@
 
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
+#include "../Components/SceneCameraComponent.h"
 #include "IEditorWindow.h"
 
 namespace LilEddie
@@ -10,6 +11,7 @@ namespace LilEddie
 	{
 	private:
 		CameraComponent* camera;
+		SceneCameraComponent* scnCam;
 		IGraphics* gfx;
 		ITexture* frameColor;
 		ImVec2 frameSize;
