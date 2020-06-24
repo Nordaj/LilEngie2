@@ -17,6 +17,8 @@ namespace LilEddie
 
 	void Init()
 	{
+		game->application.window.Maximize();
+
 		//Setup component creation factory ptr for the engine to use for serialization
 		//game->sceneManager.gameComponentFactory = CreateComponentFromString;
 
@@ -75,7 +77,9 @@ int main()
 	using namespace LilEddie;
 
 	game = new Game(Start, Update, Init);
+
 	game->gamePath = "../Sandbox/"; //TODO make use path argument
+	
 	game->Run();
 	delete game;
 	return 0;

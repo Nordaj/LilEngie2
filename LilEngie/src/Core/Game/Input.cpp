@@ -14,8 +14,8 @@ namespace LilEngie
 	void Input::Init(Game* game)
 	{
 		this->game = game;
-		currentKeys = game->application.GetKeyStates();
-		currentMouse = game->application.GetMouseState();
+		currentKeys = game->application.window.GetKeyStates();
+		currentMouse = game->application.window.GetMouseState();
 		prevKeys = new bool[255];
 	}
 
@@ -46,8 +46,8 @@ namespace LilEngie
 		memcpy(&prevMouse, currentMouse, sizeof(MouseState));
 
 		//Resets mouse deltas each frame
-		currentMouse->mouseX = 0;
-		currentMouse->mouseY = 0;
+		currentMouse->rawDeltaX = 0;
+		currentMouse->rawDeltaY = 0;
 		currentMouse->wheelDelta = 0;
 
 		//Lock mouse position to center of the screen
@@ -59,8 +59,22 @@ namespace LilEngie
 			x += game->application.windowProperties.width / 2;
 			y += game->application.windowProperties.height / 2;
 
-			game->application.SetMousePosition(x, y);
+			game->application.window.GetMousePosition(&currentMouse->mouseX, &currentMouse->mouseY);
+			game->application.window.SetMousePosition(x, y);
+
+			prevMouse.mouseX = x;
+			prevMouse.mouseY = y;
+
+			//Make sure there are no jumps in delta during transition to locked mouse
+			if (!wasLocked)
+			{
+				wasLocked = true;
+				currentMouse->mouseX = x;
+				currentMouse->mouseY = y;
+			}
 		}
+		else
+			wasLocked = false;
 	}
 
 	bool Input::GetMouseBtn(MouseButton button)
@@ -85,12 +99,9 @@ namespace LilEngie
 
 	vec3 Input::GetMouseDelta()
 	{
-		//Delta is in pixels, kinda sucks to use, no clue what else i should be using tbh
 		int deltaX = currentMouse->mouseX - prevMouse.mouseX;
 		int deltaY = currentMouse->mouseY - prevMouse.mouseY;
-		//return vec3(deltaX, deltaY, currentMouse->wheelDelta);
-
-		return vec3(currentMouse->mouseX, currentMouse->mouseY, 0);
+		return vec3(deltaX, deltaY, currentMouse->wheelDelta);
 	}
 
 	float Input::GetWheelDelta()

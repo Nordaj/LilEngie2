@@ -138,9 +138,22 @@ namespace LilEngie
 			SetCursorPos(x, y);
 		}
 
+		void GetMousePosition(int* x, int* y)
+		{
+			POINT pt;
+			GetCursorPos(&pt);
+			*x = pt.x;
+			*y = pt.y;
+		}
+
 		void SetMouseVisibility(bool visible)
 		{
 			ShowCursor(visible);
+		}
+
+		void Maximize()
+		{
+			ShowWindow(hwnd, SW_MAXIMIZE);
 		}
 
 		void PollEvents()
@@ -236,8 +249,8 @@ namespace LilEngie
 					RAWINPUT* raw = (RAWINPUT*)lpb;
 					if (raw->header.dwType == RIM_TYPEMOUSE)
 					{
-						mouseState.mouseX = raw->data.mouse.lLastX;
-						mouseState.mouseY = raw->data.mouse.lLastY;
+						mouseState.rawDeltaX = raw->data.mouse.lLastX;
+						mouseState.rawDeltaY = raw->data.mouse.lLastY;
 					}
 					delete[] lpb;
 					break;

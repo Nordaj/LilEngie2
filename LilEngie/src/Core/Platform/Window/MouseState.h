@@ -17,6 +17,8 @@ namespace LilEngie
 	{
 		int mouseX;
 		int mouseY;
+		int rawDeltaX;
+		int rawDeltaY;
 		int wheelDelta;
 		bool buttons[5] = {};
 	};

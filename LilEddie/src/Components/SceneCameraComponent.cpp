@@ -17,8 +17,10 @@ namespace LilEddie
 		{
 			//Looking behaviour
 			vec3 e = input->GetMouseDelta();
-			e = vec3(e.y, e.x, 0) * DeltaTime() * lookSpeed;
+			e = vec3(e.y, e.x, 0) * lookSpeed;
 			actor->transform->euler += e;
+
+			LIL_LOG(input->GetMouseDelta().x);
 
 			//Moving behaviour
 			mat4 rot = rotate(actor->transform->euler);

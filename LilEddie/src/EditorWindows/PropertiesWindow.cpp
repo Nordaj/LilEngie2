@@ -203,7 +203,7 @@ namespace LilEddie
 				}
 
 				std::vector<float> vals = arr.get<std::vector<float>>();
-				bool mod = ImGui::DragScalarN(name.c_str(), ImGuiDataType_Float, &vals[0], vals.size(), .1f, 0, 0, "%.3f");
+				bool mod = ImGui::DragScalarN(name.c_str(), ImGuiDataType_Float, &vals[0], vals.size(), .1f, 0, 0, "%.5f");
 
 				//assume vec3/4, TODO: somehow figure out how to distinguish between vecs and arrays
 				if (mod && current)

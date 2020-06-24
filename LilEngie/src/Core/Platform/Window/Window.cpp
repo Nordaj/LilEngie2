@@ -63,10 +63,26 @@ namespace LilEngie
 	#endif //LIL_WINDOWS
 	}
 
+	void Window::GetMousePosition(int* x, int* y)
+	{
+	#ifdef LIL_WINDOWS
+		WinWindow::GetMousePosition(x, y);
+	#endif //LIL_WINDOWS
+	}
+
 	void Window::SetMouseVisibility(bool visible)
 	{
 	#ifdef LIL_WINDOWS
 		WinWindow::SetMouseVisibility(visible);
+	#endif //LIL_WINDOWS
+	}
+
+	void Window::Maximize()
+	{
+		maximized = true;
+
+	#ifdef LIL_WINDOWS
+		WinWindow::Maximize();
 	#endif //LIL_WINDOWS
 	}
 

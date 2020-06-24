@@ -12,22 +12,10 @@ namespace LilEngie
 
 	void Application::Update()
 	{
+		windowProperties.width = window.GetSizeX();
+		windowProperties.height = window.GetSizeY();
+
 		window.PollEvents();
 		window.SwapBuffer();
-	}
-
-	bool* Application::GetKeyStates()
-	{
-		return window.GetKeyStates();
-	}
-
-	MouseState* Application::GetMouseState()
-	{
-		return window.GetMouseState();
-	}
-
-	void Application::SetMousePosition(int x, int y)
-	{
-		window.SetMousePosition(x, y);
 	}
 }

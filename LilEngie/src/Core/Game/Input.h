@@ -27,6 +27,7 @@ namespace LilEngie
 
 	private:
 		Game* game;
+		bool wasLocked = false;
 
 	public:
 		Input();

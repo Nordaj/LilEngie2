@@ -7,7 +7,7 @@ namespace LilEddie
 	class SceneCameraComponent : public IComponent
 	{
 	public:
-		float lookSpeed = 2;
+		float lookSpeed = .01f;
 		float moveSpeed = 5;
 
 		LIL_TYPE_NAME("__EddieSceneCamera");

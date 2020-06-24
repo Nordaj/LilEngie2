@@ -16,10 +16,5 @@ namespace LilEngie
 
 		void Init();
 		void Update();
-
-		bool* GetKeyStates();
-		MouseState* GetMouseState();
-
-		void SetMousePosition(int x, int y);
 	};
 }

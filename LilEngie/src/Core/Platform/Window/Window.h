@@ -23,6 +23,9 @@ namespace LilEngie
 
 	class LIL_API Window : public IEventListener
 	{
+	public:
+		bool maximized = false;
+
 	private:
 		int width = 960;
 		int height = 540;
@@ -37,7 +40,10 @@ namespace LilEngie
 		void SetTitle(const std::string &title);
 
 		void SetMousePosition(int x, int y);
+		void GetMousePosition(int* x, int* y);
 		void SetMouseVisibility(bool visible);
+
+		void Maximize();
 
 		void PollEvents();
 		void SwapBuffer();
