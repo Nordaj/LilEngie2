@@ -72,11 +72,16 @@ namespace LilEngie
 
 		std::string shaderPath = game->gamePath + "res/Shaders/Unlit";
 		shader = gfx->CreateShader(shaderPath + "VS", shaderPath + "FS", &layout, elements, 4);
+
+		//Init debug drawing
+		debugDrawing.Init(gfx, game, this);
 	}
 
 	void Renderer::Shutdown()
 	{
 		//Cleanup
+		debugDrawing.Shutdown();
+
 		gfx->ImGuiShutdown();
 
 		gfx->ReleaseInputLayout(&layout);
@@ -151,8 +156,9 @@ namespace LilEngie
 		gfx->ImGuiRender();
 		gfx->ImGuiNewFrame();
 
-
 		gfx->Render();
+
+		debugDrawing.Flush();
 	}
 
 	void Renderer::OnEvent(const Event &e)
@@ -176,26 +182,46 @@ namespace LilEngie
 	{
 		for (Camera* c : cameras)
 		{
+			int width = 0;
+			int height = 0;
+
 			//Bind framebuffer if present, otherwise just render to screen
 			if (c->framebuffer)
+			{
 				gfx->BindFramebuffer(c->framebuffer);
+				gfx->GetFramebufferSize(c->framebuffer, &width, &height);
+			}
 			else if (framebuffer)
+			{
 				gfx->BindFramebuffer(framebuffer);
+				gfx->GetFramebufferSize(framebuffer, &width, &height);
+			}
 			else
+			{
 				gfx->UnbindFramebuffer();
+				width = game->application.window.GetSizeX();
+				height = game->application.window.GetSizeY();
+			}
 
 			//Clear
 			gfx->SetClearColor(c->clearColor.r, c->clearColor.g, c->clearColor.b, c->clearColor.a);
 			gfx->Clear();
 
+			//Get camera vp
+			mat4 vp = c->projection * c->view;
+
 			//Update camera cbuffer
 			void* loc = gfx->GetCBufferPtr(cbPerCamera);
-			memcpy(loc, &c->vp, sizeof(mat4));
+			memcpy(loc, &vp, sizeof(mat4));
 			gfx->UpdateCBuffer(cbPerCamera);
 
-			//Render opaque geometry (only works once: TODO fix)
+			//Render opaque geometry
 			for (IRenderable* r : opaqueQueue)
 				r->Render(gfx);
+
+			//Render debug stuff
+			if (c->renderDebug)
+				debugDrawing.RenderAll(width, height, c->near, c->view, c->projection);
 		}
 
 		opaqueQueue.clear();

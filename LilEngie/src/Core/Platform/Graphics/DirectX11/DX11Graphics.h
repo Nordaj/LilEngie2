@@ -28,8 +28,8 @@ namespace LilEngie
 		void SetContextCurrent() override {}
 
 		//Shaders and input layout
-		IShader* CreateShader(const std::string &vert, const std::string &frag) override;
-		IShader* CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements) override;
+		IShader* CreateShader(const std::string& vert, const std::string& frag) override;
+		IShader* CreateShader(const std::string& vert, const std::string& frag, IInputLayout** layout, InputElement* elements, uint numElements) override;
 		void SetShader(IShader* shader) override;
 		void ReleaseShader(IShader** shader) override;
 		void SetInputLayout(IInputLayout* layout) override;
@@ -62,6 +62,7 @@ namespace LilEngie
 		void BindFramebuffer(IFramebuffer* framebuffer) override;
 		void UnbindFramebuffer() override;
 		ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) override;
+		void GetFramebufferSize(IFramebuffer* framebuffer, int* width, int* height) override;
 		void ReleaseFramebuffer(IFramebuffer** framebuffer) override;
 
 		//Dear ImGUI

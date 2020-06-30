@@ -450,6 +450,14 @@ namespace LilEngie
 			return &((GLFramebuffer*)framebuffer)->depthTexture;
 	}
 
+	void GLGraphics::GetFramebufferSize(IFramebuffer* framebuffer, int* width, int* height)
+	{
+		GLFramebuffer* fb = (GLFramebuffer*)framebuffer;
+
+		*width = fb->w;
+		*height= fb->h;
+	}
+
 	void GLGraphics::ReleaseFramebuffer(IFramebuffer** framebuffer)
 	{
 		if (!framebuffer)

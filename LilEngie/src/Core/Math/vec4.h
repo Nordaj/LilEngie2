@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include <Core/Core.h>
 #include "vec3.h"
 
@@ -22,8 +23,13 @@ namespace LilEngie::Math
 		vec4(float x, float y, float z, float w);
 		vec4(vec3 vec, float w = 0);
 
+		vec3 xyz();
+
 		vec4 operator+(const vec4& v) const;
 		void operator+=(const vec4& v);
+
+		vec4 operator-(const vec4& v) const;
+		void operator-=(const vec4& v);
 
 		vec4 operator*(float f) const;
 		vec4 operator*=(float f);
@@ -38,4 +44,6 @@ namespace LilEngie::Math
 	extern float len(vec4 vec);
 	extern float len2(vec4 vec);
 	extern void normalize(vec4& vec);
+
+	extern std::ostream& operator<<(std::ostream& os, const vec4& v);
 }

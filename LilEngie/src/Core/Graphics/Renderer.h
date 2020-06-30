@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "DebugDrawing.h"
 #include <Core/EventSystem/Events.h>
 #include <Core/Math/LilMath.h>
 #include <Core/Core.h>
@@ -24,6 +25,7 @@ namespace LilEngie
 		ICBuffer* cbPerCamera;
 		std::vector<Camera*> cameras;
 		float aspectRatio = 1.77777f;
+		DebugDrawing debugDrawing;
 
 	private:
 		float clearColor[4] = { .2f, .2f, .2f, 1 };

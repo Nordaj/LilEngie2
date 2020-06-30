@@ -16,11 +16,13 @@ namespace LilEddie
 		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
 		sceneCamera->transform = t;
 		camera = sceneCamera->CreateComponent<CameraComponent>();
+		camera->EnableDebugGraphics(true);
 		camera->useFramebuffer = true;
 		camera->width = 1;
 		camera->height = 1;
 		camera->Start();
 		scnCam = sceneCamera->CreateComponent<SceneCameraComponent>();
+		scnCam->Start();
 
 		gfx = game->renderer.gfx;
 

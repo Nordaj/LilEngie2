@@ -1,5 +1,6 @@
 //LilEddie - LilEngie's Editor application entry point
 
+#include <iostream>
 #include <vector>
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>

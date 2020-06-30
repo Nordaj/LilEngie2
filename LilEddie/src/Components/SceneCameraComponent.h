@@ -19,8 +19,14 @@ namespace LilEddie
 
 	private:
 		bool isLooking = false;
+		DebugDrawing* dbg;
 
 	public:
+		void Start() override;
+		void OnDraw() override;
 		void EditorUpdate() override;
+
+	private:
+		void DrawSceneLines();
 	};
 }

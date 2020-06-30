@@ -14,6 +14,5 @@ struct VSOutput
 
 float4 main(in VSOutput i) : SV_TARGET
 {
-	//return float4(color, 1);
-	return tex.Sample(samp, i.texCoord);
+	return tex.Sample(samp, i.texCoord) * float4(color, 1);
 }

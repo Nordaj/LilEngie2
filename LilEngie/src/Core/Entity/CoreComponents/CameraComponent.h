@@ -15,7 +15,6 @@ namespace LilEngie
 	{
 	public:
 		float fov = 60;
-		float n = .1f;
 		float f = 100;
 
 		bool useFramebuffer = false;
@@ -24,13 +23,10 @@ namespace LilEngie
 
 		vec4 clearColor = vec4(.05, .05, .05, 1);
 
-		mat4 view;
-		mat4 projection;
-
 		LIL_TYPE_NAME("camera")
 		PROPERTIES(
 			PROPERTY(fov)
-			PROPERTY(n)
+			NAMED_PROPERTY(camera.near, "n")
 			PROPERTY(f)
 			PROPERTY(clearColor)
 			PROPERTY(useFramebuffer)
@@ -48,6 +44,7 @@ namespace LilEngie
 		void OnDraw() override;
 
 		void ResizeFramebuffer(int width, int height);
+		void EnableDebugGraphics(bool enabled);
 
 	private:
 		void ResetProjection();

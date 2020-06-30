@@ -38,6 +38,8 @@ namespace LilEngie::Math
 	extern void translate(mat4& m, vec3 v);
 	extern mat4 rotate(vec3 euler);
 	extern void rotate(mat4& m, vec3 euler);
+	extern mat4 rotate(vec3 axis, float angle);
+	extern void rotate(mat4& m, vec3 axis, float angle);
 	extern mat4 scale(vec3 v);
 	extern void scale(mat4& m, vec3 v);
 

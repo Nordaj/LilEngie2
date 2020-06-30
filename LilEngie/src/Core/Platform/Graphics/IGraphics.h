@@ -47,7 +47,7 @@ namespace LilEngie
 		virtual void SetContextCurrent() = 0;
 
 		//Shaders and input layout
-		virtual IShader* CreateShader(const std::string &vert, const std::string &frag) = 0;
+		virtual IShader* CreateShader(const std::string& vert, const std::string& frag) = 0;
 		virtual IShader* CreateShader(const std::string &vert, const std::string &frag, IInputLayout** layout, InputElement* elements, uint numElements) = 0;
 		virtual void SetShader(IShader* shader) = 0;
 		virtual void ReleaseShader(IShader** shader) = 0;
@@ -76,19 +76,20 @@ namespace LilEngie
 		virtual void BindTexture(ITexture* texture, uint slot) = 0;
 		virtual void ReleaseTexture(ITexture** texture) = 0;
 
-		//Framebuffers TODO: make pure virtual
-		virtual IFramebuffer* CreateFramebuffer(int width, int height) { return nullptr; }
-		virtual void BindFramebuffer(IFramebuffer* framebuffer) {}
-		virtual void UnbindFramebuffer() {}
-		virtual ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) { return nullptr; }
-		virtual void ReleaseFramebuffer(IFramebuffer** framebuffer) {}
+		//Framebuffers
+		virtual IFramebuffer* CreateFramebuffer(int width, int height) = 0;
+		virtual void BindFramebuffer(IFramebuffer* framebuffer) = 0;
+		virtual void UnbindFramebuffer() = 0;
+		virtual ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) = 0;
+		virtual void GetFramebufferSize(IFramebuffer* framebuffer, int* width, int* height) = 0;
+		virtual void ReleaseFramebuffer(IFramebuffer** framebuffer) = 0;
 
-		//Dear ImGUI TODO: make pure virtual
+		//Dear ImGUI
 		virtual void ImGuiInit(const WinProp& windowProperties) = 0;
 		virtual void ImGuiNewFrame() = 0;
 		virtual void ImGuiRender() = 0;
 		virtual void ImGuiShutdown() = 0;
-		virtual void* ImGuiGetTex(ITexture* tex) { return nullptr; } //TODO: make pure virtual
+		virtual void* ImGuiGetTex(ITexture* tex) = 0;
 
 		static IGraphics* CreateGraphicsContext(GraphicsAPI api = GraphicsAPI::DirectX11);
 		GraphicsAPI GetGraphicsAPI();

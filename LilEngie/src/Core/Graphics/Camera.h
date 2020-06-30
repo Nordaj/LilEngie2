@@ -12,6 +12,9 @@ namespace LilEngie
 	public:
 		IFramebuffer* framebuffer = nullptr;
 		vec4 clearColor = vec4(0, 0, 0, 1);
-		mat4 vp = mat4(1);
+		mat4 view = mat4(1);
+		mat4 projection = mat4(1);
+		bool renderDebug = false;
+		float near = .1f;
 	};
 }

@@ -1,4 +1,5 @@
 #include <cmath>
+#include <sstream>
 #include "vec3.h"
 #include "vec4.h"
 
@@ -12,6 +13,11 @@ namespace LilEngie::Math
 
 	vec4::vec4(vec3 v, float w)
 		: x(v.x), y(v.y), z(v.z), w(w) { }
+
+	vec3 vec4::xyz()
+	{
+		return vec3(x, y, z);
+	}
 
 	vec4 vec4::operator+(const vec4& v) const
 	{
@@ -29,6 +35,24 @@ namespace LilEngie::Math
 		y += v.y;
 		z += v.z;
 		w += v.w;
+	}
+
+	vec4 vec4::operator-(const vec4& v) const
+	{
+		return {
+			x - v.x,
+			y - v.y,
+			z - v.z,
+			w - v.w
+		};
+	}
+
+	void vec4::operator-=(const vec4& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		w -= v.w;
 	}
 
 	vec4 vec4::operator*(float f) const
@@ -79,5 +103,10 @@ namespace LilEngie::Math
 	void normalize(vec4& v)
 	{
 		v = v / len(v);
+	}
+
+	std::ostream& operator<<(std::ostream& os, const vec4& v)
+	{
+		return os << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
 	}
 }

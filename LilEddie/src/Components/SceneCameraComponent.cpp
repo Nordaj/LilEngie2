@@ -3,6 +3,16 @@
 
 namespace LilEddie
 {
+	void SceneCameraComponent::Start()
+	{
+		dbg = &actor->game->renderer.debugDrawing;
+	}
+
+	void SceneCameraComponent::OnDraw()
+	{
+		DrawSceneLines();
+	}
+
 	void SceneCameraComponent::EditorUpdate()
 	{
 		if (input->GetMouseBtnDown(MouseButton::Right) && hovered)
@@ -19,8 +29,6 @@ namespace LilEddie
 			vec3 e = input->GetMouseDelta();
 			e = vec3(e.y, e.x, 0) * lookSpeed;
 			actor->transform->euler += e;
-
-			LIL_LOG(input->GetMouseDelta().x);
 
 			//Moving behaviour
 			mat4 rot = rotate(actor->transform->euler);
@@ -47,6 +55,30 @@ namespace LilEddie
 				input->lockMousePos = false;
 				input->MouseVisibility(true);
 			}
+		}
+	}
+
+	void SceneCameraComponent::DrawSceneLines()
+	{
+		if (!dbg) return;
+
+		//Axis lines
+		dbg->DrawLine(vec3(0, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), 2);
+		dbg->DrawLine(vec3(0, 0, 0), vec3(0, 1, 0), vec3(0, 1, 0), 2);
+		dbg->DrawLine(vec3(0, 0, 0), vec3(0, 0, 1), vec3(0, 0, 1), 2);
+
+		//Grid lines
+		int n = 50;
+		int hn = n / 2;
+		vec3 c = vec3(1, .3, .7) * .5;
+		for (int i = 1; i < n; i++)
+		{
+			dbg->DrawLine(vec3(i - hn, 0, -hn), vec3(i - hn, 0, hn), c, 1);
+		}
+
+		for (int k = 1; k < n; k++)
+		{
+			dbg->DrawLine(vec3(-hn, 0, k - hn), vec3(hn, 0, k - hn), c, 1);
 		}
 	}
 }

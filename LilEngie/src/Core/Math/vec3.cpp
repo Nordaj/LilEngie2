@@ -1,6 +1,7 @@
 //#pragma once
 
 #include <cmath>
+#include <sstream>
 #include "vec3.h"
 
 namespace LilEngie::Math
@@ -27,6 +28,38 @@ namespace LilEngie::Math
 		z += v.z;
 	}
 
+	vec3 vec3::operator-(const vec3& v)
+	{
+		return {
+			x - v.x,
+			y - v.y,
+			z - v.z,
+		};
+	}
+
+	void vec3::operator-=(const vec3& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+	}
+
+	vec3 vec3::operator*(const vec3& v)
+	{
+		return {
+			x * v.x,
+			y * v.y,
+			z * v.z,
+		};
+	}
+
+	void vec3::operator*=(const vec3& v)
+	{
+		x *= v.x;
+		y *= v.y;
+		z *= v.z;
+	}
+
 	vec3 vec3::operator*(float f)
 	{
 		return { x * f, y * f, z * f };
@@ -35,6 +68,11 @@ namespace LilEngie::Math
 	vec3 vec3::operator/(float f)
 	{
 		return { x / f, y / f, z / f };
+	}
+
+	vec3 vec3::operator-()
+	{
+		return vec3(x, y, z) * -1;
 	}
 
 	float& vec3::operator[](int i)
@@ -61,6 +99,11 @@ namespace LilEngie::Math
 		};
 	}
 
+	vec3 lerp(vec3 a, vec3 b, float x)
+	{
+		return (a * (1. - x)) + (b * x);
+	}
+
 	float len(vec3 v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
@@ -74,5 +117,15 @@ namespace LilEngie::Math
 	void normalize(vec3& v)
 	{
 		v =  v / len(v);
+	}
+
+	vec3 normalized(vec3 vec)
+	{
+		return vec / len(vec);
+	}
+
+	std::ostream& operator<<(std::ostream& os, const vec3& v)
+	{
+		return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 	}
 }

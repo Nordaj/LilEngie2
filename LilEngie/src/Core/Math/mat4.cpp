@@ -144,6 +144,27 @@ namespace LilEngie::Math
 		m = rotate(e) * m;
 	}
 
+	mat4 rotate(vec3 axis, float angle)
+	{
+		float c = cos(angle);
+		float s = sin(angle);
+		float t = 1 - c;
+		vec3 a = axis / len(axis);
+
+		//https://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/
+		return mat4(
+			{t * a.x * a.x + c,			t * a.x * a.y - a.z * s,	t * a.x * a.z + a.y * s,	0},
+			{t * a.x * a.y + a.z * s,	t * a.y * a.y + c,			t * a.y * a.z - a.x * s,	0},
+			{t * a.x * a.z - a.y * s,	t * a.y * a.z + a.x * s,	t * a.z * a.z + c,			0},
+			{0,							0,							0,							1}
+		);
+	}
+
+	void rotate(mat4& m, vec3 axis, float angle)
+	{
+		m = rotate(axis, angle) * m;
+	}
+
 	mat4 scale(vec3 v)
 	{
 		mat4 m = mat4(1.);

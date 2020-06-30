@@ -39,9 +39,8 @@ namespace LilEngie
 	{
 		IGraphics* gfx = renderer->gfx;
 
-		view = inverse(actor->transform->GlobalTransformation());
+		camera.view = inverse(actor->transform->GlobalTransformation());
 		ResetProjection();
-		camera.vp = projection * view;
 
 		camera.clearColor = clearColor;
 	}
@@ -58,12 +57,17 @@ namespace LilEngie
 		}
 	}
 
+	void CameraComponent::EnableDebugGraphics(bool enabled)
+	{
+		camera.renderDebug = enabled;
+	}
+
 	void CameraComponent::ResetProjection()
 	{
 		float ar = useFramebuffer ? width / (float)height : actor->game->renderer.aspectRatio;
 
-		float t = n * tan(fov / 2 * (PI / 180.f));
+		float t = camera.near * tan(fov / 2 * (PI / 180.f));
 		float r = t * ar;
-		projection = Math::projection(r, -r, t, -t, n, f);
+		camera.projection = Math::projection(r, -r, t, -t, camera.near, f);
 	}
 }

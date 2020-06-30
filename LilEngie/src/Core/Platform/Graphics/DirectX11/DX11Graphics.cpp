@@ -677,6 +677,14 @@ namespace LilEngie
 			return fb->depthStencil;
 	}
 
+	void DX11Graphics::GetFramebufferSize(IFramebuffer* framebuffer, int* width, int* height)
+	{
+		DX11Framebuffer* fb = (DX11Framebuffer*)framebuffer;
+
+		*width = fb->w;
+		*height = fb->h;
+	}
+
 	void DX11Graphics::ReleaseFramebuffer(IFramebuffer** framebuffer)
 	{
 		if (!framebuffer)

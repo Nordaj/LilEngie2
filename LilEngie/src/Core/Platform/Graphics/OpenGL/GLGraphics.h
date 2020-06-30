@@ -62,6 +62,7 @@ namespace LilEngie
 		void BindFramebuffer(IFramebuffer* framebuffer) override;
 		void UnbindFramebuffer() override;
 		ITexture* GetFramebufferTexture(IFramebuffer* framebuffer, bool depth = false) override;
+		void GetFramebufferSize(IFramebuffer* framebuffer, int* width, int* height) override;
 		void ReleaseFramebuffer(IFramebuffer** framebuffer) override;
 
 		//Dear ImGUI
