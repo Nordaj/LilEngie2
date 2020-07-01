@@ -78,7 +78,6 @@ namespace LilEngie
 			renderer.Render();
 
 			deltaTime = t.GetElapsed(TimeUnit::Seconds);
-			LIL_LOG(1. / deltaTime);
 			t = DebugTimer();
 		}
 

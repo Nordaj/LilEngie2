@@ -83,6 +83,8 @@ namespace LilEngie
 		mat4 vp = p * v;
 		vec3 cam = inverse(v)[3].xyz();
 		mat4 identity = mat4(1);
+		vec3 pn = normalized(inverse(v)[2].xyz());
+		vec3 po = inverse(v)[3].xyz();
 
 		//Draw each line
 		for (DebugLineDrawCall& line : lines)
@@ -92,8 +94,6 @@ namespace LilEngie
 
 			///World space
 			///Clip line by plane
-			vec3 pn = normalized(inverse(v)[2].xyz());
-			vec3 po = inverse(v)[3].xyz();
 			ClipLinePlane(line.a, line.b, po + (pn * near), pn);
 
 			///Clip Space

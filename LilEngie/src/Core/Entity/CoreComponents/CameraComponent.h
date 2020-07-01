@@ -14,7 +14,7 @@ namespace LilEngie
 	class LIL_API CameraComponent : public IComponent
 	{
 	public:
-		float fov = 60;
+		float fov = 45;
 		float f = 100;
 
 		bool useFramebuffer = false;
