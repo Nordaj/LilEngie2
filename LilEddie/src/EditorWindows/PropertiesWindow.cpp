@@ -38,7 +38,15 @@ namespace LilEddie
 					{
 						//Add the component if not already existing
 						if (!sa->ContainsComponent(globalComponentIdList[i]))
-							CreateComponentFromString(sa, globalComponentIdList[i]);
+						{
+							IComponent* comp = CreateComponentFromString(sa, globalComponentIdList[i]);
+
+							if (comp)
+							{
+								comp->Init();
+								comp->Start();
+							}
+						}
 
 						ImGui::CloseCurrentPopup();
 					}

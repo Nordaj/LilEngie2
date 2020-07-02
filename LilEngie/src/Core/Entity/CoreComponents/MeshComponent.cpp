@@ -36,6 +36,9 @@ namespace LilEngie
 
 	void MeshComponent::OnDraw()
 	{
+		if (!meshRenderer.IsRenderable())
+			return;
+
 		//Manage constant buffer data
 		meshRenderer.transform = actor->transform->GlobalTransformation();
 

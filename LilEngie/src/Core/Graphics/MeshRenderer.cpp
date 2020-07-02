@@ -8,6 +8,11 @@
 
 namespace LilEngie
 {
+	bool MeshRenderer::IsRenderable()
+	{
+		return meshResource && material && renderer;
+	}
+
 	void MeshRenderer::Init(Renderer* renderer)
 	{
 		this->renderer = renderer;

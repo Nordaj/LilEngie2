@@ -68,6 +68,16 @@ namespace LilEngie
 		return false;
 	}
 
+	bool Actor::ContainsComponents(std::vector<std::string>& ids)
+	{
+		for (std::string& str : ids)
+		{
+			if (!ContainsComponent(str))
+				return false;
+		}
+		return true;
+	}
+
 	int Actor::ComponentsCount()
 	{
 		return components.size();
@@ -99,7 +109,6 @@ namespace LilEngie
 			}
 
 			comp->Deserialize(c["properties"]);
-			if (c["type"] == "transform") transform = (TransformComponent*)comp;
 			comp->Init();
 		}
 	}

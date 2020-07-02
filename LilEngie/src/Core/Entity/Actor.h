@@ -49,6 +49,7 @@ namespace LilEngie
 		template<typename T>
 		T* CreateComponent();
 		bool ContainsComponent(std::string id);
+		bool ContainsComponents(std::vector<std::string>& ids);
 		int ComponentsCount();
 		IComponent* GetComponent(int i);
 

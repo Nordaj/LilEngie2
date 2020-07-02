@@ -6,8 +6,20 @@ namespace LilEngie
 	T* Actor::CreateComponent()
 	{
 		T* component = new T();
-		components.push_back(component);
 		component->actor = this;
+
+		//Make sure the component has the other components it depends on
+		if (!component->CheckDependencies())
+		{
+			delete component;
+			return nullptr;
+		}
+
+		//Add to transform if its transform
+		if (std::is_same<T, TransformComponent>::value)
+			transform = (TransformComponent*)component;
+
+		components.push_back(component);
 		return component;
 	}
 }

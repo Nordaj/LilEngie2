@@ -26,6 +26,7 @@ namespace LilEngie
 
 	public:
 		MeshRenderer() {}
+		bool IsRenderable();
 		void Init(Renderer* renderer);
 		void Render(IGraphics* gfxContext) override;
 

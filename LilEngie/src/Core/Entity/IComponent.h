@@ -32,7 +32,7 @@ namespace LilEngie
 		//Need to return string type identifier, ex: "transform"
 		virtual std::string TypeName() = 0;
 
-	protected:
+		virtual bool CheckDependencies() { return true; }
 		virtual void Init() {}
 
 		virtual void Start() {}
@@ -49,3 +49,8 @@ namespace LilEngie
 }
 
 #define LIL_TYPE_NAME(n) std::string TypeName() override { return n; }
+#define LIL_DEPENDENCIES(...) \
+bool CheckDependencies() override { \
+	std::vector<std::string> ids = {__VA_ARGS__}; \
+	return actor->ContainsComponents(ids); \
+}

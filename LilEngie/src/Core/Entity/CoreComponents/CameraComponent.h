@@ -23,6 +23,7 @@ namespace LilEngie
 
 		vec4 clearColor = vec4(.05, .05, .05, 1);
 
+		LIL_DEPENDENCIES("transform")
 		LIL_TYPE_NAME("camera")
 		PROPERTIES(
 			PROPERTY(fov)

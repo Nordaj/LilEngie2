@@ -16,6 +16,7 @@ namespace LilEngie
 
 		MeshRenderer meshRenderer;
 
+		LIL_DEPENDENCIES("transform")
 		LIL_TYPE_NAME("mesh")
 		PROPERTIES(
 			PROPERTY(meshId)
