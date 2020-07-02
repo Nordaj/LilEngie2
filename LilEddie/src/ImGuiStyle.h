@@ -2,20 +2,33 @@
 
 #include <Vendor/imgui/imgui.h>
 
-ImVec4 operator*(ImVec4 a, float b)
+inline ImVec4 operator*(ImVec4 a, float b)
 {
-	return ImVec4(a.x * b, a.y * b, a.z * b, a.w);
+    return ImVec4(a.x * b, a.y * b, a.z * b, a.w * b);
+}
+
+inline ImVec4 operator+(ImVec4 a, ImVec4 b)
+{
+    return ImVec4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+}
+
+//Try to use 0, .25, .5, .75, 1 (brightest)
+inline ImVec4 Gradient(float x)
+{
+    ImVec4 a = ImVec4(255, 61, 145, 255);
+    ImVec4 b = ImVec4(33, 29, 32, 255);
+
+    a = a * (1 / 255.);
+    b = b * (1 / 255.);
+
+    return (b * (1. - x)) + (a * x);
 }
 
 inline void SetupImGuiStyle()
 {
 	//Colors
 	ImVec4 white = ImVec4(1, 1, 1, 1);
-
 	ImVec4 text = white;
-	ImVec4 bg = white * .1;
-	ImVec4 fg = white * .5;
-	ImVec4 highlight = ImVec4(1, .25, .5, 1);
 
 	//Styling
 	ImGuiStyle& s = ImGui::GetStyle();
@@ -28,49 +41,50 @@ inline void SetupImGuiStyle()
 	s.Colors[ImGuiCol_Text] = text;
 	s.Colors[ImGuiCol_TextDisabled] = text * .5;
 
-    s.Colors[ImGuiCol_CheckMark] = fg;
-    s.Colors[ImGuiCol_SliderGrab] = fg;
-    s.Colors[ImGuiCol_SliderGrabActive] = white;
+    s.Colors[ImGuiCol_CheckMark] = Gradient(1);
+    s.Colors[ImGuiCol_SliderGrab] = Gradient(1);
+    s.Colors[ImGuiCol_SliderGrabActive] = Gradient(.5);
 
-    s.Colors[ImGuiCol_WindowBg] = bg;
-    s.Colors[ImGuiCol_ChildBg] = bg;
-    s.Colors[ImGuiCol_PopupBg] = bg;
-	s.Colors[ImGuiCol_MenuBarBg] = bg;
+    s.Colors[ImGuiCol_WindowBg] = Gradient(0);
+    s.Colors[ImGuiCol_ChildBg] = Gradient(0);
+    s.Colors[ImGuiCol_PopupBg] = Gradient(0);
+	s.Colors[ImGuiCol_MenuBarBg] = Gradient(0);
 
-    s.Colors[ImGuiCol_FrameBg] = fg * .3;
-    s.Colors[ImGuiCol_FrameBgHovered] = highlight * .3;
-    s.Colors[ImGuiCol_FrameBgActive] = fg * .3;
+    s.Colors[ImGuiCol_FrameBg] = Gradient(0) * 1.7;
+    s.Colors[ImGuiCol_FrameBgHovered] = Gradient(.5);
+    s.Colors[ImGuiCol_FrameBgActive] = Gradient(.25);
 
-    s.Colors[ImGuiCol_Border] = highlight;
+    s.Colors[ImGuiCol_Border] = Gradient(1);
     //s.Colors[ImGuiCol_BorderShadow] = highlight; //Keep default
 
-    s.Colors[ImGuiCol_TitleBg] = highlight;
-	s.Colors[ImGuiCol_TitleBgCollapsed] = highlight;
-	s.Colors[ImGuiCol_TitleBgActive] = highlight;
+    s.Colors[ImGuiCol_TitleBg] = Gradient(0);
+	s.Colors[ImGuiCol_TitleBgCollapsed] = Gradient(0);
+	s.Colors[ImGuiCol_TitleBgActive] = Gradient(.25);
 
-    s.Colors[ImGuiCol_Tab] = bg * .5;
-    s.Colors[ImGuiCol_TabHovered] = bg;
-    s.Colors[ImGuiCol_TabActive] = bg;
-    s.Colors[ImGuiCol_TabUnfocused] = bg;
-    s.Colors[ImGuiCol_TabUnfocusedActive] = bg;
+    s.Colors[ImGuiCol_Tab] = Gradient(1);
+    s.Colors[ImGuiCol_TabHovered] = Gradient(.75);
+    s.Colors[ImGuiCol_TabActive] = Gradient(1);
+    s.Colors[ImGuiCol_TabUnfocused] = Gradient(1);
+    s.Colors[ImGuiCol_TabUnfocusedActive] = Gradient(1);
 
-	s.Colors[ImGuiCol_ScrollbarBg] = bg;
-	s.Colors[ImGuiCol_ScrollbarGrab] = fg * .5;
-	s.Colors[ImGuiCol_ScrollbarGrabHovered] = fg * .6;
-	s.Colors[ImGuiCol_ScrollbarGrabActive] = fg * .7;
+	s.Colors[ImGuiCol_ScrollbarBg] = Gradient(0);
+	s.Colors[ImGuiCol_ScrollbarGrab] = Gradient(.5);
+	s.Colors[ImGuiCol_ScrollbarGrabHovered] = Gradient(.75);
+	s.Colors[ImGuiCol_ScrollbarGrabActive] = Gradient(.5);
 
-    s.Colors[ImGuiCol_Button] = fg * .3;
-    s.Colors[ImGuiCol_ButtonHovered] = fg * .5;
-    s.Colors[ImGuiCol_ButtonActive] = fg * .3;
+    s.Colors[ImGuiCol_Button] = Gradient(0) * 1.7;
+    s.Colors[ImGuiCol_ButtonHovered] = Gradient(.5);
+    s.Colors[ImGuiCol_ButtonActive] = Gradient(.25);
 
-    s.Colors[ImGuiCol_Header] = fg * .4;
-    s.Colors[ImGuiCol_HeaderHovered] = fg * .6;
-    s.Colors[ImGuiCol_HeaderActive] = fg * .4;
+    s.Colors[ImGuiCol_Header] = Gradient(.25);
+    s.Colors[ImGuiCol_HeaderHovered] = Gradient(.5);
+    s.Colors[ImGuiCol_HeaderActive] = Gradient(.25);
+
+    s.Colors[ImGuiCol_Separator] = Gradient(.25);
+    s.Colors[ImGuiCol_SeparatorHovered] = Gradient(.5);
+    s.Colors[ImGuiCol_SeparatorActive] = Gradient(.25);
 
     /*
-        ImGuiCol_Separator,
-        ImGuiCol_SeparatorHovered,
-        ImGuiCol_SeparatorActive,
         ImGuiCol_ResizeGrip,
         ImGuiCol_ResizeGripHovered,
         ImGuiCol_ResizeGripActive,

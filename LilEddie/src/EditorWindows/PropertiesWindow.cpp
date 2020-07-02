@@ -5,6 +5,7 @@
 #include <LilEngie.h>
 #include <Core/System/ISerializable.h>
 #include <Core/Entity/ComponentList.h>
+#include "../ImGuiStyle.h"
 #include "IEditorWindow.h"
 #include "LilTreeWindow.h"
 #include "PropertiesWindow.h"
@@ -61,12 +62,44 @@ namespace LilEddie
 				{
 					if (component["type"] == typeName)
 					{
-						ImGui::Text(component["type"].get<std::string>().c_str());
-						ImGui::Indent();
-						for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
-							DrawProperty(it.key(), it.value());
-						ImGui::Unindent();
-						ImGui::Separator();
+						std::string type = component["type"].get<std::string>();
+
+						//Split draw list to draw out of order foreground first
+						ImDrawList* drawList = ImGui::GetWindowDrawList();
+						drawList->ChannelsSplit(2);
+						drawList->ChannelsSetCurrent(1);
+
+						//Draw the properties dropdown in a group so that we can find the size
+						ImGui::Dummy(ImVec2(0, 10));
+						ImGui::BeginGroup();
+
+						ImGuiTreeNodeFlags headerFlags = ImGuiTreeNodeFlags_DefaultOpen;
+						headerFlags |= ImGuiTreeNodeFlags_Framed;
+						headerFlags |= ImGuiTreeNodeFlags_FramePadding;
+						headerFlags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+						if (ImGui::TreeNodeEx((type + "##CollapseHeader").c_str(), headerFlags))
+						{
+							ImGui::Indent();
+							for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
+								DrawProperty(it.key(), it.value());
+							ImGui::Unindent();
+							ImGui::Dummy(ImVec2(0, 10));
+
+							ImGui::TreePop();
+						}
+						ImGui::EndGroup();
+
+						//Draw the background after we know the size
+						drawList->ChannelsSetCurrent(0);
+
+						ImColor color = Gradient(0) * .8;
+						ImVec2 min = ImGui::GetItemRectMin();
+						ImVec2 max = ImGui::GetItemRectMax();
+						max.x = min.x + ImGui::GetContentRegionAvailWidth();
+						drawList->AddRectFilled(min, max, color, 5);
+
+						drawList->ChannelsMerge();
 					}
 				}
 			}

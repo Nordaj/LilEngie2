@@ -60,11 +60,17 @@ namespace LilEddie
 		if (actor->hideInTree)
 			return;
 
+		//No padding
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 3));
+
 		//Setup default flags
 		ImGuiTreeNodeFlags flags = 0;
 		flags |= ImGuiTreeNodeFlags_DefaultOpen;
 		flags |= ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		flags |= ImGuiTreeNodeFlags_OpenOnArrow;
+		flags |= ImGuiTreeNodeFlags_FramePadding;
+		flags |= ImGuiTreeNodeFlags_SpanFullWidth;
 
 		//Draw as selected if selected
 		if (actor->uid == selected)
@@ -72,7 +78,7 @@ namespace LilEddie
 
 		//Draw with bullet if no children
 		if (actor->GetChildrenCount() == 0)
-			flags |= ImGuiTreeNodeFlags_Bullet;
+			flags |= ImGuiTreeNodeFlags_Leaf;
 
 		//Draw this actor
 		if (ImGui::TreeNodeEx(actor->name.c_str(), flags))
@@ -88,5 +94,7 @@ namespace LilEddie
 
 			ImGui::TreePop();
 		}
+
+		ImGui::PopStyleVar(2);
 	}
 }
