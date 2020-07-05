@@ -43,6 +43,7 @@ namespace LilEngie
 				MeshResource* meshResource = new MeshResource(resourceId, this, false);
 				if (!meshResource->LoadMesh())
 				{
+					delete meshResource;
 					LIL_ERROR("Could not load mesh resource...");
 					return nullptr;
 				}
@@ -54,6 +55,7 @@ namespace LilEngie
 				ShaderResource* shaderResource = new ShaderResource(resourceId, this, false);
 				if (!shaderResource->LoadShader())
 				{
+					delete shaderResource;
 					LIL_ERROR("Could not load shader resource...");
 					return nullptr;
 				}
@@ -65,6 +67,7 @@ namespace LilEngie
 				MaterialResource* materialResource = new MaterialResource(resourceId, this, false);
 				if (!materialResource->LoadMaterial())
 				{
+					delete materialResource;
 					LIL_ERROR("Could not load material resource...");
 					return nullptr;
 				}
@@ -76,6 +79,7 @@ namespace LilEngie
 				TextureResource* textureResource = new TextureResource(resourceId, this);
 				if (!textureResource->LoadTexture())
 				{
+					delete textureResource;
 					LIL_ERROR("Could not load texture resource...");
 					return nullptr;
 				}

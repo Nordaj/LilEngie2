@@ -42,8 +42,6 @@ namespace LilEngie
 		//Manage constant buffer data
 		meshRenderer.transform = actor->transform->GlobalTransformation();
 
-		//In future do cull check here TODO
-
 		//Submit to render queue
 		renderer->QueueOpaque(&meshRenderer);
 	}

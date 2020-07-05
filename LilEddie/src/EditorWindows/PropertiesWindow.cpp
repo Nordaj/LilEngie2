@@ -25,6 +25,11 @@ namespace LilEddie
 
 		if (sa)
 		{
+			//Name and uid
+			ImGui::InputText("Name", &sa->name[0], sa->name.size());
+			ImGui::InputText("uid", &sa->uid[0], sa->uid.size());
+			ImGui::Dummy(ImVec2(0, 20));
+
 			//Add component button
 			float width = ImGui::GetWindowWidth();
 			if (ImGui::Button("New Component", ImVec2(width - 20, 25)))
