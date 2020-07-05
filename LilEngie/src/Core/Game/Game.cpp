@@ -71,10 +71,11 @@ namespace LilEngie
 			application.Update();
 
 			if (update) update();
-			sceneManager.scene->Update();
+			sceneManager.scene->DispatchActorEvent(ActorEvent::Update);
 
-			sceneManager.scene->OnDraw();
-			sceneManager.scene->OnDrawImGui();
+
+			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDraw);
+			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDrawImGui);
 			renderer.Render();
 
 			deltaTime = t.GetElapsed(TimeUnit::Seconds);

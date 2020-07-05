@@ -21,6 +21,38 @@ namespace LilEngie
 		components.clear();
 	}
 
+	void Actor::DispatchActorEvent(ActorEvent type)
+	{
+		switch (type)
+		{
+			case ActorEvent::Start:
+				for (IComponent* comp : components)
+					comp->Start();
+				break;
+			case ActorEvent::Update:
+				for (IComponent* comp : components)
+					comp->Update();
+				break;
+			case ActorEvent::OnDraw:
+				for (IComponent* comp : components)
+					comp->OnDraw();
+				break;
+			case ActorEvent::EditorUpdate:
+				for (IComponent* comp : components)
+					comp->EditorUpdate();
+				break;
+			case ActorEvent::OnDrawImGui:
+				for (IComponent* comp : components)
+					comp->OnDrawImGui();
+				break;
+			default:
+				break;
+		}
+
+		for (int i = 0; i < children.size(); i++)
+			children[i]->DispatchActorEvent(type);
+	}
+
 	int Actor::GetChildrenCount()
 	{
 		return children.size();
@@ -129,50 +161,5 @@ namespace LilEngie
 			comp->Serialize(component["properties"]);
 			j["components"].push_back(component);
 		}
-	}
-
-	void Actor::Update()
-	{
-		for (int i = 0; i < components.size(); i++)
-			components[i]->Update();
-
-		for (int i = 0; i < children.size(); i++)
-			children[i]->Update();
-	}
-
-	void Actor::OnDraw()
-	{
-		for (int i = 0; i < components.size(); i++)
-			components[i]->OnDraw();
-
-		for (int i = 0; i < children.size(); i++)
-			children[i]->OnDraw();
-	}
-
-	void Actor::EditorUpdate()
-	{
-		for (int i = 0; i < components.size(); i++)
-			components[i]->EditorUpdate();
-
-		for (int i = 0; i < children.size(); i++)
-			children[i]->EditorUpdate();
-	}
-
-	void Actor::OnDrawImGui()
-	{
-		for (int i = 0; i < components.size(); i++)
-			components[i]->OnDrawImGui();
-
-		for (int i = 0; i < children.size(); i++)
-			children[i]->OnDrawImGui();
-	}
-
-	void Actor::Start()
-	{
-		for (int i = 0; i < components.size(); i++)
-			components[i]->Start();
-
-		for (int i = 0; i < children.size(); i++)
-			children[i]->Start();
 	}
 }

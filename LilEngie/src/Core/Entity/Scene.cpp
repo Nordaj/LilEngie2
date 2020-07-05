@@ -41,6 +41,11 @@ namespace LilEngie
 		isCleaned = true;
 	}
 
+	void Scene::DispatchActorEvent(ActorEvent type)
+	{
+		root->DispatchActorEvent(type);
+	}
+
 	void Scene::SetEnabled(bool val)
 	{
 		if (isInitialized)
@@ -49,40 +54,6 @@ namespace LilEngie
 
 	bool Scene::IsEnabled()
 	{ return isEnabled; }
-
-	void Scene::Start()
-	{
-		if (isEnabled)
-			root->Start();
-	}
-
-	void Scene::Update()
-	{
-		//Sort of a slow method to updating the scene.
-		//May want to look into faster alternatives
-		if (isEnabled)
-			root->Update();
-	}
-
-	void Scene::EditorUpdate()
-	{
-		if (isEnabled)
-			root->EditorUpdate();
-	}
-
-	void Scene::OnDraw()
-	{
-		if (isEnabled)
-			root->OnDraw();
-	}
-
-	void Scene::OnDrawImGui()
-	{
-	#ifdef LIL_ENABLE_IMGUI
-		if (isEnabled)
-			root->OnDrawImGui();
-	#endif //LIL_ENABLE_IMGUI
-	}
 
 	Actor* Scene::CreateActor(std::string uid, Actor* parent)
 	{

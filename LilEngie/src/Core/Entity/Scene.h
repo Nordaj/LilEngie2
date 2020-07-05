@@ -31,14 +31,10 @@ namespace LilEngie
 		bool IsIntialized();
 		void Clean();
 
+		void DispatchActorEvent(ActorEvent type);
+
 		void SetEnabled(bool val);
 		inline bool IsEnabled();
-
-		void Start();
-		void Update();
-		void EditorUpdate();
-		void OnDraw();
-		void OnDrawImGui();
 
 		Actor* CreateActor(std::string uid, Actor* parent = nullptr);
 		void DestroyActor(Actor* actor);

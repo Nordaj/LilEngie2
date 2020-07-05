@@ -11,6 +11,15 @@ namespace LilEngie
 	class TransformComponent;
 	class Game;
 
+	enum class ActorEvent
+	{
+		Start,
+		Update,
+		OnDraw,
+		EditorUpdate,
+		OnDrawImGui
+	};
+
 	class LIL_API Actor : public ISerializable
 	{
 		friend class Scene;
@@ -37,6 +46,8 @@ namespace LilEngie
 		Actor(Scene* scene);
 		~Actor();
 
+		void DispatchActorEvent(ActorEvent type);
+
 		int GetChildrenCount();
 		Actor* GetChild(int index = 0);
 
@@ -55,13 +66,6 @@ namespace LilEngie
 
 		void Deserialize(json& j) override;
 		void Serialize(json& j) override;
-
-	private:
-		void Start();
-		void Update();
-		void OnDraw();
-		void EditorUpdate();
-		void OnDrawImGui();
 	};
 }
 

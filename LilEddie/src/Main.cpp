@@ -45,7 +45,7 @@ namespace LilEddie
 
 	void Update()
 	{
-		game->sceneManager.scene->EditorUpdate();
+		game->sceneManager.scene->DispatchActorEvent(ActorEvent::EditorUpdate);
 
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);

@@ -63,7 +63,7 @@ namespace LilEngie
 
 		//Deserialize
 		scn->Deserialize(j);
-		scn->Start();
+		scn->DispatchActorEvent(ActorEvent::Start);
 
 		return true;
 	}
