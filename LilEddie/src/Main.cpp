@@ -77,11 +77,16 @@ int main()
 {
 	using namespace LilEddie;
 
+	ComponentFactory* factory = new ComponentFactory();
+	factory->InitComponentList();
+	ComponentFactory::core = factory;
+
 	game = new Game(Start, Update, Init);
 
 	game->gamePath = "../Sandbox/"; //TODO make use path argument
 	
 	game->Run();
 	delete game;
+	delete factory;
 	return 0;
 }

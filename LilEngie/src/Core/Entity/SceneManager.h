@@ -10,14 +10,11 @@ namespace LilEngie
 	class Game;
 	class IComponent;
 
-	typedef IComponent*(*ComponentFactoryFunc)(Actor*, std::string);
-
 	class LIL_API SceneManager
 	{
 	public:
 		Game* game = nullptr;
 		Scene* scene = nullptr;
-		ComponentFactoryFunc gameComponentFactory = nullptr;
 
 	public:
 		void Init(Game* game);

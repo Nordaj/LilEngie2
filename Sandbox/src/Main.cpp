@@ -1,12 +1,13 @@
 #include <LilEngie.h>
-#include "ComponentList.h"
+#include "GameComponentFactory.h"
 
 Game* game;
 
 void Init()
 {
-	//Setup component creation factory ptr for the engine to use for serialization
-	game->sceneManager.gameComponentFactory = CreateComponentFromString;
+	GameComponentFactory* factory = new GameComponentFactory();
+	factory->InitComponentList();
+	ComponentFactory::core = factory;
 }
 
 void Start()

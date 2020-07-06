@@ -8,6 +8,7 @@
 #include <Core/Entity/Scene.h>
 #include <Core/Entity/Actor.h>
 #include <Core/Entity/IComponent.h>
+#include <Core/Entity/ComponentFactory.h>
 #include <Core/Entity/CoreComponents/TransformComponent.h>
 #include <Core/Entity/CoreComponents/MeshComponent.h>
 #include <Core/Entity/CoreComponents/CameraComponent.h>

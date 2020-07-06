@@ -1,7 +1,7 @@
 #include "IComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "ComponentList.h"
+#include "ComponentFactory.h"
 #include "Actor.h"
 
 namespace LilEngie
@@ -131,9 +131,8 @@ namespace LilEngie
 		for (auto& c : j["components"])
 		{
 			//Try to create component from engine or game, otherwise skip over
-			IComponent* comp = CreateComponentFromString(this, c["type"]);
-			if (!comp && scene->manager->gameComponentFactory)
-				comp = scene->manager->gameComponentFactory(this, c["type"]);
+			std::string type = c["type"];
+			IComponent* comp = ComponentFactory::core->CreateComponent(this, type.c_str());
 			if (!comp)
 			{
 				LIL_WARN("Could not instantiate component type: ", c["type"]);

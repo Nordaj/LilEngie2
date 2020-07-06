@@ -4,7 +4,7 @@
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
 #include <Core/System/ISerializable.h>
-#include <Core/Entity/ComponentList.h>
+#include <Core/Entity/ComponentFactory.h>
 #include "../ImGuiStyle.h"
 #include "IEditorWindow.h"
 #include "LilTreeWindow.h"
@@ -37,14 +37,15 @@ namespace LilEddie
 
 			if (ImGui::BeginPopup("New Component"))
 			{
-				for (int i = 0; i < globalComponentIdList.size(); i++)
+				for (int i = 0; i < ComponentFactory::core->componentNames.size(); i++)
 				{
-					if (ImGui::Button(globalComponentIdList[i].c_str()))
+					if (ImGui::Button(ComponentFactory::core->componentNames[i].c_str()))
 					{
 						//Add the component if not already existing
-						if (!sa->ContainsComponent(globalComponentIdList[i]))
+						std::string componentType = ComponentFactory::core->componentNames[i];
+						if (!sa->ContainsComponent(componentType))
 						{
-							IComponent* comp = CreateComponentFromString(sa, globalComponentIdList[i]);
+							IComponent* comp = ComponentFactory::core->CreateComponent(sa, componentType.c_str());
 
 							if (comp)
 							{
