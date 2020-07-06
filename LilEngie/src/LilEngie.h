@@ -19,12 +19,3 @@
 #include <Core/Math/LilMath.h>
 
 using namespace LilEngie;
-
-#define LIL_ENGIE_SETUP(x, y, z) \
-int main() \
-{ \
-	game = new Game(x, y, z); \
-	game->Run(); \
-	delete game; \
-	return 0; \
-}

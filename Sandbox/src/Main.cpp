@@ -1,23 +1,18 @@
 #include <LilEngie.h>
 #include "GameComponentFactory.h"
 
-Game* game;
-
-void Init()
+int main()
 {
-	GameComponentFactory* factory = new GameComponentFactory();
-	factory->InitComponentList();
-	ComponentFactory::core = factory;
-}
+	Game* game = new Game();
 
-void Start()
-{
+	//Create our own component factory
+	game->componentFactory = new GameComponentFactory();
+	game->componentFactory->InitComponentList();
+	ComponentFactory::core = game->componentFactory;
+
 	LIL_LOG("Hello, welcome to Lil Engie 2.");
+
+	game->Run();
+	delete game;
+	return 0;
 }
-
-void Update()
-{
-
-}
-
-LIL_ENGIE_SETUP(Start, Update, Init)

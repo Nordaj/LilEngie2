@@ -23,14 +23,13 @@
 
 namespace LilEngie
 {
-	Game::Game(Function start, Function update, Function init)
-		: start(start), update(update), init(init), deltaTime(0)
-	{ 
-
-	}
+	Game::Game()
+	{ }
 
 	Game::~Game()
-	{ }
+	{ 
+		delete componentFactory;
+	}
 
 	void Game::Run()
 	{
@@ -45,6 +44,14 @@ namespace LilEngie
 		Log::core = &logger;
 		logger.verbosity = Verbosity::Verbose; //Remove eventually
 
+		//Setup component factory if not setup by derrived
+		if (!componentFactory)
+		{
+			componentFactory = new ComponentFactory();
+			componentFactory->InitComponentList();
+			componentFactory->core = componentFactory;
+		}
+
 		//Initialization
 		sceneManager.Init(this);
 		resourceManager.Init(this);
@@ -52,7 +59,7 @@ namespace LilEngie
 		renderer.Init(application.windowProperties, GraphicsAPI::DirectX11, this);
 		input.Init(this);
 
-		if (init) init();
+		Init();
 
 		//Subscribe to any necessary events
 		Subscribe(EventType::WindowClose);
@@ -63,19 +70,19 @@ namespace LilEngie
 		//sceneManager.SaveScene("res/Scenes/TestSave.lilscn");
 
 		//Main loop
-		if (start) start();
+		Start();
 		DebugTimer t;
 		while (isRunning)
 		{
 			input.Update();
 			application.Update();
 
-			if (update) update();
+			Update();
 			sceneManager.scene->DispatchActorEvent(ActorEvent::Update);
-
 
 			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDraw);
 			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDrawImGui);
+
 			renderer.Render();
 
 			deltaTime = t.GetElapsed(TimeUnit::Seconds);

@@ -8,12 +8,11 @@
 #include <Core/Resources/ResourceManager.h>
 #include "Core/Graphics/Renderer.h"
 #include "Core/Entity/SceneManager.h"
+#include <Core/Entity/ComponentFactory.h>
 #include "Input.h"
 
 namespace LilEngie
 {
-	typedef void(*Function)();
-
 	class LIL_API Game : IEventListener
 	{
 	public:
@@ -24,21 +23,25 @@ namespace LilEngie
 		ResourceManager resourceManager;
 		SceneManager sceneManager;
 		Input input;
+		ComponentFactory* componentFactory;
 		float deltaTime;
 
 		std::string gamePath;
 
 	private:
-		Function start, update, init;
-
 		bool isRunning = true;
 		Event closeEvent;
 
 	public:
-		Game(Function start, Function update, Function init);
-		~Game();
+		Game();
+		virtual ~Game();
 
 		void Run();
 		void OnEvent(const Event &e) override;
+
+	protected:
+		virtual void Init() {}
+		virtual void Start() {}
+		virtual void Update() {}
 	};
 }
