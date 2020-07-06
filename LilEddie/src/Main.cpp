@@ -69,6 +69,16 @@ namespace LilEddie
 		if (ImGui::BeginMainMenuBar())
 		{
 			ImGui::PopStyleVar();
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Save", "CTRL+S"))
+					game->sceneManager.SaveScene();
+				if (ImGui::MenuItem("Save As", "CTRL+SHIFT+S")) {} //TODO
+				if (ImGui::MenuItem("New", "CTRL+N")) {} //TODO
+				if (ImGui::MenuItem("Reload", "CTRL+R")) {} //TODO
+
+				ImGui::EndMenu();
+			}
 			if (ImGui::BeginMenu("Window"))
 			{
 				for (IEditorWindow* win : windows)

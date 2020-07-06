@@ -1,0 +1,93 @@
+{
+	"actors": [
+		{
+			"name": "Mesh Actor",
+			"uid": "Mesh Actor",
+			"parent": "ROOT",
+			"editorOnly": false,
+			"hideInTree": false,
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"position": [0, 0, 0],
+						"rotation": [0, 2.6, 0],
+						"scale": [1, 1, 1]
+					}
+				},
+
+				{
+					"type": "mesh",
+					"properties": {
+						"meshId": ["res/Models/teapot.fbx", "mesh"],
+						"matId": ["res/Materials/Unlit.lilmat", "material"]
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Mesh Actor 2",
+			"uid": "Mesh Actor 2",
+			"parent": "Mesh Actor",
+			"editorOnly": false,
+			"hideInTree": false,
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"position": [2, 0, 0],
+						"rotation": [0, 0, 0],
+						"scale": [1, 1, 1]
+					}
+				},
+
+				{
+					"type": "mesh",
+					"properties": {
+						"meshId": ["res/Models/teapot.fbx", "mesh"],
+						"matId": ["res/Materials/Unlit.lilmat", "material"]
+					}
+				},
+
+				{
+					"type": "spinner",
+					"properties": {
+						"rotSpeed": [0, 0, 3.41]
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Camera Actor",
+			"uid": "Camera Actor",
+			"parent": "ROOT",
+			"editorOnly": false,
+			"hideInTree": false,
+			"components": [
+				{
+					"type": "transform",
+					"properties": {
+						"position": [0, 0, -4],
+						"rotation": [0, 0, 0],
+						"scale": [1, 1, 1]
+					}
+				},
+
+				{
+					"type": "camera",
+					"properties": {
+						"fov": 45,
+						"n": 0.1,
+						"f": 100,
+						"clearColor": [0.05, 0.05, 0.05, 1],
+						"useFramebuffer": false,
+						"width": 0,
+						"height": 0
+					}
+				}
+			]
+		}
+	]
+}

@@ -15,6 +15,7 @@ namespace LilEngie
 	public:
 		SceneManager* manager;
 		std::string name;
+		std::string path;
 
 	private:
 		std::map<std::string, Actor*> actors;

@@ -34,6 +34,7 @@ namespace LilEngie
 		//Create scene object (use local scene later)
 		Scene* scn = new Scene();
 		scn->manager = this;
+		scn->path = path;
 		scene = scn;
 		scn->Init();
 
@@ -70,12 +71,20 @@ namespace LilEngie
 		if (!scn) scn = scene;
 		if (!scene) return false;
 
+		//Make sure we have a path
+		if (!path)
+			path = scn->path.c_str();
+
 		//Begin serialization
 		json j;
 		scene->Serialize(j);
 
+		//Get the actual path of the scene from resources relative path
+		std::string realPath = path;
+		realPath = game->resourceManager.GetResourcePath(realPath);
+
 		//Save json to file
-		std::ofstream os(path, std::ofstream::trunc);
+		std::ofstream os(realPath, std::ofstream::trunc);
 		os << j.dump(4);
 		os.close();
 	}
