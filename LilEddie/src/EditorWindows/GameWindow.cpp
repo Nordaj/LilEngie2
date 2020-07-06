@@ -24,8 +24,6 @@ namespace LilEddie
 
 	void GameWindow::OnDraw()
 	{
-		ImGui::Begin("Game View");
-
 		//Handle resizing
 		if (ImGui::GetContentRegionAvail().x != frameSize.x || ImGui::GetContentRegionAvail().y != frameSize.y)
 		{
@@ -36,7 +34,5 @@ namespace LilEddie
 
 		//Draw image
 		ImGui::Image(game->renderer.gfx->ImGuiGetTex(frameColor), frameSize, uv0, uv1);
-
-		ImGui::End();
 	}
 }

@@ -9,6 +9,8 @@ namespace LilEddie
 {
 	class GameWindow : public IEditorWindow
 	{
+		WINDOW_TITLE("Game View")
+
 	private:
 		IGraphics* gfx;
 		ITexture* frameColor;

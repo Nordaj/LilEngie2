@@ -23,8 +23,6 @@ namespace LilEddie
 		if (game->input.GetKeyDown(Key::F2) && ImGui::IsWindowFocused() && selected != "")
 			renaming = true;
 
-		ImGui::Begin("LilTree");
-
 		//Add actor button
 		if (ImGui::Button("Add Actor", ImVec2(ImGui::GetWindowWidth() - 20, 25)))
 		{
@@ -50,8 +48,6 @@ namespace LilEddie
 
 		//Scene tree
 		DrawActorList(s->GetActor("ROOT"));
-
-		ImGui::End();
 	}
 
 	void LilTreeWindow::DrawActorList(Actor* actor)

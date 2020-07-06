@@ -8,6 +8,8 @@ namespace LilEddie
 {
 	class LilTreeWindow : public IEditorWindow
 	{
+		WINDOW_TITLE("Lil Tree")
+
 	public:
 		std::string selected = "";
 

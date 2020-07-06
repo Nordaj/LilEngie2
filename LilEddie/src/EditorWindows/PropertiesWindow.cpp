@@ -21,8 +21,6 @@ namespace LilEddie
 	{
 		Actor* sa = scnMgr->scene->GetActor(treeWindow->selected);
 
-		ImGui::Begin("Properties");
-
 		if (sa)
 		{
 			//Name and uid
@@ -118,8 +116,6 @@ namespace LilEddie
 				}
 			}
 		}
-
-		ImGui::End();
 	}
 
 	void PropertiesWindow::DrawProperty(std::string name, json value)

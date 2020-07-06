@@ -64,10 +64,33 @@ namespace LilEddie
 		ImGuiID dsid = ImGui::GetID("Dockspace");
 		ImGui::DockSpace(dsid);
 
-		ImGui::ShowDemoWindow();
+		//Draw menu bar
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		if (ImGui::BeginMainMenuBar())
+		{
+			ImGui::PopStyleVar();
+			if (ImGui::BeginMenu("Window"))
+			{
+				for (IEditorWindow* win : windows)
+				{
+					if (ImGui::MenuItem(win->WindowTitle().c_str()))
+						win->isOpen = true;
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
 
-		for (int i = 0; i < windows.size(); i++)
-			windows[i]->OnDraw();
+		//Draw each window only if opened
+		for (IEditorWindow* win : windows)
+		{
+			if (win->isOpen)
+			{
+				ImGui::Begin(win->WindowTitle().c_str(), &win->isOpen);
+				win->OnDraw();
+				ImGui::End();
+			}
+		}
 
 		ImGui::End();
 	}

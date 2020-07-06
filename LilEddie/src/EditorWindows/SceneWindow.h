@@ -9,6 +9,8 @@ namespace LilEddie
 {
 	class SceneWindow : public IEditorWindow
 	{
+		WINDOW_TITLE("Scene View")
+
 	private:
 		CameraComponent* camera;
 		SceneCameraComponent* scnCam;

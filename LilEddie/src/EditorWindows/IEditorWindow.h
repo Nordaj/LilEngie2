@@ -8,6 +8,7 @@ namespace LilEddie
 	{
 	public:
 		Game* game;
+		bool isOpen = true;
 
 	public:
 		IEditorWindow(Game* game)
@@ -15,5 +16,8 @@ namespace LilEddie
 
 		virtual void Init() { }
 		virtual void OnDraw() { }
+		virtual std::string WindowTitle() = 0;
 	};
 }
+
+#define WINDOW_TITLE(n) public: std::string WindowTitle() override { return n; }

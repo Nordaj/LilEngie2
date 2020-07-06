@@ -11,6 +11,8 @@ namespace LilEddie
 
 	class PropertiesWindow : public IEditorWindow
 	{
+		WINDOW_TITLE("Properties")
+
 	public:
 		LilTreeWindow* treeWindow = nullptr;
 

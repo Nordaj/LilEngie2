@@ -43,8 +43,6 @@ namespace LilEddie
 
 	void SceneWindow::OnDraw()
 	{
-		ImGui::Begin("Scene View");
-
 		scnCam->hovered = ImGui::IsWindowHovered();
 
 		//Handle window resizing
@@ -56,7 +54,5 @@ namespace LilEddie
 		}
 
 		ImGui::Image(game->renderer.gfx->ImGuiGetTex(frameColor), frameSize, uv0, uv1);
-
-		ImGui::End();
 	}
 }
