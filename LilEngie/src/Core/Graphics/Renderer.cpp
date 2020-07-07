@@ -57,6 +57,7 @@ namespace LilEngie
 
 		Subscribe(EventType::WindowResize);
 		Subscribe(EventType::WindowClose);
+		Subscribe(EventType::SceneUnload);
 
 		//Create defualt constant buffers
 		cbPerObject = gfx->CreateCBuffer(sizeof(mat4));
@@ -172,6 +173,10 @@ namespace LilEngie
 				break;
 			case EventType::WindowClose:
 				isClosing = true;
+				break;
+			case EventType::SceneUnload:
+				cameras.clear();
+				opaqueQueue.clear();
 				break;
 			default:
 				break;

@@ -26,5 +26,9 @@ namespace LilEddie
 
 		void Init() override;
 		void OnDraw() override;
+		void Reload() override;
+
+	private:
+		void SetupSceneCamera();
 	};
 }

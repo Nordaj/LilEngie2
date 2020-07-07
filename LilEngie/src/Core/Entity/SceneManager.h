@@ -22,6 +22,7 @@ namespace LilEngie
 
 		bool LoadScene(const char* path);
 		bool SaveScene(const char* path = nullptr, Scene* scn = nullptr);
+		bool NewScene();
 		void UnloadScene();
 	};
 }

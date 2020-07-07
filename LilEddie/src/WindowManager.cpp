@@ -14,7 +14,7 @@ namespace LilEddie
 	WindowManager::WindowManager(Game* game)
 		: game(game)
 	{
-
+		saveScenePath = std::string(255, 0);
 	}
 
 	WindowManager::~WindowManager()
@@ -63,31 +63,7 @@ namespace LilEddie
 		ImGui::DockSpace(dsid);
 
 		//Draw menu bar
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-		if (ImGui::BeginMainMenuBar())
-		{
-			ImGui::PopStyleVar();
-			if (ImGui::BeginMenu("File"))
-			{
-				if (ImGui::MenuItem("Save", "CTRL+S"))
-					game->sceneManager.SaveScene();
-				if (ImGui::MenuItem("Save As", "CTRL+SHIFT+S")) {} //TODO
-				if (ImGui::MenuItem("New", "CTRL+N")) {} //TODO
-				if (ImGui::MenuItem("Reload", "CTRL+R")) {} //TODO
-
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Window"))
-			{
-				for (IEditorWindow* win : windows)
-				{
-					if (ImGui::MenuItem(win->WindowTitle().c_str()))
-						win->isOpen = true;
-				}
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
+		MenuBar();
 
 		//Draw each window only if opened
 		for (IEditorWindow* win : windows)
@@ -101,5 +77,125 @@ namespace LilEddie
 		}
 
 		ImGui::End();
+	}
+
+	void WindowManager::ReloadWindows()
+	{
+		for (IEditorWindow* win : windows)
+			win->Reload();
+	}
+
+	void WindowManager::MenuBar()
+	{
+		bool openSaveAs = false;
+		bool openSceneOpen = false;
+		
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		if (ImGui::BeginMainMenuBar())
+		{
+			ImGui::PopStyleVar();
+
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Save", "CTRL+S"))
+					game->sceneManager.SaveScene();
+				if (ImGui::MenuItem("Save As", "CTRL+SHIFT+S"))
+					openSaveAs = true;
+				if (ImGui::MenuItem("Open", "CTRL+O"))
+					openSceneOpen = true;
+				if (ImGui::MenuItem("New", "CTRL+N"))
+				{
+					game->sceneManager.NewScene();
+					ReloadWindows();
+				}
+				if (ImGui::MenuItem("Reload", "CTRL+R"))
+				{
+					std::string& path = game->sceneManager.scene->path;
+					game->sceneManager.LoadScene(path.c_str());
+					ReloadWindows();
+				}
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Window"))
+			{
+				for (IEditorWindow* win : windows)
+				{
+					if (ImGui::MenuItem(win->WindowTitle().c_str()))
+						win->isOpen = true;
+				}
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMainMenuBar();
+		}
+
+		//Open popups outside of menu (odd imgui issue)
+		if (openSaveAs)
+		{
+			ImGui::OpenPopup("Save Scene As");
+
+			//Init save location
+			std::string& path = game->sceneManager.scene->path;
+			memcpy(&saveScenePath[0], &path[0], path.size());
+		}
+
+		if (openSceneOpen)
+		{
+			ImGui::OpenPopup("Open Scene");
+
+			//Init save location
+			std::string& path = game->sceneManager.scene->path;
+			memcpy(&saveScenePath[0], &path[0], path.size());
+		}
+
+		SaveAsPopup();
+		OpenScenePopup();
+	}
+
+	void WindowManager::SaveAsPopup()
+	{
+		ImGui::SetNextWindowSize(ImVec2(300, 100));
+		if (ImGui::BeginPopupModal("Save Scene As"))
+		{
+			ImGui::InputText("path", &saveScenePath[0], saveScenePath.size());
+
+			if (ImGui::Button("Cancel"))
+				ImGui::CloseCurrentPopup();
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Save"))
+			{
+				game->sceneManager.scene->path = saveScenePath;
+				game->sceneManager.SaveScene();
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	void WindowManager::OpenScenePopup()
+	{
+		ImGui::SetNextWindowSize(ImVec2(300, 100));
+		if (ImGui::BeginPopupModal("Open Scene"))
+		{
+			ImGui::InputText("path", &saveScenePath[0], saveScenePath.size());
+
+			if (ImGui::Button("Cancel"))
+				ImGui::CloseCurrentPopup();
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Open"))
+			{
+				game->sceneManager.LoadScene(saveScenePath.c_str());
+				ReloadWindows();
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
 	}
 }

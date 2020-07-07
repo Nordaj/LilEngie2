@@ -4,9 +4,12 @@
 
 namespace LilEddie
 {
+	class WindowManager;
+
 	class IEditorWindow
 	{
 	public:
+		WindowManager* manager;
 		Game* game;
 		bool isOpen = true;
 
@@ -16,6 +19,7 @@ namespace LilEddie
 
 		virtual void Init() { }
 		virtual void OnDraw() { }
+		virtual void Reload() { }
 		virtual std::string WindowTitle() = 0;
 	};
 }

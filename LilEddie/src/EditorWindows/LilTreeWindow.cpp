@@ -24,7 +24,7 @@ namespace LilEddie
 			renaming = true;
 
 		//Add actor button
-		if (ImGui::Button("Add Actor", ImVec2(ImGui::GetWindowWidth() - 20, 25)))
+		if (ImGui::Button("New Actor", ImVec2(ImGui::GetWindowWidth() - 20, 25)))
 		{
 			ImGui::OpenPopup("Create Actor");
 		}

@@ -1,0 +1,134 @@
+{
+    "actors": [
+        {
+            "components": [
+                {
+                    "properties": {
+                        "position": [
+                            0.0,
+                            0.0,
+                            -4.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "clearColor": [
+                            0.05000000074505806,
+                            0.05000000074505806,
+                            0.05000000074505806,
+                            1.0
+                        ],
+                        "f": 100.0,
+                        "fov": 45.0,
+                        "height": 0,
+                        "n": 0.10000000149011612,
+                        "useFramebuffer": false,
+                        "width": 0
+                    },
+                    "type": "camera"
+                }
+            ],
+            "editorOnly": false,
+            "hideInTree": false,
+            "name": "Camera Actor",
+            "parent": "ROOT",
+            "uid": "Camera Actor"
+        },
+        {
+            "components": [
+                {
+                    "properties": {
+                        "position": [
+                            2.799999952316284,
+                            0.3499999940395355,
+                            2.5999999046325684
+                        ],
+                        "rotation": [
+                            0.0,
+                            2.5999999046325684,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "matId": [
+                            "res/Materials/Unlit.lilmat",
+                            "material"
+                        ],
+                        "meshId": [
+                            "res/Models/teapot.fbx",
+                            "mesh"
+                        ]
+                    },
+                    "type": "mesh"
+                }
+            ],
+            "editorOnly": false,
+            "hideInTree": false,
+            "name": "Mesh Actor",
+            "parent": "ROOT",
+            "uid": "Mesh Actor"
+        },
+        {
+            "components": [
+                {
+                    "properties": {
+                        "position": [
+                            2.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "matId": [
+                            "res/Materials/Unlit.lilmat",
+                            "material"
+                        ],
+                        "meshId": [
+                            "res/Models/teapot.fbx",
+                            "mesh"
+                        ]
+                    },
+                    "type": "mesh"
+                }
+            ],
+            "editorOnly": false,
+            "hideInTree": false,
+            "name": "Mesh Actor 2",
+            "parent": "Mesh Actor",
+            "uid": "Mesh Actor 2"
+        }
+    ]
+}

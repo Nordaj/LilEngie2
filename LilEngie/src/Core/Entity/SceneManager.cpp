@@ -7,6 +7,7 @@
 #include <Core/Resources/ResourceId.h>
 #include <Core/Resources/ResourceManager.h>
 #include <Core/Game/Game.h>
+#include <Core/EventSystem/Events.h>
 #include "Scene.h"
 #include "SceneManager.h"
 
@@ -89,6 +90,20 @@ namespace LilEngie
 		os.close();
 	}
 
+	bool SceneManager::NewScene()
+	{
+		//Unload current scene
+		UnloadScene();
+
+		//Create scene object
+		scene = new Scene();
+		scene->manager = this;
+		scene->path = "res/Scenes/NewScene.lilscn";
+		scene->Init();
+
+		return true;
+	}
+
 	void SceneManager::UnloadScene()
 	{
 		//In the future will also allocate scenes but for now we are only deallocating
@@ -97,5 +112,9 @@ namespace LilEngie
 			scene->Clean();
 			delete scene;
 		}
+
+		//Need to send scene unload event
+		Event ev = Event(EventType::SceneUnload);
+		game->eventManager.Dispatch(ev);
 	}
 }

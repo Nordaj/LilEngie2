@@ -9,6 +9,7 @@ namespace LilEngie
 		WindowResize,
 		WindowClose,
 		GameClose,
+		SceneUnload,
 		EventTypeCount //Amount of unique types
 	};
 

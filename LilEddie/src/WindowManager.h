@@ -13,11 +13,20 @@ namespace LilEddie
 		std::vector<IEditorWindow*> windows;
 		Game* game;
 
+	private:
+		std::string saveScenePath;
+
 	public:
 		WindowManager(Game* game);
 		~WindowManager();
 
 		void Init();
 		void Update();
+		void ReloadWindows();
+
+	private:
+		void MenuBar();
+		void SaveAsPopup();
+		void OpenScenePopup();
 	};
 }

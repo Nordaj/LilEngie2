@@ -8,26 +8,9 @@ namespace LilEddie
 {
 	void SceneWindow::Init()
 	{
-		//Create/Setup scene camera
-		Actor* sceneCamera = game->sceneManager.scene->CreateActor("__LilEddieSceneCamera");
-		sceneCamera->name = "__LilEddieSceneCamera";
-		sceneCamera->serialize = false;
-		sceneCamera->hideInTree = true;
-		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
-		sceneCamera->transform = t;
-		camera = sceneCamera->CreateComponent<CameraComponent>();
-		camera->EnableDebugGraphics(true);
-		camera->useFramebuffer = true;
-		camera->width = 1;
-		camera->height = 1;
-		camera->Start();
-		scnCam = sceneCamera->CreateComponent<SceneCameraComponent>();
-		scnCam->Start();
-
 		gfx = game->renderer.gfx;
 
-		//Get frame color
-		frameColor = gfx->GetFramebufferTexture(camera->framebuffer);
+		SetupSceneCamera();
 
 		if (gfx->GetGraphicsAPI() == GraphicsAPI::OpenGL)
 		{
@@ -54,5 +37,35 @@ namespace LilEddie
 		}
 
 		ImGui::Image(game->renderer.gfx->ImGuiGetTex(frameColor), frameSize, uv0, uv1);
+	}
+
+	void SceneWindow::Reload()
+	{
+		SetupSceneCamera();
+	}
+
+	void SceneWindow::SetupSceneCamera()
+	{
+		//Reset frame size 
+		frameSize = ImVec2(0, 0);
+
+		//Create/Setup scene camera
+		Actor* sceneCamera = game->sceneManager.scene->CreateActor("__LilEddieSceneCamera");
+		sceneCamera->name = "__LilEddieSceneCamera";
+		sceneCamera->serialize = false;
+		sceneCamera->hideInTree = true;
+		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
+		sceneCamera->transform = t;
+		camera = sceneCamera->CreateComponent<CameraComponent>();
+		camera->EnableDebugGraphics(true);
+		camera->useFramebuffer = true;
+		camera->width = 1;
+		camera->height = 1;
+		camera->Start();
+		scnCam = sceneCamera->CreateComponent<SceneCameraComponent>();
+		scnCam->Start();
+
+		//Get frame color
+		frameColor = gfx->GetFramebufferTexture(camera->framebuffer);
 	}
 }
