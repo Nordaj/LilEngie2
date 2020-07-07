@@ -1,5 +1,6 @@
 #pragma once
 
+#include "WindowManager.h"
 #include <LilEngie.h>
 
 namespace LilEddie
@@ -9,7 +10,7 @@ namespace LilEddie
 	class LilEddieGame : public Game
 	{
 	private:
-		std::vector<IEditorWindow*> windows;
+		WindowManager windowManager;
 
 	public:
 		LilEddieGame();
