@@ -12,8 +12,11 @@ namespace LilEngie
 
 	Mesh::~Mesh()
 	{ 
-		gfx->ReleaseVertexBuffer(&vertexBuffer);
-		gfx->ReleaseIndexBuffer(&indexBuffer);
+		if (vertexBuffer)
+			gfx->ReleaseVertexBuffer(&vertexBuffer);
+
+		if (indexBuffer)
+			gfx->ReleaseIndexBuffer(&indexBuffer);
 	}
 
 	bool Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint>& indices, IGraphics* gfx)

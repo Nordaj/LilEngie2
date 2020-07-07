@@ -1,5 +1,6 @@
 #include <vector>
 #include <Vendor/imgui/imgui.h>
+#include <Vendor/imgui/imgui_stdlib.h>
 #include <LilEngie.h>
 #include "ImGuiStyle.h"
 #include "EditorWindows/IEditorWindow.h"
@@ -13,9 +14,7 @@ namespace LilEddie
 {
 	WindowManager::WindowManager(Game* game)
 		: game(game)
-	{
-		saveScenePath = std::string(255, 0);
-	}
+	{ }
 
 	WindowManager::~WindowManager()
 	{
@@ -110,7 +109,7 @@ namespace LilEddie
 				}
 				if (ImGui::MenuItem("Reload", "CTRL+R"))
 				{
-					std::string& path = game->sceneManager.scene->path;
+					std::string path = game->sceneManager.scene->path;
 					game->sceneManager.LoadScene(path.c_str());
 					ReloadWindows();
 				}
@@ -158,7 +157,7 @@ namespace LilEddie
 		ImGui::SetNextWindowSize(ImVec2(300, 100));
 		if (ImGui::BeginPopupModal("Save Scene As"))
 		{
-			ImGui::InputText("path", &saveScenePath[0], saveScenePath.size());
+			ImGui::InputText("path", &saveScenePath);
 
 			if (ImGui::Button("Cancel"))
 				ImGui::CloseCurrentPopup();
@@ -181,7 +180,7 @@ namespace LilEddie
 		ImGui::SetNextWindowSize(ImVec2(300, 100));
 		if (ImGui::BeginPopupModal("Open Scene"))
 		{
-			ImGui::InputText("path", &saveScenePath[0], saveScenePath.size());
+			ImGui::InputText("path", &saveScenePath);
 
 			if (ImGui::Button("Cancel"))
 				ImGui::CloseCurrentPopup();

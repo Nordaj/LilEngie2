@@ -29,10 +29,12 @@ namespace LilEngie
 
 	bool SceneManager::LoadScene(const char* path)
 	{
-		//Unload current scene (uncomment later)
+		///SEEMS THAT UNLOADING MESSES UP MEMORY IT SHOULDNT
+
+		//Unload current scene
 		UnloadScene();
 
-		//Create scene object (use local scene later)
+		//Create scene object
 		Scene* scn = new Scene();
 		scn->manager = this;
 		scn->path = path;

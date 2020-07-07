@@ -129,6 +129,48 @@
             "name": "Mesh Actor 2",
             "parent": "Mesh Actor",
             "uid": "Mesh Actor 2"
-        }
+        },
+        {
+            "components": [
+                {
+                    "properties": {
+                        "position": [
+                            -1.7000000476837158,
+                            0.5,
+                            1.7000000476837158
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "transform"
+                },
+                {
+                    "properties": {
+                        "matId": [
+                            "res/Materials/Unlit.lilmat",
+                            "material"
+                        ],
+                        "meshId": [
+                            "res/Models/cube.obj",
+                            "mesh"
+                        ]
+                    },
+                    "type": "mesh"
+                }
+            ],
+            "editorOnly": false,
+            "hideInTree": false,
+            "name": "Test Cube",
+            "parent": "ROOT",
+            "uid": "Test Cube"
+        },
     ]
 }

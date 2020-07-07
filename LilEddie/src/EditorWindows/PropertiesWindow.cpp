@@ -2,6 +2,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <Vendor/imgui/imgui.h>
+#include <Vendor/imgui/imgui_stdlib.h>
 #include <LilEngie.h>
 #include <Core/System/ISerializable.h>
 #include <Core/Entity/ComponentFactory.h>
@@ -24,8 +25,8 @@ namespace LilEddie
 		if (sa)
 		{
 			//Name and uid
-			ImGui::InputText("Name", &sa->name[0], sa->name.size());
-			ImGui::InputText("uid", &sa->uid[0], sa->uid.size());
+			ImGui::InputText("Name", &sa->name);
+			ImGui::InputText("uid", &sa->uid);
 			ImGui::Dummy(ImVec2(0, 20));
 
 			//Add component button
@@ -128,7 +129,7 @@ namespace LilEddie
 			case json::value_t::string:
 			{
 				std::string s = value.get<std::string>();
-				if (ImGui::InputText(name.c_str(), &s[0], s.size()) && current)
+				if (ImGui::InputText(name.c_str(), &s) && current)
 					current->SetProperty(name, s);
 				break;
 			}
@@ -204,7 +205,7 @@ namespace LilEddie
 
 				ImGui::Indent();
 				bool mod = false;
-				mod = ImGui::InputText(("##" + name).c_str(), &vals[0][0], vals[0].size());
+				mod = ImGui::InputText(("##" + name).c_str(), &vals[0]);
 				
 				//Display type
 				if (ImGui::BeginCombo(("Type##" + name).c_str(), vals[1].c_str()))
