@@ -171,6 +171,6 @@
             "name": "Test Cube",
             "parent": "ROOT",
             "uid": "Test Cube"
-        },
+        }
     ]
 }
