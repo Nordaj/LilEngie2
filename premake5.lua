@@ -69,7 +69,7 @@ project "LilEngie"
 
 project "Sandbox"
 	location "%{prj.name}"
-	kind "ConsoleApp"
+	kind "SharedLib"
 	language "C++"
 	cppdialect "C++17"
 

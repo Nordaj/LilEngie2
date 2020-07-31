@@ -16,3 +16,9 @@ int main()
 	delete game;
 	return 0;
 }
+
+//Component factory for game for when building as dll (for LilEddie's use)
+extern "C" __declspec(dllexport) ComponentFactory* CreateComponentFactory()
+{
+	return new GameComponentFactory();
+}
