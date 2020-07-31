@@ -8,6 +8,7 @@
 #include "EditorWindows/PropertiesWindow.h"
 #include "EditorWindows/SceneWindow.h"
 #include "EditorWindows/GameWindow.h"
+#include "EditorWindows/ToolbarWindow.h"
 #include "WindowManager.h"
 
 namespace LilEddie
@@ -33,6 +34,7 @@ namespace LilEddie
 
 		windows.push_back(new GameWindow(game));
 		windows.push_back(new SceneWindow(game));
+		windows.push_back(new ToolbarWindow(game));
 
 		//Use imgui style
 		SetupImGuiStyle();

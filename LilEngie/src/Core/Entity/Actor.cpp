@@ -148,7 +148,8 @@ namespace LilEngie
 	{
 		SerializeProperty(j, name, "name");
 		SerializeProperty(j, uid, "uid");
-		SerializeProperty(j, parent->uid, "parent");
+		if (parent)
+			SerializeProperty(j, parent->uid, "parent");
 		SerializeProperty(j, editorOnly, "editorOnly");
 		SerializeProperty(j, hideInTree, "hideInTree");
 
