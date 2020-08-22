@@ -113,10 +113,10 @@ namespace LilEngie
 		{
 			scene->Clean();
 			delete scene;
-		}
 
-		//Need to send scene unload event
-		Event ev = Event(EventType::SceneUnload);
-		game->eventManager.Dispatch(ev);
+			//Need to send scene unload event
+			Event ev = Event(EventType::SceneUnload);
+			game->eventManager.Dispatch(ev);
+		}
 	}
 }

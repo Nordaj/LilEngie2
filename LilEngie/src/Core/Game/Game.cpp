@@ -24,6 +24,7 @@
 namespace LilEngie
 {
 	Game::Game()
+		: playMode(true)
 	{ }
 
 	Game::~Game()
@@ -74,7 +75,9 @@ namespace LilEngie
 			application.Update();
 
 			Update();
-			sceneManager.scene->DispatchActorEvent(ActorEvent::Update);
+
+			if (playMode)
+				sceneManager.scene->DispatchActorEvent(ActorEvent::Update);
 
 			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDraw);
 			sceneManager.scene->DispatchActorEvent(ActorEvent::OnDrawImGui);

@@ -25,6 +25,7 @@ namespace LilEngie
 		Input input;
 		ComponentFactory* componentFactory;
 		float deltaTime;
+		bool playMode;
 
 		std::string gamePath;
 

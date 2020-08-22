@@ -9,7 +9,7 @@ static class LilBuilder
 	{
 		//Test arguments
 #if DEBUG
-		args = new string[] { "gamemodule", "D:\\Documents\\GitHub\\LilEngie2\\LilEngie2.sln", "D:\\Documents\\GitHub\\LilEngie2\\Sandbox\\bin\\EditorGameDebug\\x64\\", "Sandbox", "EditorGameDebug" };
+		args = new string[] { "gamemodule", "D:\\Documents\\GitHub\\LilEngie2\\LilEngie2.sln", "D:\\Documents\\GitHub\\LilEngie2\\Sandbox\\bin\\EditorGameRelease\\x64\\", "Sandbox", "EditorGameRelease" };
 #endif //DEBUG
 
 		//Make sure we have enough arguments
@@ -54,6 +54,7 @@ static class LilBuilder
 			string versionName = args.Get(3) + "-" + GenUID();
 
 			//Create/overwrite LatestVersions.txt with version info
+			Directory.CreateDirectory(args.Get(2));
 			using (StreamWriter sw = new StreamWriter(File.Create(args.Get(2) + "LatestVersion.txt")))
 			{
 				sw.WriteLine(versionName);	//Output name

@@ -22,6 +22,9 @@ namespace LilEddie
 		componentFactory->InitComponentList();
 		ComponentFactory::core = componentFactory;
 
+		//Should not be in play mode by default
+		playMode = false;
+
 		//Allow us to load game dll with its component factory if a build exists
 		ReloadGameDLL();
 	}
@@ -54,6 +57,12 @@ namespace LilEddie
 
 	int LilEddieGame::ReloadGameDLL()
 	{
+		//Unload current scene (just use a new scene) (rn it loads it from file, not fast)
+		std::string scenePath = "";
+		if (sceneManager.scene)
+			scenePath = sceneManager.scene->path;
+		sceneManager.NewScene();
+
 		//Use config as string for dll path
 		std::string config = "EditorGameRelease";
 	#ifdef LIL_DEBUG
@@ -126,6 +135,11 @@ namespace LilEddie
 		if (gameLib)
 			FreeLibrary((HMODULE)gameLib);
 		gameLib = tempGameLib;
+
+		//Load scene back
+		if (scenePath != "")
+			sceneManager.LoadScene(scenePath.c_str());
+
 		return 0;
 	}
 

@@ -33,6 +33,7 @@ namespace LilEddie
 			//TODO:
 			//Cache scene state
 			//Enter play mode
+			game->playMode = !game->playMode;
 
 			//Unless already playing then:
 			//Exit play mode
@@ -56,12 +57,6 @@ namespace LilEddie
 			//TODO: 
 			//Hotswap game module (easy function call)
 			//Reload scene data (could be complex, do research on best efficient approach)
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("NR\nHot\nSwap", btnSize))
-		{
-			//TODO:
-			//Only hotswap game module (Non Reload, means dont reload scene data)
 
 			int err = ((LilEddieGame*)game)->ReloadGameDLL();
 
