@@ -46,7 +46,7 @@ namespace LilEddie
 		std::string outDir = gamePath + "bin/" + config + "/x64/";
 
 		//<Mode> <solution> <OutputDir> <ProjName> <Config>
-		std::string lilBuilder = "start /B ../Tools/Binaries/LilBuilder.exe gamemodule " + 
+		std::string lilBuilder = "\"..\\Tools\\Binaries\\LilBuilder.exe\" gamemodule " + 
 			slnPath + " " + 
 			outDir + " " + 
 			projName + " " + 
