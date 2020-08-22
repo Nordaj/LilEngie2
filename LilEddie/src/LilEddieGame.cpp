@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <stdio.h>
 #include <string>
 #include <filesystem>
 #include <LilEngie.h>
@@ -33,32 +33,33 @@ namespace LilEddie
 	void LilEddieGame::ReloadGameDLL()
 	{
 		//Use config as string for dll path
-		std::string config = "Release";
+		std::string config = "EditorGameRelease";
 	#ifdef LIL_DEBUG
-		config = "Debug";
+		config = "EditorGameDebug";
 	#endif
 
 		//Create path to game module
 		std::string gameOutput = gamePath + "bin/" + config + "/x64/";
-		std::string modulePath = gameOutput + "LinkedModules/";
-		
-		//TODO: need to make sure that when fail, new path is going to be deleted
 
-		//Create module path directory in case it doesnt exist
-		std::error_code pathErr;
-		std::filesystem::create_directory(modulePath, pathErr);
+		//Find Game DLL Path using LatestVersion.txt
+		FILE* versFile = fopen((gameOutput + "LatestVersion.txt").c_str(), "r");
+		if (!versFile)
+		{
+			LIL_ERROR("Could not open LatestVersion.txt file to find game module.");
+			return;
+		}
 
-		//Setup dll and pdb paths
-		std::string modNum = std::to_string(currentModuleNumber++);
-		std::string dllPath = modulePath + projName + modNum + ".dll";
-		std::string pdbPath = modulePath + projName + modNum + ".pdb";
+		std::string versLn(128, 0);
+		if (!fgets(&versLn[0], 128, versFile))
+		{
+			LIL_ERROR("LatestVersion.txt was empty.");
+			return;
+		}
+		if (auto p = versLn.find("\n"))
+			versLn.erase(p);
 
-		//Copy the dll to the new path
-		std::error_code dllErr, pdbErr; ///I dont want exceptions if the copies fail
-		std::filesystem::copy(gameOutput + projName + ".dll", dllPath,
-			std::filesystem::copy_options::overwrite_existing, dllErr);
-		std::filesystem::copy(gameOutput + projName + ".pdb", pdbPath,
-			std::filesystem::copy_options::overwrite_existing, pdbErr);
+		std::string dllPath = gameOutput + versLn + ".dll";
+		fclose(versFile);
 
 		//Load the game dll
 		std::wstring wDllPath = std::wstring(dllPath.begin(), dllPath.end());
@@ -88,7 +89,7 @@ namespace LilEddie
 		componentFactory->InitComponentList();
 		ComponentFactory::core = componentFactory;
 
-		//Update global core pointers on both dll's to match
+		//Update global core pointers on both ends to match
 		SetCorePtrs();
 		void* syncCorePtrs = GetProcAddress(tempGameLib, "SyncGlobalPtrs");
 		if (!syncCorePtrs)
