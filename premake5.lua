@@ -145,6 +145,11 @@ project "Sandbox"
 	filter "configurations:EditorGameDebug or EditorGameRelease"
 		kind "SharedLib"
 
+	filter "configurations:Debug or Release"
+		postbuildcommands{
+			"copy /Y \"%{wks.location}Dependencies\\Assimp\\bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\" \"%{prj.location}bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\"",
+		}
+
 	filter "system:windows"
 		systemversion "latest"
 
