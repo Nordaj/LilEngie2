@@ -1,5 +1,6 @@
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
+#include "LilEddieGame.h"
 #include "ToolbarWindow.h"
 
 namespace LilEddie
@@ -55,6 +56,8 @@ namespace LilEddie
 		{
 			//TODO:
 			//Only hotswap game module (Non Reload, means dont reload scene data)
+
+			((LilEddieGame*)game)->ReloadGameDLL();
 		}
 
 		ImGui::EndGroup();

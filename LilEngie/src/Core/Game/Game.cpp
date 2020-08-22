@@ -33,15 +33,13 @@ namespace LilEngie
 
 	void Game::Run()
 	{
-		//Set core pointers
-		ResourceManager::core = &resourceManager;
-		EventManager::core = &eventManager;
+		//Set all core engine subsystem pointers
+		SetCorePtrs();
 
 		//Setup events
 		closeEvent = Event(EventType::GameClose);
 
 		//Logging
-		Log::core = &logger;
 		logger.verbosity = Verbosity::Verbose; //Remove eventually
 
 		//Setup component factory if not setup by derrived
@@ -66,8 +64,6 @@ namespace LilEngie
 
 		//Load scene from file
 		sceneManager.LoadScene("res/Scenes/Test.lilscn");
-
-		//sceneManager.SaveScene("res/Scenes/TestSave.lilscn");
 
 		//Main loop
 		Start();
@@ -106,5 +102,16 @@ namespace LilEngie
 			default:
 				break;
 		}
+	}
+
+	void Game::SetCorePtrs()
+	{
+		ResourceManager::core = &resourceManager;
+		EventManager::core = &eventManager;
+		Log::core = &logger;
+		Input::core = &input;
+
+		if (componentFactory)
+			ComponentFactory::core = componentFactory;
 	}
 }

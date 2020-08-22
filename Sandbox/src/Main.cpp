@@ -17,8 +17,14 @@ int main()
 	return 0;
 }
 
-//Component factory for game for when building as dll (for LilEddie's use)
+//Component factory for game when using as dll (for LilEddie's use)
 extern "C" __declspec(dllexport) ComponentFactory* CreateComponentFactory()
 {
 	return new GameComponentFactory();
+}
+
+//Sloppy solution to sync global core pointers across dll's
+extern "C" __declspec(dllexport) void SyncGlobalPtrs(Game* game)
+{
+	game->SetCorePtrs();
 }

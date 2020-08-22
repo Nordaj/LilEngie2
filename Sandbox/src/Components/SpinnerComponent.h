@@ -16,6 +16,4 @@ public:
 public:
 	void Start() override;
 	void Update() override;
-
-	void OnDrawImGui() override;
 };

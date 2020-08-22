@@ -1,9 +1,15 @@
 workspace "LilEngie2"
-	configurations {"Debug", "Release"}
+	configurations {"Debug", "Release", "EditorGameDebug", "EditorGameRelease"}
 	architecture "x86_64"
 	startproject "LilEddie"
 
 project "LilEngie"
+
+	configmap {
+		["EditorGameDebug"] = "Debug",
+		["EditorGameRelease"] = "Release"
+	}
+
 	location "%{prj.name}"
 	kind "StaticLib"
 	language "C++"
@@ -55,12 +61,12 @@ project "LilEngie"
 		"opengl32.lib"
 	}
 
-	filter "configurations:Debug"
+	filter "configurations:Debug or EditorGameDebug"
 		defines "LIL_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
-	filter "configurations:Release"
+	filter "configurations:Release or EditorGameRelease"
 		runtime "Release"
 		optimize "on"
 
@@ -69,10 +75,10 @@ project "LilEngie"
 
 project "Sandbox"
 	location "%{prj.name}"
-	kind "SharedLib"
+	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
-
+	
 	targetdir "%{prj.name}/bin/%{cfg.buildcfg}/x64/"
 	objdir "%{prj.name}/bin/int/%{cfg.buildcfg}/x64/"
 
@@ -102,7 +108,6 @@ project "Sandbox"
 	libdirs
 	{
 		"Dependencies/GLEW/lib/Release/x64/",
-		"Dependencies/Assimp/lib/%{cfg.buildcfg}/x64/"
 	}
 
 	links
@@ -118,23 +123,37 @@ project "Sandbox"
 		"LilEngie"
 	}
 
-	postbuildcommands{
-		"copy /Y \"%{wks.location}Dependencies\\Assimp\\bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\" \"%{prj.location}bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\""
-	}
-
-	filter "configurations:Debug"
+	filter "configurations:Debug or EditorGameDebug"
 		defines "LIL_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
-	filter "configurations:Release"
+		libdirs 
+		{
+			"Dependencies/Assimp/lib/Debug/x64/"
+		}
+
+	filter "configurations:Release or EditorGameRelease"
 		runtime "Release"
 		optimize "on"
+
+		libdirs 
+		{
+			"Dependencies/Assimp/lib/Release/x64/"
+		}
+
+	filter "configurations:EditorGameDebug or EditorGameRelease"
+		kind "SharedLib"
 
 	filter "system:windows"
 		systemversion "latest"
 
 project "LilEddie"
+	configmap {
+		["EditorGameDebug"] = "Debug",
+		["EditorGameRelease"] = "Release"
+	}
+
 	location "%{prj.name}"
 	kind "ConsoleApp"
 	language "C++"
@@ -186,17 +205,48 @@ project "LilEddie"
 	}
 
 	postbuildcommands{
-		"copy /Y \"%{wks.location}Dependencies\\Assimp\\bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\" \"%{prj.location}bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\""
+		"copy /Y \"%{wks.location}Dependencies\\Assimp\\bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\" \"%{prj.location}bin\\%{cfg.buildcfg}\\x64\\assimp-vc142-mt.dll\"",
 	}
 
-	filter "configurations:Debug"
+	filter "configurations:Debug or EditorGameDebug"
 		defines "LIL_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
-	filter "configurations:Release"
+	filter "configurations:Release or EditorGameRelease"
 		runtime "Release"
 		optimize "on"
 
 	filter "system:windows"
 		systemversion "latest"
+
+project "LilBuilder"
+	configmap {
+		["EditorGameDebug"] = "Debug",
+		["EditorGameRelease"] = "Release"
+	}
+
+	location "Tools/%{prj.name}"
+	kind "ConsoleApp"
+	language "C#"
+
+	files { "%{prj.location}/src/**.cs" }
+
+	links{
+		"System",
+		"System.Core",
+		"System.IO",
+		"System.Diagnostics"
+	}
+
+	targetdir "%{prj.location}/bin/%{cfg.buildcfg}/x64/"
+	objdir "%{prj.location}/bin/int/%{cfg.buildcfg}/x64/"
+
+	filter "configurations:Debug or EditorGameDebug"
+		defines "DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release or EditorGameRelease"
+		runtime "Release"
+		optimize "on"

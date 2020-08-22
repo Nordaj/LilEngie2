@@ -39,6 +39,8 @@ namespace LilEngie
 		void Run();
 		void OnEvent(const Event &e) override;
 
+		void SetCorePtrs();
+
 	protected:
 		virtual void Init() {}
 		virtual void Start() {}

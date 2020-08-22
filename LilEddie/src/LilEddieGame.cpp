@@ -1,7 +1,11 @@
+#include <cstdio>
 #include <string>
+#include <filesystem>
 #include <LilEngie.h>
 #include "LilEddieGame.h"
+
 #include <windows.h>
+#include <fileapi.h>
 
 namespace LilEddie
 {
@@ -34,12 +38,31 @@ namespace LilEddie
 		config = "Debug";
 	#endif
 
-		//Get dll path as wstring
-		std::string str = gamePath + "bin/" + config + "/x64/" + projName + ".dll";
-		std::wstring wstr = std::wstring(str.begin(), str.end());
+		//Create path to game module
+		std::string gameOutput = gamePath + "bin/" + config + "/x64/";
+		std::string modulePath = gameOutput + "LinkedModules/";
+		
+		//TODO: need to make sure that when fail, new path is going to be deleted
+
+		//Create module path directory in case it doesnt exist
+		std::error_code pathErr;
+		std::filesystem::create_directory(modulePath, pathErr);
+
+		//Setup dll and pdb paths
+		std::string modNum = std::to_string(currentModuleNumber++);
+		std::string dllPath = modulePath + projName + modNum + ".dll";
+		std::string pdbPath = modulePath + projName + modNum + ".pdb";
+
+		//Copy the dll to the new path
+		std::error_code dllErr, pdbErr; ///I dont want exceptions if the copies fail
+		std::filesystem::copy(gameOutput + projName + ".dll", dllPath,
+			std::filesystem::copy_options::overwrite_existing, dllErr);
+		std::filesystem::copy(gameOutput + projName + ".pdb", pdbPath,
+			std::filesystem::copy_options::overwrite_existing, pdbErr);
 
 		//Load the game dll
-		HINSTANCE tempGameLib = LoadLibrary(wstr.c_str());
+		std::wstring wDllPath = std::wstring(dllPath.begin(), dllPath.end());
+		HINSTANCE tempGameLib = LoadLibrary(wDllPath.c_str());
 		if (!tempGameLib)
 		{
 			LIL_ERROR("Could not find or link game dll.");
@@ -50,7 +73,7 @@ namespace LilEddie
 		void* createCompAddr = GetProcAddress(tempGameLib, "CreateComponentFactory");
 		if (!createCompAddr)
 		{
-			LIL_ERROR("Could not find CreateComponentFactory function of game, will not link new dll.");
+			LIL_ERROR("Could not find CreateComponentFactory function of game module, will not link new dll.");
 			FreeLibrary(tempGameLib);
 			return;
 		}
@@ -64,6 +87,17 @@ namespace LilEddie
 		componentFactory = gameCreateCompFactory();
 		componentFactory->InitComponentList();
 		ComponentFactory::core = componentFactory;
+
+		//Update global core pointers on both dll's to match
+		SetCorePtrs();
+		void* syncCorePtrs = GetProcAddress(tempGameLib, "SyncGlobalPtrs");
+		if (!syncCorePtrs)
+		{
+			LIL_ERROR("Could not find core pointer syncing function of game module, will not link new dll.");
+			FreeLibrary(tempGameLib);
+			return;
+		}
+		((void(*)(Game*))syncCorePtrs)(this);
 
 		//Update game lib in current use
 		if (gameLib)

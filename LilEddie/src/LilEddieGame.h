@@ -15,6 +15,7 @@ namespace LilEddie
 
 	private:
 		void* gameLib = nullptr;
+		int currentModuleNumber = 0;
 		WindowManager windowManager;
 
 	public:
