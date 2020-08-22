@@ -164,6 +164,16 @@
                         ]
                     },
                     "type": "mesh"
+                },
+                {
+                    "properties": {
+                        "rotSpeed": [
+                            5.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "type": "spinner"
                 }
             ],
             "editorOnly": false,

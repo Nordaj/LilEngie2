@@ -12,6 +12,13 @@ static class LilBuilder
 		args = new string[] { "gamemodule", "D:\\Documents\\GitHub\\LilEngie2\\LilEngie2.sln", "D:\\Documents\\GitHub\\LilEngie2\\Sandbox\\bin\\EditorGameDebug\\x64\\", "Sandbox", "EditorGameDebug" };
 #endif //DEBUG
 
+		//Make sure we have enough arguments
+		if (args.Length < 5)
+		{
+			Console.WriteLine("Not enough arguments...");
+			return 1;
+		}
+
 		//Check the kind of build
 		if (args.Get(0) == "gamemodule")
 		{
@@ -65,7 +72,9 @@ static class LilBuilder
 
 				//Try to start the process
 				try
-				{ msbuildProcess.Start(); }
+				{ 
+					msbuildProcess.Start();
+				}
 				catch
 				{
 					Console.WriteLine("Could not start MSBuild.exe process");

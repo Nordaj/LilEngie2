@@ -43,6 +43,12 @@ namespace LilEddie
 		{
 			//TODO:
 			//Build game module
+			int err = ((LilEddieGame*)game)->CompileGameDLL();
+
+			if (!err)
+				LIL_LOG("Game module compilation finished.");
+			if (err) ///cant use else with logs lol
+				LIL_LOG("Game module compilation failed with code ", err);
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Hot\nSwap", btnSize))
@@ -57,7 +63,12 @@ namespace LilEddie
 			//TODO:
 			//Only hotswap game module (Non Reload, means dont reload scene data)
 
-			((LilEddieGame*)game)->ReloadGameDLL();
+			int err = ((LilEddieGame*)game)->ReloadGameDLL();
+
+			if (!err)
+				LIL_LOG("Game module hot swap finished.");
+			if (err) ///cant use else with logs lol
+				LIL_LOG("Game module hot swap failed with code ", err);
 		}
 
 		ImGui::EndGroup();

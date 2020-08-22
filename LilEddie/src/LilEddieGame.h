@@ -12,6 +12,7 @@ namespace LilEddie
 	{
 	public:
 		std::string projName;
+		std::string slnPath;
 
 	private:
 		void* gameLib = nullptr;
@@ -22,7 +23,9 @@ namespace LilEddie
 		LilEddieGame();
 		~LilEddieGame();
 
-		void ReloadGameDLL();
+		//Both methods returns 0 on success, error code on fail (see defs)
+		int CompileGameDLL();
+		int ReloadGameDLL();
 
 	protected:
 		void Init() override;

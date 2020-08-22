@@ -15,6 +15,7 @@ namespace LilEddie
 		//Temporary, later will be main function argument for opening specific projects, could be anywhere
 		gamePath = "../Sandbox/";
 		projName = "Sandbox";
+		slnPath = "../LilEngie2.sln";
 
 		//Create default component factory
 		componentFactory = new ComponentFactory();
@@ -30,7 +31,28 @@ namespace LilEddie
 		
 	}
 
-	void LilEddieGame::ReloadGameDLL()
+	int LilEddieGame::CompileGameDLL()
+	{
+		//Assumes we want game module/editor debug/release states to be the same (for now yes, later no)
+		std::string config = "EditorGameRelease";
+	#ifdef LIL_DEBUG
+		config = "EditorGameDebug";
+	#endif
+
+		//Might need to change how we find output dir
+		std::string outDir = gamePath + "bin/" + config + "/x64/";
+
+		//<Mode> <solution> <OutputDir> <ProjName> <Config>
+		std::string lilBuilder = "start /B ../Tools/Binaries/LilBuilder.exe gamemodule " + 
+			slnPath + " " + 
+			outDir + " " + 
+			projName + " " + 
+			config;
+
+		return system(lilBuilder.c_str());
+	}
+
+	int LilEddieGame::ReloadGameDLL()
 	{
 		//Use config as string for dll path
 		std::string config = "EditorGameRelease";
@@ -46,14 +68,14 @@ namespace LilEddie
 		if (!versFile)
 		{
 			LIL_ERROR("Could not open LatestVersion.txt file to find game module.");
-			return;
+			return 1;
 		}
 
 		std::string versLn(128, 0);
 		if (!fgets(&versLn[0], 128, versFile))
 		{
 			LIL_ERROR("LatestVersion.txt was empty.");
-			return;
+			return 2;
 		}
 		if (auto p = versLn.find("\n"))
 			versLn.erase(p);
@@ -67,7 +89,7 @@ namespace LilEddie
 		if (!tempGameLib)
 		{
 			LIL_ERROR("Could not find or link game dll.");
-			return;
+			return 3;
 		}
 
 		//Get address of CreateComponentFactory function
@@ -76,7 +98,7 @@ namespace LilEddie
 		{
 			LIL_ERROR("Could not find CreateComponentFactory function of game module, will not link new dll.");
 			FreeLibrary(tempGameLib);
-			return;
+			return 4;
 		}
 
 		//Delete old component factory if it's there
@@ -96,7 +118,7 @@ namespace LilEddie
 		{
 			LIL_ERROR("Could not find core pointer syncing function of game module, will not link new dll.");
 			FreeLibrary(tempGameLib);
-			return;
+			return 5;
 		}
 		((void(*)(Game*))syncCorePtrs)(this);
 
@@ -104,6 +126,7 @@ namespace LilEddie
 		if (gameLib)
 			FreeLibrary((HMODULE)gameLib);
 		gameLib = tempGameLib;
+		return 0;
 	}
 
 	void LilEddieGame::Init()
