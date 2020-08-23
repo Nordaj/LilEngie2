@@ -9,7 +9,7 @@ static class LilBuilder
 	{
 		//Test arguments
 #if DEBUG
-		args = new string[] { "gamemodule", "D:\\Documents\\GitHub\\LilEngie2\\LilEngie2.sln", "D:\\Documents\\GitHub\\LilEngie2\\Sandbox\\bin\\EditorGameRelease\\x64\\", "Sandbox", "EditorGameRelease" };
+		args = new string[] { "gamemodule", "D:\\Documents\\GitHub\\LilEngie2\\LilEngie2.sln", "D:\\Documents\\GitHub\\LilEngie2\\Sandbox\\bin\\EditorGameDebug\\x64\\", "Sandbox", "EditorGameDebug" };
 #endif //DEBUG
 
 		//Make sure we have enough arguments

@@ -8,6 +8,8 @@ namespace LilEddie
 {
 	void SceneWindow::Init()
 	{
+		Subscribe(EventType::ExitPlayMode);
+
 		gfx = game->renderer.gfx;
 
 		SetupSceneCamera();
@@ -42,6 +44,18 @@ namespace LilEddie
 	void SceneWindow::Reload()
 	{
 		SetupSceneCamera();
+	}
+
+	void SceneWindow::OnEvent(const Event& e)
+	{
+		switch (e.type)
+		{
+			case EventType::ExitPlayMode:
+				Reload();
+				break;
+			default:
+				break;
+		}
 	}
 
 	void SceneWindow::SetupSceneCamera()

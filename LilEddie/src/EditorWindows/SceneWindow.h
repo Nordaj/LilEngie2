@@ -7,7 +7,7 @@
 
 namespace LilEddie
 {
-	class SceneWindow : public IEditorWindow
+	class SceneWindow : public IEditorWindow, public IEventListener
 	{
 		WINDOW_TITLE("Scene View")
 
@@ -27,6 +27,8 @@ namespace LilEddie
 		void Init() override;
 		void OnDraw() override;
 		void Reload() override;
+
+		void OnEvent(const Event& e) override;
 
 	private:
 		void SetupSceneCamera();

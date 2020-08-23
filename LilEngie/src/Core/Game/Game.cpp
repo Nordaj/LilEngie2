@@ -123,7 +123,12 @@ namespace LilEngie
 		cachedScene.clear();
 		sceneManager.scene->Serialize(cachedScene);
 
-		//Entery play mode
+		//Dispatch play mode event
+		Event e = Event();
+		e.type = EventType::EnterPlayMode;
+		eventManager.Dispatch(e);
+
+		//Enter play mode
 		playMode = true;
 		sceneManager.scene->DispatchActorEvent(ActorEvent::Start);
 	}
@@ -135,6 +140,11 @@ namespace LilEngie
 
 		//Reload cached scene
 		sceneManager.LoadScene(cachedScene);
+
+		//Dispatch play mode event
+		Event e = Event();
+		e.type = EventType::ExitPlayMode;
+		eventManager.Dispatch(e);
 	}
 
 	void Game::SetPlayMode(bool isPlay)

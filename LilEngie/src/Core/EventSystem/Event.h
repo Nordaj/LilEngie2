@@ -10,6 +10,8 @@ namespace LilEngie
 		WindowClose,
 		GameClose,
 		SceneUnload,
+		EnterPlayMode,
+		ExitPlayMode,
 		EventTypeCount //Amount of unique types
 	};
 
