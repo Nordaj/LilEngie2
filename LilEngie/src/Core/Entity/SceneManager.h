@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <Core/System/ISerializable.h>
 #include <Core/Core.h>
 
 namespace LilEngie
@@ -21,6 +22,7 @@ namespace LilEngie
 		void Init(Game* game);
 		void Shutdown();
 
+		bool LoadScene(json& sceneJson);
 		bool LoadScene(const char* path);
 		bool SaveScene(const char* path = nullptr, Scene* scn = nullptr);
 		bool NewScene();

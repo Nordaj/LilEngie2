@@ -1,4 +1,7 @@
 {
+	"name": "Test",
+	"path": "res/Scenes/Test.lilscn",
+
     "actors": [
         {
             "components": [

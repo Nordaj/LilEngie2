@@ -6,10 +6,12 @@
 #include <Core/Debug/Log.h>
 #include <Core/Debug/DebugTimer.h>
 #include <Core/System/PoolAllocator.h>
+#include <Core/System/ISerializable.h>
 #include <Core/Platform/Graphics/IGraphics.h>
 #include <Core/Entity/SceneManager.h>
 #include <Core/Entity/Scene.h>
 #include <Core/Entity/Actor.h>
+#include <Core/Entity/ComponentFactory.h>
 #include <Core/Entity/CoreComponents/MeshComponent.h>
 #include <Core/Entity/CoreComponents/TransformComponent.h>
 #include <Core/Entity/CoreComponents/CameraComponent.h>
@@ -117,6 +119,11 @@ namespace LilEngie
 	//TODO
 	void Game::EnterPlayMode()
 	{
+		//Cache scene
+		cachedScene.clear();
+		sceneManager.scene->Serialize(cachedScene);
+
+		//Entery play mode
 		playMode = true;
 		sceneManager.scene->DispatchActorEvent(ActorEvent::Start);
 	}
@@ -125,6 +132,9 @@ namespace LilEngie
 	void Game::ExitPlayMode()
 	{
 		playMode = false;
+
+		//Reload cached scene
+		sceneManager.LoadScene(cachedScene);
 	}
 
 	void Game::SetPlayMode(bool isPlay)

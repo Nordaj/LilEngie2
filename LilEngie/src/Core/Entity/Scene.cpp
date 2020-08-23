@@ -124,6 +124,9 @@ namespace LilEngie
 
 	void Scene::Deserialize(json& j)
 	{
+		DeserializeProperty(j, name, "name");
+		DeserializeProperty(j, path, "path");
+
 		//Start by creating actors manually with the uid's
 		for (auto& a : j["actors"])
 			Actor* actor = CreateActor(a["uid"]);
@@ -141,6 +144,9 @@ namespace LilEngie
 
 	void Scene::Serialize(json& j)
 	{
+		SerializeProperty(j, name, "name");
+		SerializeProperty(j, path, "path");
+
 		for (auto it = actors.begin(); it != actors.end(); it++)
 		{
 			//Skip root

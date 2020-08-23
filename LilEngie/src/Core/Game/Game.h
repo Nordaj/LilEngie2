@@ -2,17 +2,19 @@
 
 #include <string>
 #include <Core/Core.h>
+#include <Core/System/ISerializable.h>
 #include <Core/Application/Application.h>
 #include <Core/EventSystem/Events.h>
 #include <Core/Debug/Log.h>
 #include <Core/Resources/ResourceManager.h>
-#include "Core/Graphics/Renderer.h"
-#include "Core/Entity/SceneManager.h"
-#include <Core/Entity/ComponentFactory.h>
+#include <Core/Graphics/Renderer.h>
+#include <Core/Entity/SceneManager.h>
 #include "Input.h"
 
 namespace LilEngie
 {
+	class ComponentFactory;
+
 	class LIL_API Game : IEventListener
 	{
 	public:
@@ -32,6 +34,7 @@ namespace LilEngie
 		bool playMode;
 
 	private:
+		json cachedScene;
 		bool isRunning = true;
 		Event closeEvent;
 

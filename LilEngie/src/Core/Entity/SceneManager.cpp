@@ -27,10 +27,8 @@ namespace LilEngie
 		UnloadScene();
 	}
 
-	bool SceneManager::LoadScene(const char* path)
+	bool SceneManager::LoadScene(json& sceneJson)
 	{
-		///SEEMS THAT UNLOADING MESSES UP MEMORY IT SHOULDNT
-
 		isLoadingScene = true;
 
 		//Unload current scene
@@ -39,9 +37,21 @@ namespace LilEngie
 		//Create scene object
 		Scene* scn = new Scene();
 		scn->manager = this;
-		scn->path = path;
 		scene = scn;
 		scn->Init();
+
+		//Deserialize
+		scn->Deserialize(sceneJson);
+
+		isLoadingScene = false;
+		return true;
+	}
+
+	bool SceneManager::LoadScene(const char* path)
+	{
+		///SEEMS THAT UNLOADING MESSES UP MEMORY IT SHOULDNT
+
+		isLoadingScene = true;
 
 		//Get the actual path of the scene from resources relative path
 		std::string realPath = path;
@@ -63,11 +73,8 @@ namespace LilEngie
 		//Parse into json object TODO look into better parsing (log errors)
 		json j = json::parse(str);
 
-		//Deserialize
-		scn->Deserialize(j);
-
-		isLoadingScene = false;
-		return true;
+		//Actually load scene from json obj
+		return LoadScene(j);
 	}
 
 	bool SceneManager::SaveScene(const char* path, Scene* scn)
