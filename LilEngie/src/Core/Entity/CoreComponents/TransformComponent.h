@@ -22,8 +22,7 @@ namespace LilEngie
 		)
 
 	public:
-		void Start() override;
-		void Update() override;
+		void Init() override;
 
 		mat4 GlobalTransformation();
 		mat4 LocalTransformation();

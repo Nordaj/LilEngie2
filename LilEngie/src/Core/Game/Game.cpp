@@ -68,6 +68,8 @@ namespace LilEngie
 
 		//Main loop
 		Start();
+		if (playMode)
+			sceneManager.scene->DispatchActorEvent(ActorEvent::Start);
 		DebugTimer t;
 		while (isRunning)
 		{
@@ -116,6 +118,7 @@ namespace LilEngie
 	void Game::EnterPlayMode()
 	{
 		playMode = true;
+		sceneManager.scene->DispatchActorEvent(ActorEvent::Start);
 	}
 
 	//TODO

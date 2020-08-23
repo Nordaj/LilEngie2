@@ -15,6 +15,7 @@ namespace LilEngie
 	public:
 		Game* game = nullptr;
 		Scene* scene = nullptr;
+		bool isLoadingScene;
 
 	public:
 		void Init(Game* game);

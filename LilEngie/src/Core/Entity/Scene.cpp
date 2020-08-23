@@ -134,6 +134,9 @@ namespace LilEngie
 			Actor* actor = GetActor(a["uid"]);
 			actor->Deserialize(a);
 		}
+
+		//Call awake on each actor
+		root->DispatchActorEvent(ActorEvent::Init);
 	}
 
 	void Scene::Serialize(json& j)

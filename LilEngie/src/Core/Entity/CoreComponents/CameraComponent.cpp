@@ -12,7 +12,7 @@
 
 namespace LilEngie
 {
-	void CameraComponent::Start()
+	void CameraComponent::Init()
 	{
 		ResetProjection();
 
@@ -30,11 +30,6 @@ namespace LilEngie
 		}
 	}
 
-	void CameraComponent::Update()
-	{
-
-	}
-
 	void CameraComponent::OnDraw()
 	{
 		IGraphics* gfx = renderer->gfx;
@@ -43,6 +38,17 @@ namespace LilEngie
 		ResetProjection();
 
 		camera.clearColor = clearColor;
+	}
+
+	void CameraComponent::UseFramebuffer()
+	{
+		//Only start using one if not already
+		if (!useFramebuffer)
+		{
+			useFramebuffer = true;
+			framebuffer = renderer->gfx->CreateFramebuffer(width, height);
+			camera.framebuffer = framebuffer;
+		}
 	}
 
 	void CameraComponent::ResizeFramebuffer(int width, int height)

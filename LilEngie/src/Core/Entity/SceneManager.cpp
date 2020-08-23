@@ -31,6 +31,8 @@ namespace LilEngie
 	{
 		///SEEMS THAT UNLOADING MESSES UP MEMORY IT SHOULDNT
 
+		isLoadingScene = true;
+
 		//Unload current scene
 		UnloadScene();
 
@@ -63,8 +65,8 @@ namespace LilEngie
 
 		//Deserialize
 		scn->Deserialize(j);
-		scn->DispatchActorEvent(ActorEvent::Start);
 
+		isLoadingScene = false;
 		return true;
 	}
 

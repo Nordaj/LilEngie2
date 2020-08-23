@@ -25,6 +25,10 @@ namespace LilEngie
 	{
 		switch (type)
 		{
+			case ActorEvent::Init:
+				for (IComponent* comp : components)
+					comp->Init();
+				break;
 			case ActorEvent::Start:
 				for (IComponent* comp : components)
 					comp->Start();
@@ -140,7 +144,6 @@ namespace LilEngie
 			}
 
 			comp->Deserialize(c["properties"]);
-			comp->Init();
 		}
 	}
 

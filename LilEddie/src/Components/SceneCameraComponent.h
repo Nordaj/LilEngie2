@@ -22,7 +22,7 @@ namespace LilEddie
 		DebugDrawing* dbg;
 
 	public:
-		void Start() override;
+		void Init() override;
 		void OnDraw() override;
 		void EditorUpdate() override;
 

@@ -29,11 +29,6 @@ namespace LilEngie
 		SetMaterial(matRes->material);
 	}
 
-	void MeshComponent::Update()
-	{
-
-	}
-
 	void MeshComponent::OnDraw()
 	{
 		if (!meshRenderer.IsRenderable())

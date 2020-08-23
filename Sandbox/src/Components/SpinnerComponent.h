@@ -16,4 +16,5 @@ public:
 public:
 	void Start() override;
 	void Update() override;
+	void OnDraw() override;
 };

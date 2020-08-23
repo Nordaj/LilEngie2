@@ -3,7 +3,7 @@
 
 namespace LilEddie
 {
-	void SceneCameraComponent::Start()
+	void SceneCameraComponent::Init()
 	{
 		dbg = &actor->game->renderer.debugDrawing;
 	}

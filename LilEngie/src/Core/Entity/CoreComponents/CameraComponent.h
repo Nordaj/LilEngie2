@@ -17,12 +17,15 @@ namespace LilEngie
 		float fov = 45;
 		float f = 100;
 
-		bool useFramebuffer = false;
 		IFramebuffer* framebuffer;
 		int width, height;
 
 		vec4 clearColor = vec4(.05, .05, .05, 1);
 
+	private:
+		bool useFramebuffer = false;
+
+	public:
 		LIL_DEPENDENCIES("transform")
 		LIL_TYPE_NAME("camera")
 		PROPERTIES(
@@ -40,10 +43,10 @@ namespace LilEngie
 		Renderer* renderer;
 
 	public:
-		void Start() override;
-		void Update() override;
+		void Init() override;
 		void OnDraw() override;
 
+		void UseFramebuffer();
 		void ResizeFramebuffer(int width, int height);
 		void EnableDebugGraphics(bool enabled);
 

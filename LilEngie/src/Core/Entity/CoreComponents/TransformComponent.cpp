@@ -5,14 +5,9 @@
 
 namespace LilEngie
 {
-	void TransformComponent::Start()
+	void TransformComponent::Init()
 	{
 		actor->transform = this;
-	}
-
-	void TransformComponent::Update()
-	{
-
 	}
 
 	mat4 TransformComponent::GlobalTransformation()

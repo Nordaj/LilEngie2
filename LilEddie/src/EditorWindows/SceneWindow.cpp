@@ -55,15 +55,12 @@ namespace LilEddie
 		sceneCamera->serialize = false;
 		sceneCamera->hideInTree = true;
 		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
-		sceneCamera->transform = t;
 		camera = sceneCamera->CreateComponent<CameraComponent>();
 		camera->EnableDebugGraphics(true);
-		camera->useFramebuffer = true;
 		camera->width = 1;
 		camera->height = 1;
-		camera->Start();
+		camera->UseFramebuffer();
 		scnCam = sceneCamera->CreateComponent<SceneCameraComponent>();
-		scnCam->Start();
 
 		//Get frame color
 		frameColor = gfx->GetFramebufferTexture(camera->framebuffer);

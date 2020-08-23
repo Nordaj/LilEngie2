@@ -20,6 +20,15 @@ namespace LilEngie
 			transform = (TransformComponent*)component;
 
 		components.push_back(component);
+
+		//Call init only if not loading scene (when scene loading itll be called later)
+		if (!game->sceneManager.isLoadingScene)
+			component->Init();
+
+		//Call start if in play mode and not loading scene (when scene loading itll be called later)
+		if (game->IsPlaying() && !game->sceneManager.isLoadingScene)
+			component->Start();
+
 		return component;
 	}
 }

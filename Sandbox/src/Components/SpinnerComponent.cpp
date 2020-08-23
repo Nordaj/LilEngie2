@@ -17,3 +17,9 @@ void SpinnerComponent::Update()
 		input->MouseVisibility(!input->mouseVisible);
 	}
 }
+
+void SpinnerComponent::OnDraw()
+{
+	if (input->GetKey(Key::Space))
+		actor->transform->euler += (rotSpeed * DeltaTime() * 10);
+}

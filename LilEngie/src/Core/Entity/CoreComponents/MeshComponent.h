@@ -29,11 +29,8 @@ namespace LilEngie
 	public:
 		void SetMaterial(Material* material);
 
-	private:
+	public:
 		void Init() override;
-
-		//void Start() override;
-		void Update() override;
 
 		void OnDraw() override;
 	};

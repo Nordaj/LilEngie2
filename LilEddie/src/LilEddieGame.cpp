@@ -26,6 +26,9 @@ namespace LilEddie
 		playMode = false;
 
 		//Allow us to load game dll with its component factory if a build exists
+		LIL_LOG("Compiling Game Module");
+		//CompileGameDLL(); TODO: add this back once compilation issue fixed
+		LIL_LOG("Game module compilation complete");
 		ReloadGameDLL();
 	}
 

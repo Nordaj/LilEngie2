@@ -44,15 +44,7 @@ namespace LilEddie
 						//Add the component if not already existing
 						std::string componentType = ComponentFactory::core->componentNames[i];
 						if (!sa->ContainsComponent(componentType))
-						{
 							IComponent* comp = ComponentFactory::core->CreateComponent(sa, componentType.c_str());
-
-							if (comp)
-							{
-								comp->Init();
-								comp->Start();
-							}
-						}
 
 						ImGui::CloseCurrentPopup();
 					}

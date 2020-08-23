@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <Core/Core.h>
+#include <Core/Game/Game.h>
 #include <Core/System/ISerializable.h>
 #include "IComponent.h"
 
@@ -13,6 +14,7 @@ namespace LilEngie
 
 	enum class ActorEvent
 	{
+		Init,
 		Start,
 		Update,
 		OnDraw,
