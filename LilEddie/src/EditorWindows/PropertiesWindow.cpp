@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <Vendor/imgui/imgui.h>
 #include <Vendor/imgui/imgui_stdlib.h>
+#include <Vendor/imgui/imgui_internal.h>
 #include <LilEngie.h>
 #include <Core/System/ISerializable.h>
 #include <Core/Entity/ComponentFactory.h>
@@ -65,6 +66,7 @@ namespace LilEddie
 			json j;
 			sa->Serialize(j);
 
+			//Present each individual component
 			for (int i = 0; i < sa->ComponentsCount(); i++)
 			{
 				std::string typeName = sa->GetComponent(i)->TypeName();
@@ -86,12 +88,23 @@ namespace LilEddie
 						ImGui::Dummy(ImVec2(0, 10));
 						ImGui::BeginGroup();
 
+						//Draw the header for the component
 						ImGuiTreeNodeFlags headerFlags = ImGuiTreeNodeFlags_DefaultOpen;
 						headerFlags |= ImGuiTreeNodeFlags_Framed;
 						headerFlags |= ImGuiTreeNodeFlags_FramePadding;
 						headerFlags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+						headerFlags |= ImGuiTreeNodeFlags_AllowItemOverlap;
 
-						if (ImGui::TreeNodeEx((type + "##CollapseHeader").c_str(), headerFlags))
+						bool componentHeader = ImGui::TreeNodeEx((type + "##CollapseHeader").c_str(), headerFlags);
+
+						//Draw the destroy component button
+						ImGui::SameLine(ImGui::GetContentRegionAvail().x);
+						ImGui::Dummy(ImVec2(10, 10));
+						if (ImGui::CloseButton(ImGui::GetID(("x##" + type).c_str()), ImGui::GetItemRectMin()))
+							sa->DestroyComponent(sa->GetComponent(i));
+
+						//Draw actual component properties
+						if (componentHeader)
 						{
 							ImGui::Indent();
 							for (json::iterator it = component["properties"].begin(); it != component["properties"].end(); it++)
