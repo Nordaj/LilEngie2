@@ -28,12 +28,12 @@ namespace LilEddie
 			//Save the project
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Play", btnSize))
+		if (ImGui::Button(game->IsPlaying() ? "Stop" : "Play", btnSize))
 		{
 			//TODO:
 			//Cache scene state
 			//Enter play mode
-			game->playMode = !game->playMode;
+			game->SetPlayMode(!game->IsPlaying());
 
 			//Unless already playing then:
 			//Exit play mode

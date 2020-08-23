@@ -25,9 +25,11 @@ namespace LilEngie
 		Input input;
 		ComponentFactory* componentFactory;
 		float deltaTime;
-		bool playMode;
 
 		std::string gamePath;
+
+	protected:
+		bool playMode;
 
 	private:
 		bool isRunning = true;
@@ -39,6 +41,11 @@ namespace LilEngie
 
 		void Run();
 		void OnEvent(const Event &e) override;
+
+		bool IsPlaying();
+		void EnterPlayMode();
+		void ExitPlayMode();
+		void SetPlayMode(bool isPlay);
 
 		void SetCorePtrs();
 

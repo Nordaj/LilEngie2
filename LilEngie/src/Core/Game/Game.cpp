@@ -107,6 +107,31 @@ namespace LilEngie
 		}
 	}
 
+	bool Game::IsPlaying()
+	{
+		return playMode;
+	}
+
+	//TODO
+	void Game::EnterPlayMode()
+	{
+		playMode = true;
+	}
+
+	//TODO
+	void Game::ExitPlayMode()
+	{
+		playMode = false;
+	}
+
+	void Game::SetPlayMode(bool isPlay)
+	{
+		if (playMode && !isPlay)
+			ExitPlayMode();
+		else if (!playMode && isPlay)
+			EnterPlayMode();
+	}
+
 	void Game::SetCorePtrs()
 	{
 		ResourceManager::core = &resourceManager;
