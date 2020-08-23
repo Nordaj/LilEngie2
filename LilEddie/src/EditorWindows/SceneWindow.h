@@ -12,6 +12,8 @@ namespace LilEddie
 		WINDOW_TITLE("Scene View")
 
 	private:
+		vec3 camPos = vec3(0, 0, 0);
+		vec3 camEuler = vec3(0, 0, 0);
 		CameraComponent* camera;
 		SceneCameraComponent* scnCam;
 		IGraphics* gfx;

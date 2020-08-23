@@ -29,6 +29,8 @@ namespace LilEddie
 	void SceneWindow::OnDraw()
 	{
 		scnCam->hovered = ImGui::IsWindowHovered();
+		camPos = scnCam->actor->transform->position;
+		camEuler = scnCam->actor->transform->euler;
 
 		//Handle window resizing
 		if (ImGui::GetContentRegionAvail().x != frameSize.x || ImGui::GetContentRegionAvail().y != frameSize.y)
@@ -69,6 +71,8 @@ namespace LilEddie
 		sceneCamera->serialize = false;
 		sceneCamera->hideInTree = true;
 		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
+		t->position = camPos;
+		t->euler = camEuler;
 		camera = sceneCamera->CreateComponent<CameraComponent>();
 		camera->EnableDebugGraphics(true);
 		camera->width = 1;

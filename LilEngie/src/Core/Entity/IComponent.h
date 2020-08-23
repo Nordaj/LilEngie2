@@ -18,7 +18,7 @@ namespace LilEngie
 		friend class Actor;
 		friend class SceneManager;
 
-	protected:
+	public:
 		Actor* actor;
 		Input* input;
 
