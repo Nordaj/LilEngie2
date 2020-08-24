@@ -60,10 +60,13 @@ namespace LilEddie
 
 	int LilEddieGame::ReloadGameDLL()
 	{
-		//Unload current scene (just use a new scene) (rn it loads it from file, not fast)
-		std::string scenePath = "";
-		if (sceneManager.scene)
-			scenePath = sceneManager.scene->path;
+		//Cache current scene
+		bool hasScene = sceneManager.scene;
+		json cachedScene;
+		if (hasScene)
+			sceneManager.scene->Serialize(cachedScene);
+
+		//Unload current scene
 		sceneManager.NewScene();
 
 		//Use config as string for dll path
@@ -140,8 +143,8 @@ namespace LilEddie
 		gameLib = tempGameLib;
 
 		//Load scene back
-		if (scenePath != "")
-			sceneManager.LoadScene(scenePath.c_str());
+		if (hasScene)
+			sceneManager.LoadScene(cachedScene);
 
 		return 0;
 	}

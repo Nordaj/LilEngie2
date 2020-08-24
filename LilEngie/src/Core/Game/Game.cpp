@@ -116,7 +116,6 @@ namespace LilEngie
 		return playMode;
 	}
 
-	//TODO
 	void Game::EnterPlayMode()
 	{
 		//Cache scene
@@ -133,7 +132,6 @@ namespace LilEngie
 		sceneManager.scene->DispatchActorEvent(ActorEvent::Start);
 	}
 
-	//TODO
 	void Game::ExitPlayMode()
 	{
 		playMode = false;
