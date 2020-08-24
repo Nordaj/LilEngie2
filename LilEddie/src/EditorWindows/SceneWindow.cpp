@@ -9,6 +9,7 @@ namespace LilEddie
 	void SceneWindow::Init()
 	{
 		Subscribe(EventType::ExitPlayMode);
+		Subscribe(EventType::EditorSceneRecall);
 
 		gfx = game->renderer.gfx;
 
@@ -53,6 +54,7 @@ namespace LilEddie
 		switch (e.type)
 		{
 			case EventType::ExitPlayMode:
+			case EventType::EditorSceneRecall:
 				Reload();
 				break;
 			default:

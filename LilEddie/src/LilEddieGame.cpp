@@ -146,6 +146,11 @@ namespace LilEddie
 		if (hasScene)
 			sceneManager.LoadScene(cachedScene);
 
+		//Dispatch scene recall
+		Event e;
+		e.type = EventType::EditorSceneRecall;
+		eventManager.Dispatch(e);
+
 		return 0;
 	}
 

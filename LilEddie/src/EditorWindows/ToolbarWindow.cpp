@@ -52,7 +52,7 @@ namespace LilEddie
 				LIL_LOG("Game module compilation failed with code ", err);
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Hot\nSwap", btnSize))
+		if (ImGui::Button("Load\nGame", btnSize))
 		{
 			//TODO: 
 			//Hotswap game module (easy function call)

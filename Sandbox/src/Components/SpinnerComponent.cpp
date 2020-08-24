@@ -9,7 +9,7 @@ void SpinnerComponent::Start()
 void SpinnerComponent::Update()
 {
 	if (input->GetKey(Key::Space))
-		actor->transform->euler += (rotSpeed * DeltaTime() * 10);
+		actor->transform->euler += (rotSpeed * DeltaTime() * 3);
 
 	if (input->GetKeyUp(Key::Escape))
 	{

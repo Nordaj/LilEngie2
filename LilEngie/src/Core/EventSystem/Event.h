@@ -12,6 +12,7 @@ namespace LilEngie
 		SceneUnload,
 		EnterPlayMode,
 		ExitPlayMode,
+		EditorSceneRecall,
 		EventTypeCount //Amount of unique types
 	};
 
