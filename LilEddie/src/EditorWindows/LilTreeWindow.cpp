@@ -48,6 +48,13 @@ namespace LilEddie
 
 		//Scene tree
 		DrawActorList(s->GetActor("ROOT"));
+
+		//Parent swap
+		if (dragChild && dragParent)
+		{
+			dragChild->ChangeParent(dragParent);
+			dragParent = dragChild = nullptr;
+		}
 	}
 
 	void LilTreeWindow::DrawActorList(Actor* actor)
@@ -76,8 +83,30 @@ namespace LilEddie
 		if (actor->GetChildrenCount() == 0)
 			flags |= ImGuiTreeNodeFlags_Leaf;
 
-		//Draw this actor
-		if (ImGui::TreeNodeEx(actor->name.c_str(), flags))
+		//Draw this actor node (in order for reasonable drag drop graphics, need to implement my own tree node, or use another method)
+		bool tnOpen = ImGui::TreeNodeEx(actor->name.c_str(), flags);
+
+		//Drag drop functionality
+		if (ImGui::BeginDragDropSource())
+		{
+			ImGui::Text(actor->name.c_str());
+			ImGui::SetDragDropPayload("TreeActorNode", &actor, sizeof(Actor*));
+			ImGui::EndDragDropSource();
+		}
+		else if (ImGui::BeginDragDropTarget())
+		{
+			const ImGuiPayload* pl = ImGui::AcceptDragDropPayload("TreeActorNode");
+			if (pl)
+			{
+				dragParent = actor;
+				dragChild = *(Actor**)pl->Data;
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+		//Draw sub actors
+		if (tnOpen)
 		{
 			//Set as selected if clicked
 			if (ImGui::IsItemClicked())

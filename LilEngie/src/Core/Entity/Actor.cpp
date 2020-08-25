@@ -67,6 +67,25 @@ namespace LilEngie
 		return children[index];
 	}
 
+	void Actor::ChangeParent(Actor* p)
+	{
+		//Remove parent's me child
+		for (auto it = parent->children.begin(); it != parent->children.end(); it++)
+		{
+			if (*it == this)
+			{
+				this->parent->children.erase(it);
+				break;
+			}
+		}
+
+		//Update parent ptr
+		parent = p;
+
+		//Add me to new parent's children
+		parent->children.push_back(this);
+	}
+
 	void Actor::SetEnabled(bool val)
 	{
 		isEnabled = true;

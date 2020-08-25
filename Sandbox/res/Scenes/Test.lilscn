@@ -1,7 +1,4 @@
 {
-	"name": "Test",
-	"path": "res/Scenes/Test.lilscn",
-
     "actors": [
         {
             "components": [
@@ -171,7 +168,7 @@
                 {
                     "properties": {
                         "rotSpeed": [
-                            5.0,
+                            1.0,
                             0.0,
                             0.0
                         ]
@@ -185,5 +182,7 @@
             "parent": "ROOT",
             "uid": "Test Cube"
         }
-    ]
+    ],
+    "name": "Test",
+    "path": "res/Scenes/Test.lilscn"
 }

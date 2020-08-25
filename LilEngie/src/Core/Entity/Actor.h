@@ -53,6 +53,8 @@ namespace LilEngie
 		int GetChildrenCount();
 		Actor* GetChild(int index = 0);
 
+		void ChangeParent(Actor* parent);
+
 		void SetEnabled(bool val);
 		bool IsEnabled();
 

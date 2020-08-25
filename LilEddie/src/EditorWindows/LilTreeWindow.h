@@ -18,6 +18,8 @@ namespace LilEddie
 		std::string newActorUid;
 		std::string newActorName;
 		bool renaming = false;
+		Actor* dragChild = nullptr;
+		Actor* dragParent = nullptr;
 
 	public:
 		LilTreeWindow(Game* game) 
