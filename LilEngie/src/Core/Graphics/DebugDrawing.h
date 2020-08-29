@@ -45,6 +45,9 @@ namespace LilEngie
 		std::vector<DebugLineDrawCall> lines;
 		std::vector<DebugSquareDrawCall> squares;
 
+		std::vector<DebugLineDrawCall> overlayLines;
+		std::vector<DebugSquareDrawCall> overlaySquares;
+
 	public:
 		DebugDrawing();
 
@@ -56,7 +59,11 @@ namespace LilEngie
 		void Flush();
 
 		//Caches every draw call
-		void DrawLine(vec3 a, vec3 b, vec3 col, int pixelWidth);
-		void DrawSquare(vec3 c, vec3 col, int pixelWidth);
+		void DrawLine(vec3 a, vec3 b, vec3 col, int pixelWidth, bool overlay = false);
+		void DrawSquare(vec3 c, vec3 col, int pixelWidth, bool overlay = false);
+
+	private:
+		void RenderLines(int width, int height, float near, const mat4& v, const mat4& p, bool overlay);
+		void RenderSquares(int width, int height, float near, const mat4& v, const mat4& p, bool overlay);
 	};
 }

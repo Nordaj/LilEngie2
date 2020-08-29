@@ -7,6 +7,8 @@
 
 namespace LilEddie
 {
+	class LilTreeWindow;
+
 	class SceneWindow : public IEditorWindow, public IEventListener
 	{
 		WINDOW_TITLE("Scene View")
@@ -19,8 +21,12 @@ namespace LilEddie
 		IGraphics* gfx;
 		ITexture* frameColor;
 		ImVec2 frameSize;
+		ImVec2 frameRectMin;
 		ImVec2 uv0;
 		ImVec2 uv1;
+		DebugDrawing* dbg;
+		LilTreeWindow* treeWin;
+		TransformGizmo trsGizmo;
 
 	public:
 		SceneWindow(Game* game)
@@ -34,5 +40,6 @@ namespace LilEddie
 
 	private:
 		void SetupSceneCamera();
+		void DrawTransformGizmos(Actor* selected);
 	};
 }

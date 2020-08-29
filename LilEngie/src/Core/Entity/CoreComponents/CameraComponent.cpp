@@ -68,6 +68,12 @@ namespace LilEngie
 		camera.renderDebug = enabled;
 	}
 
+	mat4 CameraComponent::GetViewProjection()
+	{
+		ResetProjection();
+		return camera.projection * camera.view;
+	}
+
 	void CameraComponent::ResetProjection()
 	{
 		float ar = useFramebuffer ? width / (float)height : actor->game->renderer.aspectRatio;

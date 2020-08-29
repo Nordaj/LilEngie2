@@ -1,7 +1,10 @@
 #include <Vendor/imgui/imgui.h>
 #include <LilEngie.h>
 #include <Core/Platform/Graphics/IGraphics.h>
+#include <Core/Graphics/DebugDrawing.h>
 #include "../Components/SceneCameraComponent.h"
+#include "../WindowManager.h"
+#include "LilTreeWindow.h"
 #include "SceneWindow.h"
 
 namespace LilEddie
@@ -12,6 +15,7 @@ namespace LilEddie
 		Subscribe(EventType::EditorSceneRecall);
 
 		gfx = game->renderer.gfx;
+		dbg = &game->renderer.debugDrawing;
 
 		SetupSceneCamera();
 
@@ -25,10 +29,22 @@ namespace LilEddie
 			uv0 = ImVec2(0, 0);
 			uv1 = ImVec2(1, 1);
 		}
+
+		treeWin = (LilTreeWindow*)manager->GetWindow("Lil Tree");
+		trsGizmo.Init(game, dbg, camera);
 	}
 
 	void SceneWindow::OnDraw()
 	{
+		//Transform gizmos
+		if (treeWin)
+		{
+			Actor* actor = game->sceneManager.scene->GetActor(treeWin->selected);
+			if (actor)
+				DrawTransformGizmos(actor);
+		}
+
+		//Handle scn camera stuff
 		scnCam->hovered = ImGui::IsWindowHovered();
 		camPos = scnCam->actor->transform->position;
 		camEuler = scnCam->actor->transform->euler;
@@ -41,7 +57,16 @@ namespace LilEddie
 			frameColor = gfx->GetFramebufferTexture(camera->framebuffer);
 		}
 
+		//Display but without moving controls while adding a little indent
+		ImVec2 cursorPos = ImGui::GetCursorPos();
+
 		ImGui::Image(game->renderer.gfx->ImGuiGetTex(frameColor), frameSize, uv0, uv1);
+		frameRectMin = ImGui::GetItemRectMin();
+
+		ImGui::SetCursorPos(ImVec2(cursorPos.x + 5, cursorPos.y + 5));
+
+		//Draw overlay controls
+		ImGui::Checkbox("World Mode", &trsGizmo.worldMode);
 	}
 
 	void SceneWindow::Reload()
@@ -84,5 +109,23 @@ namespace LilEddie
 
 		//Get frame color
 		frameColor = gfx->GetFramebufferTexture(camera->framebuffer);
+	}
+
+	void SceneWindow::DrawTransformGizmos(Actor* actor)
+	{
+		if (!actor || !actor->transform)
+			return;
+
+		//Figure clip space mouse pos in scene view
+		vec3 mp = vec3(ImGui::GetMousePos().x, ImGui::GetMousePos().y, 0);
+		vec3 frm = vec3(frameRectMin.x, frameRectMin.y, 0);
+		mp -= frm;
+		mp /= vec3(frameSize.x, frameSize.y, 1);
+		mp = mp * 2 - 1;
+		mp.y *= -1;
+		mp.z = 0;
+
+		trsGizmo.selected = actor;
+		trsGizmo.Draw(mp);
 	}
 }

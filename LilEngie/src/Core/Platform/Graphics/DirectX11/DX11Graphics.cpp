@@ -182,6 +182,22 @@ namespace LilEngie
 		ctx->deviceContext->RSSetViewports(1, &viewport);
 	}
 
+	void DX11Graphics::EnableDepth()
+	{
+		if (ctx->currentFramebuffer)
+			ctx->deviceContext->OMSetRenderTargets(1, &ctx->currentFramebuffer->colorRenderView, ctx->currentFramebuffer->depthRenderView);
+		else
+			ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, ctx->depthStencilView);
+	}
+
+	void DX11Graphics::DisableDepth()
+	{
+		if (ctx->currentFramebuffer)
+			ctx->deviceContext->OMSetRenderTargets(1, &ctx->currentFramebuffer->colorRenderView, nullptr);
+		else
+			ctx->deviceContext->OMSetRenderTargets(1, &ctx->renderTargetView, nullptr);
+	}
+
 	IShader* DX11Graphics::CreateShader(const std::string &vert, const std::string &frag)
 	{
 		return CreateShader(vert, frag, nullptr, nullptr, 0);

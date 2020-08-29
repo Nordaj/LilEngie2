@@ -60,14 +60,68 @@ namespace LilEngie::Math
 		z *= v.z;
 	}
 
+	vec3 vec3::operator/(const vec3& v)
+	{
+		return {
+			x / v.x,
+			y / v.y,
+			z / v.z,
+		};
+	}
+
+	void vec3::operator/=(const vec3& v)
+	{
+		x /= v.x;
+		y /= v.y;
+		z /= v.z;
+	}
+
+	vec3 vec3::operator+(float f)
+	{
+		return vec3(x + f, y + f, z + f);
+	}
+
+	void vec3::operator+=(float f)
+	{
+		x += f;
+		y += f;
+		z += f;
+	}
+
+	vec3 vec3::operator-(float f)
+	{
+		return vec3(x - f, y - f, z - f);
+	}
+
+	void vec3::operator-=(float f)
+	{
+		x -= f;
+		y -= f;
+		z -= f;
+	}
+
 	vec3 vec3::operator*(float f)
 	{
 		return { x * f, y * f, z * f };
 	}
 
+	void vec3::operator*=(float f)
+	{
+		x *= f;
+		y *= f;
+		z *= f;
+	}
+
 	vec3 vec3::operator/(float f)
 	{
 		return { x / f, y / f, z / f };
+	}
+
+	void vec3::operator/=(float f)
+	{
+		x /= f;
+		y /= f;
+		z /= f;
 	}
 
 	vec3 vec3::operator-()
@@ -122,6 +176,11 @@ namespace LilEngie::Math
 	vec3 normalized(vec3 vec)
 	{
 		return vec / len(vec);
+	}
+
+	vec3 proj(vec3 a, vec3 b)
+	{
+		return a * (dot(a, b) / dot(a, a));
 	}
 
 	std::ostream& operator<<(std::ostream& os, const vec3& v)

@@ -24,6 +24,15 @@ namespace LilEngie
 	public:
 		void Init() override;
 
+		void SetGlobalPosition(vec3 position);
+		void SetGlobalEuler(vec3 euler);
+		void SetGlobalScale(vec3 scale);
+
+		vec3 GlobalPosition();
+		vec3 GlobalEuler();
+		vec3 GlobalScale();
+
+		mat4 InheritedTransformation();
 		mat4 GlobalTransformation();
 		mat4 LocalTransformation();
 	};

@@ -26,6 +26,8 @@ namespace LilEngie
 		void Render() override;
 		void Resize(int width, int height) override;
 		void SetContextCurrent() override;
+		void EnableDepth() override;
+		void DisableDepth() override;
 
 		//Shaders and input layout
 		IShader* CreateShader(const std::string &vert, const std::string &frag) override;

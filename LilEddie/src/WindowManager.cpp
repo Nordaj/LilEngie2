@@ -26,15 +26,16 @@ namespace LilEddie
 	void WindowManager::Init()
 	{
 		//Create all windows
-		windows.push_back(new LilTreeWindow(game));
+		RegisterWindow<LilTreeWindow>();
+		RegisterWindow<GameWindow>();
+		RegisterWindow<ToolbarWindow>();
+		RegisterWindow<SceneWindow>();
 
+		///Special needs lookin ass (fix later, its easy)
 		PropertiesWindow* propertiesWindow = new PropertiesWindow(game);
 		propertiesWindow->treeWindow = (LilTreeWindow*)windows[0];
+		propertiesWindow->manager = this;
 		windows.push_back(propertiesWindow);
-
-		windows.push_back(new GameWindow(game));
-		windows.push_back(new SceneWindow(game));
-		windows.push_back(new ToolbarWindow(game));
 
 		//Use imgui style
 		SetupImGuiStyle();
@@ -84,6 +85,16 @@ namespace LilEddie
 	{
 		for (IEditorWindow* win : windows)
 			win->Reload();
+	}
+
+	IEditorWindow* WindowManager::GetWindow(const char* title)
+	{
+		for (IEditorWindow* win : windows)
+		{
+			if (!strcmp(win->WindowTitle().c_str(), title))
+				return win;
+		}
+		return nullptr;
 	}
 
 	void WindowManager::MenuBar()

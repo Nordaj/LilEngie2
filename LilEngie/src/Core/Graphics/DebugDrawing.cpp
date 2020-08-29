@@ -12,9 +12,7 @@
 namespace LilEngie
 {
 	DebugDrawing::DebugDrawing()
-	{
-		lines = std::vector<DebugLineDrawCall>();
-	}
+	{ }
 
 	void DebugDrawing::Init(IGraphics* gfx, Game* game, Renderer* renderer)
 	{
@@ -79,6 +77,44 @@ namespace LilEngie
 		//Bind material
 		material->BindMaterial();
 
+		RenderLines(width, height, near, v, p, false);
+		RenderSquares(width, height, near, v, p, false);
+
+		gfx->DisableDepth();
+
+		RenderLines(width, height, near, v, p, true);
+		RenderSquares(width, height, near, v, p, true);
+
+		gfx->EnableDepth();
+	}
+
+	void DebugDrawing::Flush()
+	{
+		lines.clear();
+		squares.clear();
+
+		overlayLines.clear();
+		overlaySquares.clear();
+	}
+
+	void DebugDrawing::DrawLine(vec3 a, vec3 b, vec3 col, int pixelWidth, bool overlay)
+	{
+		if (overlay)
+			overlayLines.push_back({ a, b, col, pixelWidth });
+		else
+			lines.push_back({a, b, col, pixelWidth});
+	}
+
+	void DebugDrawing::DrawSquare(vec3 p, vec3 col, int pixelWidth, bool overlay)
+	{
+		if (overlay)
+			overlaySquares.push_back({ p, col, pixelWidth });
+		else
+			squares.push_back({ p, col, pixelWidth });
+	}
+
+	void DebugDrawing::RenderLines(int width, int height, float near, const mat4& v, const mat4& p, bool overlay)
+	{
 		//Get necessary variables
 		mat4 vp = p * v;
 		vec3 cam = inverse(v)[3].xyz();
@@ -87,7 +123,7 @@ namespace LilEngie
 		vec3 po = inverse(v)[3].xyz();
 
 		//Draw each line
-		for (DebugLineDrawCall& line : lines)
+		for (DebugLineDrawCall& line : overlay ? overlayLines : lines)
 		{
 			//Calc matrices
 			mat4 m = mat4(1);
@@ -151,9 +187,19 @@ namespace LilEngie
 			gfx->BindVertexBuffer(vBuffer, sizeof(Vertex));
 			gfx->Draw(6);
 		}
+	}
+
+	void DebugDrawing::RenderSquares(int width, int height, float, const mat4& v, const mat4& p, bool overlay)
+	{
+		//Get necessary variables
+		mat4 vp = p * v;
+		vec3 cam = inverse(v)[3].xyz();
+		mat4 identity = mat4(1);
+		vec3 pn = normalized(inverse(v)[2].xyz());
+		vec3 po = inverse(v)[3].xyz();
 
 		//Draw each square
-		for (DebugSquareDrawCall& square : squares)
+		for (DebugSquareDrawCall& square : overlay ? overlaySquares : squares)
 		{
 			//Calc matrices (everyting done in clip space)
 			mat4 camVP = mat4(1);
@@ -191,20 +237,5 @@ namespace LilEngie
 			gfx->BindVertexBuffer(vBuffer, sizeof(Vertex));
 			gfx->Draw(6);
 		}
-	}
-
-	void DebugDrawing::Flush()
-	{
-		lines.clear();
-	}
-
-	void DebugDrawing::DrawLine(vec3 a, vec3 b, vec3 col, int pixelWidth)
-	{
-		lines.push_back({a, b, col, pixelWidth});
-	}
-
-	void DebugDrawing::DrawSquare(vec3 p, vec3 col, int pixelWidth)
-	{
-		squares.push_back({ p, col, pixelWidth });
 	}
 }

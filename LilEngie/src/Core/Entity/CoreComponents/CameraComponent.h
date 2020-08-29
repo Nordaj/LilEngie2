@@ -49,6 +49,7 @@ namespace LilEngie
 		void UseFramebuffer();
 		void ResizeFramebuffer(int width, int height);
 		void EnableDebugGraphics(bool enabled);
+		mat4 GetViewProjection();
 
 	private:
 		void ResetProjection();

@@ -45,6 +45,8 @@ namespace LilEngie
 		virtual void Render() = 0;
 		virtual void Resize(int width, int height) = 0;
 		virtual void SetContextCurrent() = 0;
+		virtual void EnableDepth() = 0;
+		virtual void DisableDepth() = 0;
 
 		//Shaders and input layout
 		virtual IShader* CreateShader(const std::string& vert, const std::string& frag) = 0;

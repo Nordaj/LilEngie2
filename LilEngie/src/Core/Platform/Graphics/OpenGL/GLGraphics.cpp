@@ -108,6 +108,16 @@ namespace LilEngie
 	#endif //LIL_WINDOWS
 	}
 
+	void GLGraphics::EnableDepth()
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+
+	void GLGraphics::DisableDepth()
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+
 	IShader* GLGraphics::CreateShader(const std::string &vert, const std::string &frag)
 	{
 		return CreateShader(vert, frag, nullptr, nullptr, 0);

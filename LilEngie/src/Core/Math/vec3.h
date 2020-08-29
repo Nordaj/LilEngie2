@@ -28,8 +28,20 @@ namespace LilEngie::Math
 		vec3 operator*(const vec3& v);
 		void operator*=(const vec3& v);
 
+		vec3 operator/(const vec3& v);
+		void operator/=(const vec3& v);
+
+		vec3 operator+(float f);
+		void operator+=(float f);
+
+		vec3 operator-(float f);
+		void operator-=(float f);
+
 		vec3 operator*(float f);
+		void operator*=(float f);
+
 		vec3 operator/(float f);
+		void operator/=(float f);
 
 		vec3 operator-();
 
@@ -44,6 +56,9 @@ namespace LilEngie::Math
 	extern float len2(vec3 vec);
 	extern void normalize(vec3& vec);
 	extern vec3 normalized(vec3 vec);
+
+	//Projects b onto a
+	extern vec3 proj(vec3 a, vec3 b);
 
 	extern std::ostream& operator<<(std::ostream& os, const vec3& v);
 }
