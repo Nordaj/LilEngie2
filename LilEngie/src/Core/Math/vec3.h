@@ -19,31 +19,31 @@ namespace LilEngie::Math
 		vec3();
 		vec3(float x, float y, float z);
 
-		vec3 operator+(const vec3& v);
+		vec3 operator+(const vec3& v) const;
 		void operator+=(const vec3& v);
 
-		vec3 operator-(const vec3& v);
+		vec3 operator-(const vec3& v) const;
 		void operator-=(const vec3& v);
 
-		vec3 operator*(const vec3& v);
+		vec3 operator*(const vec3& v) const;
 		void operator*=(const vec3& v);
 
-		vec3 operator/(const vec3& v);
+		vec3 operator/(const vec3& v) const;
 		void operator/=(const vec3& v);
 
-		vec3 operator+(float f);
+		vec3 operator+(float f) const;
 		void operator+=(float f);
 
-		vec3 operator-(float f);
+		vec3 operator-(float f) const;
 		void operator-=(float f);
 
-		vec3 operator*(float f);
+		vec3 operator*(float f) const;
 		void operator*=(float f);
 
-		vec3 operator/(float f);
+		vec3 operator/(float f) const;
 		void operator/=(float f);
 
-		vec3 operator-();
+		vec3 operator-() const;
 
 		float& operator[](int i);
 		float operator[](int i) const;

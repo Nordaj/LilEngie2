@@ -12,7 +12,7 @@ namespace LilEngie::Math
 	vec3::vec3(float x, float y, float z)
 		: x(x), y(y), z(z) { }
 
-	vec3 vec3::operator+(const vec3& v)
+	vec3 vec3::operator+(const vec3& v) const
 	{
 		return {
 			x + v.x,
@@ -28,7 +28,7 @@ namespace LilEngie::Math
 		z += v.z;
 	}
 
-	vec3 vec3::operator-(const vec3& v)
+	vec3 vec3::operator-(const vec3& v) const
 	{
 		return {
 			x - v.x,
@@ -44,7 +44,7 @@ namespace LilEngie::Math
 		z -= v.z;
 	}
 
-	vec3 vec3::operator*(const vec3& v)
+	vec3 vec3::operator*(const vec3& v) const
 	{
 		return {
 			x * v.x,
@@ -60,7 +60,7 @@ namespace LilEngie::Math
 		z *= v.z;
 	}
 
-	vec3 vec3::operator/(const vec3& v)
+	vec3 vec3::operator/(const vec3& v) const
 	{
 		return {
 			x / v.x,
@@ -76,7 +76,7 @@ namespace LilEngie::Math
 		z /= v.z;
 	}
 
-	vec3 vec3::operator+(float f)
+	vec3 vec3::operator+(float f) const
 	{
 		return vec3(x + f, y + f, z + f);
 	}
@@ -88,7 +88,7 @@ namespace LilEngie::Math
 		z += f;
 	}
 
-	vec3 vec3::operator-(float f)
+	vec3 vec3::operator-(float f) const
 	{
 		return vec3(x - f, y - f, z - f);
 	}
@@ -100,7 +100,7 @@ namespace LilEngie::Math
 		z -= f;
 	}
 
-	vec3 vec3::operator*(float f)
+	vec3 vec3::operator*(float f) const
 	{
 		return { x * f, y * f, z * f };
 	}
@@ -112,7 +112,7 @@ namespace LilEngie::Math
 		z *= f;
 	}
 
-	vec3 vec3::operator/(float f)
+	vec3 vec3::operator/(float f) const
 	{
 		return { x / f, y / f, z / f };
 	}
@@ -124,7 +124,7 @@ namespace LilEngie::Math
 		z /= f;
 	}
 
-	vec3 vec3::operator-()
+	vec3 vec3::operator-() const
 	{
 		return vec3(x, y, z) * -1;
 	}
