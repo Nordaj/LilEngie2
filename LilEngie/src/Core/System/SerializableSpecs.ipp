@@ -80,6 +80,19 @@ namespace LilEngie
 		data = vec4(j[name][0].get<float>(), j[name][1].get<float>(), j[name][2].get<float>(), j[name][3].get<float>());
 	}
 
+	//quat
+	template<>
+	inline void ISerializable::SerializeProperty<quat>(json& j, quat& data, std::string name)
+	{
+		j[name] = { data.x, data.y, data.z, data.w };
+	}
+
+	template<>
+	inline void ISerializable::DeserializeProperty<quat>(json& j, quat& data, std::string name)
+	{
+		data = quat(j[name][0].get<float>(), j[name][1].get<float>(), j[name][2].get<float>(), j[name][3].get<float>());
+	}
+
 	//mat4
 	template<>
 	inline void ISerializable::SerializeProperty<mat4>(json& j, mat4& data, std::string name)

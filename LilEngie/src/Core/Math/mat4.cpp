@@ -105,7 +105,6 @@ namespace LilEngie::Math
 
 	mat4 rotate(vec3 e)
 	{
-		//This function is slow as shit, will get to quaternions once i understand the dark magic
 		float sx = sin(e.x);
 		float cx = cos(e.x);
 
@@ -136,7 +135,7 @@ namespace LilEngie::Math
 			{ 0.,  0., 0., 1. }
 		);
 
-		return rotZ * rotY * rotX;
+		return rotX * rotY * rotZ;
 	}
 
 	void rotate(mat4& m, vec3 e)

@@ -15,7 +15,7 @@ namespace LilEddie
 
 	private:
 		vec3 camPos = vec3(0, 0, 0);
-		vec3 camEuler = vec3(0, 0, 0);
+		quat camRotation;
 		CameraComponent* camera;
 		SceneCameraComponent* scnCam;
 		IGraphics* gfx;

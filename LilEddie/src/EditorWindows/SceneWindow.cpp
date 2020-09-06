@@ -47,7 +47,7 @@ namespace LilEddie
 		//Handle scn camera stuff
 		scnCam->hovered = ImGui::IsWindowHovered();
 		camPos = scnCam->actor->transform->position;
-		camEuler = scnCam->actor->transform->euler;
+		camRotation = scnCam->actor->transform->rotation;
 
 		//Handle window resizing
 		if (ImGui::GetContentRegionAvail().x != frameSize.x || ImGui::GetContentRegionAvail().y != frameSize.y)
@@ -99,7 +99,7 @@ namespace LilEddie
 		sceneCamera->hideInTree = true;
 		TransformComponent* t = sceneCamera->CreateComponent<TransformComponent>();
 		t->position = camPos;
-		t->euler = camEuler;
+		t->rotation = camRotation;
 		camera = sceneCamera->CreateComponent<CameraComponent>();
 		camera->EnableDebugGraphics(true);
 		camera->width = 1;

@@ -31,13 +31,13 @@ namespace LilEngie::Math
 		quat(vec4 v);
 
 		static quat Euler(vec3 euler);
-		//vec3 Euler() const;
+		vec3 Euler() const; //NOT WORKING
 
 		static quat AxisAngle(vec3 axis, float angle);
 		vec4 AxisAngle() const;
 
 		//static quat RotationMatrix(const mat4& m);
-		mat4 RotationMatrix() const;
+		mat4 RotationMatrix() const; //Either this is wrong or euler->mat is wrong
 
 		vec3 RotatePoint(const vec3& pt) const;
 

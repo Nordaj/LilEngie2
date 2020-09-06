@@ -11,13 +11,14 @@ namespace LilEngie
 	{
 	public:
 		vec3 position;
-		vec3 euler;
+		quat rotation;
 		vec3 scale = vec3(1, 1, 1);
 
+	private:
 		LIL_TYPE_NAME("transform")
 		PROPERTIES(
 			PROPERTY(position)
-			NAMED_PROPERTY(euler, "rotation")
+			PROPERTY(rotation)
 			PROPERTY(scale)
 		)
 

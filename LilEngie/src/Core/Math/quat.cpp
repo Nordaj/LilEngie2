@@ -36,11 +36,17 @@ namespace LilEngie::Math
 		};
 	}
 
-	//TODO
-	//vec3 quat::Euler() const
-	//{
-	//	return vec3();
-	//}
+	vec3 quat::Euler() const
+	{
+		//Really needed help for this one
+		//https://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/Quaternions.pdf
+
+		return {
+			atan2(2*(w*x - y*z), 1 - 2*(x*x + y*y)),
+			asin(2*(w*y + z*x)),
+			atan2(2*(w*z - x*y), 1 - 2*(y*y + z*z)),
+		};
+	}
 
 	quat quat::AxisAngle(vec3 a, float t)
 	{

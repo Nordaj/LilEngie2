@@ -60,6 +60,6 @@ namespace LilEngie
 
 	mat4 TransformComponent::LocalTransformation()
 	{
-		return translate(position) * rotate(euler) * Math::scale(scale);
+		return translate(position) * rotation.RotationMatrix() * Math::scale(scale);
 	}
 }

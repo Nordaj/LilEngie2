@@ -28,10 +28,14 @@ namespace LilEddie
 			//Looking behaviour
 			vec3 e = input->GetMouseDelta();
 			e = vec3(e.y, e.x, 0) * lookSpeed;
-			actor->transform->euler += e;
+			euler += e;
+
+			quat pitch = quat::AxisAngle(vec3(1, 0, 0), euler.x);
+			quat yaw = quat::AxisAngle(vec3(0, 1, 0), euler.y);
+			actor->transform->rotation = yaw * pitch;
 
 			//Moving behaviour
-			mat4 rot = rotate(actor->transform->euler);
+			mat4 rot = actor->transform->rotation.RotationMatrix();
 			vec3 forward = vec3(rot[2].x, rot[2].y, rot[2].z);
 			vec3 right = vec3(rot[0].x, rot[0].y, rot[0].z);
 

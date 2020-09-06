@@ -18,6 +18,7 @@ namespace LilEddie
 		)
 
 	private:
+		vec3 euler;
 		bool isLooking = false;
 		DebugDrawing* dbg;
 
